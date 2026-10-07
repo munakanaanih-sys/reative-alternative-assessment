@@ -1,0 +1,1193 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>ومضات ذكية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=IBM+Plex+Sans+Hebrew:wght@400;500;600&family=Readex+Pro:wght@500;600;700&display=swap">
+<style>
+/* Layout: a single-column workbook — sticky stepper on top, one stage per screen, a guiding-questions margin note beside the fields on wide screens */
+:root{
+  --brand-bg:#0E1A3A; --brand-gold:#E2B85A; --brand-ink:#F3E9D2;
+  --bg:#F4F6F3; --surface:#FFFFFF; --ink:#1B2422; --muted:#5D6B67; --line:#D9E0DC;
+  --accent:#1F5C57; --accent-soft:#E3EEEC; --wood:#B07A2A; --wood-soft:#F5EBDC;
+  --ok:#2E7D4F; --warn:#A8541B;
+  --f-display:"Readex Pro","IBM Plex Sans Arabic","IBM Plex Sans Hebrew",Tahoma,sans-serif;
+  --f-body:"IBM Plex Sans Arabic","IBM Plex Sans Hebrew",Tahoma,"Segoe UI",sans-serif;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#111816; --surface:#18211F; --ink:#E6ECE9; --muted:#9DABA6; --line:#2C3835;
+  --accent:#6CC3B8; --accent-soft:#1E3330; --wood:#DDA956; --wood-soft:#2E2618;
+  --ok:#6FCB93; --warn:#E59A62; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111816; --surface:#18211F; --ink:#E6ECE9; --muted:#9DABA6; --line:#2C3835;
+  --accent:#6CC3B8; --accent-soft:#1E3330; --wood:#DDA956; --wood-soft:#2E2618;
+  --ok:#6FCB93; --warn:#E59A62; color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.7}
+.wrap{max-width:980px;margin:0 auto;padding-inline:16px;padding-block:20px 60px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.35}
+h1{font-size:1.65rem;font-weight:700}
+h2{font-size:1.25rem;font-weight:600}
+h3{font-size:1.02rem;font-weight:600}
+p{margin:0}
+.intro{display:grid;gap:8px;margin-bottom:18px}
+.intro p{color:var(--muted);max-width:68ch}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+details.rules{background:var(--wood-soft);border-radius:var(--r);padding:10px 14px}
+details.rules summary{cursor:pointer;font-weight:600;color:var(--wood)}
+details.rules ol{margin:8px 0 2px;padding-inline-start:20px;display:grid;gap:4px}
+
+.stepper{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:10px;border-bottom:1px solid var(--line);margin-bottom:20px;overflow-x:auto}
+.stepper ol{list-style:none;margin:0;padding:0;display:flex;gap:6px;min-width:max-content}
+.stepper button{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:999px;padding:6px 12px 6px 14px;font:inherit;font-size:.88rem;cursor:pointer}
+.stepper button .n{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--line);color:var(--ink);font-family:var(--f-display);font-size:.78rem;font-variant-numeric:tabular-nums}
+.stepper button[aria-current="step"]{border-color:var(--accent);color:var(--ink);font-weight:600}
+.stepper button[aria-current="step"] .n{background:var(--accent);color:var(--surface)}
+.stepper button.done .n{background:var(--accent-soft);color:var(--accent)}
+
+.stage{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:20px;align-items:start}
+@media (max-width:760px){.stage{grid-template-columns:minmax(0,1fr)}}
+.stage-head{grid-column:1/-1;display:grid;gap:4px}
+.stage-head p{color:var(--muted);max-width:70ch}
+.fields{display:grid;gap:16px;min-width:0}
+aside.guide{background:var(--accent-soft);border-radius:var(--r);padding:14px 16px;display:grid;gap:8px;font-size:.92rem}
+aside.guide h3{font-size:.85rem;letter-spacing:.02em;color:var(--accent)}
+aside.guide ul{margin:0;padding-inline-start:18px;display:grid;gap:6px}
+@media (min-width:761px){aside.guide{position:sticky;top:90px}}
+
+.field{display:grid;gap:6px;min-width:0}
+.field label,.lbl{font-weight:600;font-size:.94rem}
+.field .hint{color:var(--muted);font-size:.84rem}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+input[type=text],input[type=date],select,textarea{width:100%;box-sizing:border-box;font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:9px 11px}
+textarea{min-height:84px;resize:vertical}
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+::placeholder{color:var(--muted);opacity:.75}
+
+.ai-row{display:flex;justify-content:flex-end}
+.ai-btn{font:inherit;font-size:.82rem;border:1px dashed var(--accent);background:transparent;color:var(--accent);border-radius:999px;padding:3px 12px;cursor:pointer}
+.ai-btn[disabled]{opacity:.5;cursor:wait}
+.suggest{border:1px solid var(--accent);background:var(--surface);border-radius:8px;padding:10px 12px;display:grid;gap:8px}
+.suggest .s-label{font-size:.8rem;color:var(--accent);font-weight:600}
+.suggest .s-text{white-space:pre-wrap}
+.suggest .s-actions{display:flex;flex-wrap:wrap;gap:8px}
+
+.btn{font:inherit;font-size:.92rem;border-radius:8px;padding:8px 16px;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--surface);font-weight:600}
+.btn.wood{background:var(--wood);border-color:var(--wood);color:var(--surface);font-weight:600}
+.btn.quiet{background:transparent}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+
+.assist{background:var(--surface);border:1px solid var(--wood);border-radius:var(--r);padding:14px 16px;display:grid;gap:12px}
+.assist-head{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between}
+.assist-head p{color:var(--muted);font-size:.9rem}
+.assist-body{display:grid;gap:14px;border-top:1px dashed var(--line);padding-top:12px}
+.assist-steps ol{margin:6px 0 0;padding-inline-start:22px;display:grid;gap:4px}
+.sparks{margin:6px 0 0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:8px}
+.sparks li{background:var(--wood-soft);border-radius:8px;padding:8px 12px;font-size:.9rem}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.chips label{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:3px 12px;font-size:.86rem;cursor:pointer;background:var(--bg)}
+.chips input{accent-color:var(--accent)}
+.chips label:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}
+.assist-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.ideas{display:grid;gap:12px}
+.ideas-qs{background:var(--accent-soft);border-radius:8px;padding:10px 14px}
+.ideas-qs ul{margin:4px 0 0;padding-inline-start:18px;display:grid;gap:4px}
+.idea-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.idea{border:1px solid var(--line);border-radius:8px;padding:12px;display:grid;gap:6px;align-content:start;min-width:0}
+.idea .meta{font-size:.8rem;color:var(--wood);font-weight:600}
+.idea .rev{font-size:.86rem;color:var(--muted)}
+.idea .q{font-size:.86rem;border-top:1px dashed var(--line);padding-top:6px}
+.idea .use{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.idea .use .btn{font-size:.8rem;padding:4px 10px}
+.ideas-foot{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;font-size:.86rem;color:var(--muted)}
+.tasks{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.task{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px;display:grid;gap:12px;min-width:0}
+.task h3{display:flex;align-items:center;gap:8px}
+.tag{font-size:.75rem;font-family:var(--f-display);background:var(--wood-soft);color:var(--wood);border-radius:999px;padding:1px 10px}
+
+.crit{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px;display:grid;gap:12px}
+.crit-head{display:flex;flex-wrap:wrap;gap:10px;align-items:end}
+.crit-head .field{flex:1 1 220px}
+.crit-head .w{flex:0 0 110px}
+.levels{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+.levels textarea{min-height:70px}
+.lv4 label{color:var(--ok)} .lv1 label{color:var(--warn)}
+.both{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;border-top:1px dashed var(--line);padding-top:10px}
+.crit-actions{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px}
+.weight-sum{font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums}
+
+.checks{display:grid;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px}
+.checks label{display:flex;gap:10px;align-items:flex-start;font-weight:400;cursor:pointer}
+.checks input{margin-top:6px;accent-color:var(--accent);width:17px;height:17px;flex:none}
+.missing{background:var(--wood-soft);border-radius:8px;padding:10px 14px;font-size:.9rem}
+.missing ul{margin:4px 0 0;padding-inline-start:18px}
+.out{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.out .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:10px}
+.out .card p{color:var(--muted);font-size:.9rem}
+.status{font-size:.88rem;min-height:1.4em}
+.status.ok{color:var(--ok)} .status.err{color:var(--warn)}
+
+.lbl-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 10px}
+.help-btn{font:inherit;font-size:.78rem;font-weight:500;border:1px solid var(--wood);background:var(--wood-soft);color:var(--wood);border-radius:999px;padding:1px 10px;cursor:pointer;white-space:nowrap}
+.help-btn[aria-expanded="true"]{background:var(--wood);color:var(--surface)}
+.help{background:var(--wood-soft);border-radius:8px;padding:10px 12px;display:grid;gap:8px;font-size:.88rem;font-weight:400}
+.help .ex{background:var(--surface);border-radius:6px;padding:8px 10px;display:grid;gap:2px}
+.help .ex span{font-size:.75rem;font-weight:600;color:var(--wood)}
+.nav{grid-column:1/-1;display:flex;justify-content:space-between;gap:10px;margin-top:8px;border-top:1px solid var(--line);padding-top:14px}
+.banner{background:var(--wood-soft);color:var(--ink);border-radius:8px;padding:8px 14px;font-size:.9rem;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.inline-confirm{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:var(--surface);border:1px solid var(--warn);border-radius:8px;padding:8px 12px;font-size:.9rem}
+@media (prefers-reduced-motion:no-preference){.suggest{animation:fade .25s ease}@keyframes fade{from{opacity:.4}to{opacity:1}}}
+
+.top-row{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between}
+.lang-switch{display:flex;align-items:center;gap:4px;flex-wrap:wrap;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:3px}
+.lang-switch .ls-label{font-size:.78rem;color:var(--muted);padding-inline:8px 4px}
+.lang-switch button{font:inherit;font-size:.86rem;border:0;background:transparent;color:var(--ink);border-radius:999px;padding:4px 12px;cursor:pointer}
+.lang-switch button[aria-pressed="true"]{background:var(--accent);color:var(--surface);font-weight:600}
+.stu-badge{font-size:.74rem;font-weight:600;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:1px 9px;margin-inline-end:auto}
+.lbl-row label{margin-inline-end:auto}.lbl-row .stu-badge+.help-btn{margin-inline-start:0}
+.lbl-row:has(.stu-badge) label{margin-inline-end:0}
+.langbox{background:var(--accent-soft);border-radius:var(--r);padding:12px 14px;display:grid;gap:10px}
+.check-inline{display:flex;gap:8px;align-items:flex-start;cursor:pointer;font-size:.92rem}
+.check-inline input{margin-top:6px;accent-color:var(--accent);width:17px;height:17px;flex:none}
+textarea.short{min-height:60px}
+.trans{background:var(--surface);border:1px solid var(--accent);border-radius:var(--r);padding:14px;display:grid;gap:12px}
+.trans-head{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:flex-start;justify-content:space-between}
+.trans-head p{color:var(--muted);font-size:.9rem;max-width:62ch}
+.tr-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;border-top:1px dashed var(--line);padding-top:10px}
+.tr-src{background:var(--bg);border-radius:8px;padding:8px 12px;min-width:0;overflow-wrap:anywhere}
+.tr-lbl{display:block;font-size:.76rem;font-weight:600;color:var(--muted)}
+.hint.warn{color:var(--warn)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.gl-head,.gl-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;gap:8px;align-items:start}
+.gl-head{font-size:.78rem;font-weight:600;color:var(--muted)}
+.gl-sug{background:var(--accent-soft);border-radius:8px;padding:10px 12px;display:grid;gap:8px}
+.gl-m{color:var(--muted);font-size:.82rem}
+@media (max-width:480px){.gl-head{display:none}.gl-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.gl-row .btn{grid-column:1/-1;justify-self:start}}
+.fixlang{display:grid;gap:10px}
+.fix-list{display:grid;gap:10px;background:var(--surface);border-radius:8px;padding:10px 12px}
+.fix-row{display:grid;gap:6px;border-top:1px dashed var(--line);padding-top:8px}
+.fix-pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}
+.fix-src{background:var(--bg);border-radius:8px;padding:8px 10px;color:var(--muted);overflow-wrap:anywhere}
+.task-tr{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.tr-prev p{overflow-wrap:anywhere}
+.brand-band{display:flex;align-items:center;gap:16px;background:var(--brand-bg);color:var(--brand-ink);border-radius:14px;padding:14px 18px;box-shadow:inset 0 0 0 1px rgba(226,184,90,.35)}
+.brand-logo{width:88px;height:auto;border-radius:10px;flex:none;max-width:100%}
+.brand-text{display:grid;gap:2px;min-width:0}
+.intro .brand-band .brand-name{font-family:var(--f-display);font-weight:700;font-size:1.5rem;color:var(--brand-gold);line-height:1.3}
+.brand-name span{font-size:.72rem;letter-spacing:.18em;font-weight:600;margin-inline-start:8px;opacity:.85;vertical-align:middle}
+.brand-band h1{color:var(--brand-ink);font-size:1.2rem;font-weight:600}
+.intro .brand-band 
+.intro .brand-band .brand-credit{font-size:.88rem;color:var(--brand-gold)}
+.top-row{justify-content:flex-end}
+@media (max-width:480px){.brand-band{gap:12px;padding:12px}.brand-logo{width:64px}.brand-name{font-size:1.25rem}.brand-band h1{font-size:1.02rem}}
+</style>
+<div class="wrap" dir="rtl" lang="ar">
+  <header class="intro" id="hdr"></header>
+  <nav class="stepper" aria-label="مراحل التخطيط"><ol id="stepper"></ol></nav>
+  <form id="form" autocomplete="off" novalidate onsubmit="return false">
+    <section class="stage" data-stage="0"></section>
+    <section class="stage" data-stage="1" hidden></section>
+    <section class="stage" data-stage="2" hidden></section>
+    <section class="stage" data-stage="3" hidden></section>
+    <section class="stage" data-stage="4" hidden></section>
+    <div class="nav"><button class="btn" type="button" id="prev">السابق</button><button class="btn primary" type="button" id="next">التالي</button></div>
+  </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
+<script>
+const LOGO_B64="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";
+// ===== UI strings =====
+const I18N={
+ar:{
+  title:"ومضات ذكية",tagline:"منصة تخطيط تقييم بديل إبداعي",credit:"أنشأتها المرشدة منى مصطفى - كناعنه",logoAlt:"شعار ومضات ذكية",
+  intro:"يعبّئ الطاقم البنود معًا في خمس مراحل، وفي النهاية يحصل على ملفَي Word: مهمة للطالب فيها خياران يختار منهما واحدًا، ومرشد تقييم للمعلم. كل ما في الملفين مأخوذ من كلماتكم. زر «اقتراح صياغة» اختياري، ولا يُعتمد أي اقتراح إلا بموافقتكم. إن لم تكونوا متأكدين مما يُكتب في بند، اضغطوا «توضيح ومثال» بجانبه.",
+  uiLang:"لغة المنصة",
+  rulesH:"الشروط الثابتة",
+  rules:["التخطيط يبدأ من المهارة، لا من الأداة أو النشاط.","مهمتان كحد أقصى، تفحصان المهارة نفسها بطريقتين مختلفتين.","مهمة واحدة على الأقل بعيدة عن الكتابة والحل التقليدي، وتتطلب تفكيرًا عالي المستوى.","مرشد تصحيح موحد يصلح للمهمتين معًا.","ما يراه الطالب يُكتب بلغة الموضوع."],
+  btnExample:"تعبئة بمثال للتوضيح",btnClear:"بدء نموذج جديد",
+  exampleBanner:"النموذج معبأ الآن بمثال من موضوع التغذية للتوضيح فقط. امسحوه قبل البدء بخطتكم.",clearExample:"مسح المثال",
+  stages:["البيانات","المهارة","المهمتان","مرشد التصحيح","الفحص والملفات"],stepperAria:"مراحل التخطيط",
+  prev:"السابق",next:"التالي",yes:"نعم",cancel:"إلغاء",
+  confirmExample:"سيُستبدل ما كتبتموه بالمثال. هل تريدون المتابعة؟",confirmClear:"سيُمسح كل ما في النموذج. هل تريدون المتابعة؟",
+  s1h:"بيانات الطاقم والوحدة",s1p:"اختاروا وحدة تعليمية حقيقية ستدرّسونها قريبًا.",
+  subject:"الموضوع",subjectPh:"مثال: علوم",subjects:["لغة عربية","لغة عبرية","لغة إنجليزية","رياضيات","علوم"],
+  grade:"الصف",gradePh:"مثال: الثامن",unit:"الوحدة التعليمية",unitPh:"مثال: الأنظمة البيئية",
+  coordinator:"المركّز/ة",date:"تاريخ التخطيط",team:"أعضاء الطاقم",teamPh:"الأسماء مفصولة بفواصل",
+  studentLang:"لغة ملف الطالب",langNames:{ar:"العربية",he:"العبرية",en:"الإنجليزية"},
+  helperAr:"إضافة معاني الكلمات الصعبة بالعربية في ملف الطالب",
+  slNote:"القاعدة: ما يراه الطالب يُكتب بلغة الموضوع. في العربية والعلوم والرياضيات يُكتب بالعربية، وفي العبرية بالعبرية، وفي الإنجليزية بالإنجليزية. لغة الملف تتغير تلقائيًا عند كتابة اسم الموضوع، والبنود التي تظهر للطالب تحمل علامة تذكير. ما يخص المعلم فقط يُكتب باللغة التي تريحكم.",
+  s1guideH:"قبل أن تبدأوا",s1guide:["عبّئوا الاستمارة معًا كطاقم، على جهاز واحد.","ما تكتبونه يُحفظ في هذا المتصفح، فيمكنكم العودة إليه لاحقًا.","ملف المعلم يُكتب بلغة المنصة التي تختارونها في الأعلى."],
+  stuBadge:l=>`يظهر للطالب: يُكتب ب${l}`,
+  s2h:"المهارة والدليل",s2p:"اتفقوا على مهارة واحدة واضحة، وصِفوا ما يفعله الطالب ليثبت أنه يملكها.",
+  unitSkills:"المهارات المطلوبة في الوحدة حسب المنهج",unitSkillsPh:"اكتبوا كل المهارات، ثم اختاروا منها",
+  skill:"المهارة التي اخترناها",skillHint:"صوغوها بفعل قابل للملاحظة: «يقارن ويبرر» وليس «يفهم».",
+  skillWhy:"لماذا اخترناها؟",evidence:"الدليل: ماذا سيفعل الطالب أو يقول ليثبت المهارة؟",
+  skillStudent:"كيف نشرح المهارة للطالب؟",skillStudentHint:"يظهر في ملف الطالب تحت عنوان «ماذا ستُظهر في هذه المهمة؟»",skillStudentPh:"في هذه المهمة ستُظهر قدرتك على...",
+  guideQ:"أسئلة للنقاش",
+  s2guide:["ما المهارة التي لا يكشفها الامتحان الكتابي عند طلابنا؟","ما الذي نريد أن يستطيع الطالب فعله بعد هذه الوحدة، حتى بعد سنة؟","هل تتطلب المهارة تحليلًا أو تقييمًا أو ابتكارًا، أم تذكرًا وتنفيذًا فقط؟","ماذا يفعل طالب يملك المهارة بشكل مختلف عن طالب لا يملكها؟"],
+  s3h:"المهمتان",s3p:"مهمتان تفحصان المهارة نفسها بطريقتين مختلفتين. الطالب يختار واحدة منهما، وواحدة على الأقل بعيدة عن الكتابة.",
+  assistH:"عالقون في اختيار فكرة؟",assistP:"نساعدكم في توجيه التفكير انطلاقًا من المهارة التي كتبتموها. القرار يبقى لكم.",assistBtn:"طلب المساعدة",
+  assistNeed:"اكتبوا أولًا «المهارة التي اخترناها» و«الدليل» في المرحلة الثانية، لأن الأفكار تُبنى عليهما.",assistBack:"العودة إلى المرحلة الثانية",
+  assistQsH:"ابدأوا بهذه الأسئلة كطاقم:",
+  assistQs:["أين يستعمل الناس هذه المهارة خارج المدرسة؟ في أي مهنة أو موقف يومي؟","لمن يمكن أن يقدّم الطالب عمله؟ (زملاء، صف أصغر، أهل، زوار، لجنة)","هل يمكن أن يُظهر الطالب المهارة بيديه، بصوته، بجسده، أو بتصميم شيء ما؟","أي مساحة في المدرسة تمنح المهارة سياقًا حقيقيًا: الحديقة المائية، الروبوتيكا، النجارة، الساحة؟"],
+  sparksH:"أو انطلقوا من أحد هذه الاقتراحات، واسألوا: كيف ينطبق على مهارتنا؟",
+  sparks:["ما رأيكم أن يختار الطالب ظاهرة من حياته اليومية أو من محيط المدرسة، ويفسّرها بما تعلّمه في الوحدة؟","ما رأيكم أن يعلّم الطالب ما تعلّمه لطلاب صف أصغر، ويُقيَّم على جودة شرحه؟","ما رأيكم أن يصمم الطالب نموذجًا في النجارة أو الروبوتيكا يجسّد فكرة من الوحدة ويشرح قراراته؟","ما رأيكم أن يجري الطالب قياسًا أو مراقبة في الحديقة المائية، ويستنتج منها؟","ما رأيكم أن يقترح الطالب حلًا لمشكلة حقيقية في المدرسة، ويقنع به الإدارة أو لجنة الطلاب؟","ما رأيكم أن يتقمّص الطالب دور شخصية (عالم، كاتب، مهندس، صحفي) ويدافع عن موقف؟","ما رأيكم أن يقارن الطالب بين نصّين أو حلّين أو ظاهرتين، ويحكم أيهما أفضل ولماذا؟","ما رأيكم أن يؤدي الطالب حوارًا أو إعلانًا أو مقابلة بالعربية أو العبرية أو الإنجليزية أمام جمهور حقيقي؟"],
+  prefsH:"ما الذي يهمكم في الفكرة؟ (اختياري)",
+  prefs:["خارج الصف","استعمال مساحة تعليمية","عرض أمام جمهور حقيقي","عمل يدوي أو بناء","منتَج رقمي","حوار أو أداء شفهي","ربط بالمجتمع أو البيت","عمل جماعي"],
+  noteLbl:"أفكار أولية أو قيود عندكم (اختياري)",notePh:"مثال: نريد شيئًا يشارك فيه الأهل، أو لدينا حصتان فقط",
+  assistGo:"اقترحوا علينا نقاط انطلاق",thinkingLong:"جارٍ التفكير... قد يستغرق ذلك نصف دقيقة.",
+  ideasQsH:"أسئلة لتضييق الاختيار:",reveals:"تكشف:",discuss:"للنقاش:",toTask:["بداية للمهمة الأولى","بداية للمهمة الثانية"],
+  ideasFoot:"هذه نقاط انطلاق فقط. خذوا منها، ادمجوها، أو تجاهلوها، وصوغوا المهمة بكلماتكم.",moreIdeas:"أفكار أخرى",
+  moved:n=>`نُقلت الفكرة إلى ${n} كمسودة. طوّروا الوصف بكلماتكم وأكملوا باقي البنود.`,
+  replaceQ:n=>`في ${n} نص مكتوب. هل تريدون استبدال العنوان والوصف؟`,replace:"استبدال",
+  s3guide:["هل تُظهر المهمة المهارة التي اخترناها، أم تفحص شيئًا آخر كالخط أو الحفظ؟","لو أن طالبًا ضعيفًا في الكتابة لكنه يملك المهارة، أي مهمة ستنصفه؟","ما الذي تكشفه المهمة الثانية ولا تكشفه الأولى؟","هل تخدم الحديقة المائية أو الروبوتيكا أو النجارة مهارتكم؟ استعمالها إمكانية لا شرط."],
+  taskTag:n=>`خيار ${n}`,taskName:["المهمة الأولى","المهمة الثانية"],
+  tTitle:"عنوان المهمة",tDesc:"وصف المهمة للطالب",tDescHint:"بلغة يفهمها الطالب، بصيغة المخاطَب.",tPlace:"أين تُنفَّذ؟",tMode:"طريقة العمل",tPlaceOther:"حدّدوا المكان",
+  tProduct:"ماذا يُنتج الطالب أو يقدّم؟",tMaterials:"المواد والأدوات",tTime:"الوقت المتاح",tTimePh:"مثال: حصتان",
+  tReveals:"ما الذي تكشفه هذه المهمة ولا تكشفه الأخرى؟",teacherOnly:"يظهر في ملف المعلم فقط.",
+  places:{class:"الصف",robotics:"غرفة الروبوتيكا",carpentry:"ورشة النجارة",water:"الحديقة المائية",yard:"ساحة المدرسة",outside:"خارج المدرسة",other:"أخرى"},
+  modes:{solo:"فردي",pair:"زوجي",group:"مجموعة"},
+  s4h:"مرشد التصحيح الموحد",s4p:"3 إلى 4 معايير تصف جوانب المهارة. كل معيار يجب أن يصلح للمهمتين: إن لم تستطيعوا وصف ظهوره في إحداهما، فهو يقيس المنتَج لا المهارة.",
+  critN:n=>`المعيار ${n}`,critPh:"جانب من المهارة",weight:"الوزن %",optional:"اختياري",
+  levels:{4:"ممتاز (4)",3:"جيد (3)",2:"يحتاج تحسين (2)",1:"بداية (1)"},
+  inA:"كيف يظهر في المهمة الأولى؟",inB:"كيف يظهر في المهمة الثانية؟",
+  critAi:"اقتراح صياغة للمعيار",removeCrit:"حذف المعيار",addCrit:"إضافة معيار",
+  weightSum:n=>`مجموع الأوزان: ${n}%`,weightBad:" (يجب أن يكون 100%)",
+  s4guide:["ارجعوا إلى «الدليل» في المرحلة الثانية: هو المادة الخام للمعايير.","هل يعطي معلمان مختلفان الطالب نفس الدرجة بهذا المرشد؟","هل الفرق بين المستويات واضح وقابل للملاحظة (عدد، جودة، استقلالية)؟","الأوزان اختيارية. إن استعملتموها، يجب أن يكون مجموعها 100%."],
+  s5h:"الفحص الذاتي والملفات",s5p:"علّموا البنود بعد التحقق منها فعلًا. يُتاح إنشاء الملفين بعد تعليم كل البنود.",
+  checks:["المهارة مصاغة بفعل قابل للملاحظة.","المهارة تتطلب تفكيرًا عالي المستوى، لا تذكرًا فقط.","المهمتان تفحصان المهارة نفسها بطريقتين مختلفتين فعلًا.","مهمة واحدة على الأقل بعيدة عن الكتابة والحل التقليدي.","في المهمتين مجال للإبداع واتخاذ القرار من الطالب.","كل معيار في المرشد يصلح للمهمتين معًا.","لا يوجد معيار يقيس شكل المنتَج بدل المهارة.","الفرق بين مستويات المرشد واضح وقابل للملاحظة.","الخطة قابلة للتنفيذ من ناحية الوقت والمساحة والموارد."],
+  missingH:"ينقص قبل إنشاء الملفين:",
+  miss:{unit:"اسم الوحدة (المرحلة 1)",skill:"المهارة التي اخترناها (المرحلة 2)",skillStudent:"شرح المهارة للطالب (المرحلة 2)",task:n=>`عنوان ووصف ${n} (المرحلة 3)`,crit:"معيار واحد على الأقل (المرحلة 4)",critBoth:c=>`كيف يظهر المعيار «${c}» في المهمتين (المرحلة 4)`,weights:"مجموع الأوزان يجب أن يكون 100% أو اتركوها فارغة (المرحلة 4)"},
+  glH:"معاني الكلمات الصعبة",glP:"اختاروا كلمات قليلة قد تصعب على الطلاب، لا جملًا كاملة. يظهر معنى كل كلمة بالعربية بخط صغير مرفوع بجانبها في ملف الطالب، فيبقى الطالب يقرأ بلغة الموضوع. أضفنا معاني بعض الكلمات الثابتة في الملف (مثل المعايير والمواد) تلقائيًا.",
+  glWord:"الكلمة كما تظهر في النص",glMeaning:"معناها بالعربية",glAdd:"إضافة كلمة",glRemove:"حذف",glSuggest:"اقتراح كلمات صعبة من النص",glNoAi:"أضيفوا الكلمات بأنفسكم، أو افتحوا الصفحة في تطبيق Claude لاستعمال الاقتراحات.",glNotFound:"هذه الكلمة غير موجودة في النصوص التي يراها الطالب.",
+  langWarn:l=>`بعض البنود التي تظهر للطالب مكتوبة بالعربية، مع أن ملف الطالب ب${l}. الأفضل أن تعيدوا كتابتها ب${l} في المراحل السابقة. وإن احتجتم، يمكن الاستعانة بالترجمة التلقائية ثم مراجعتها.`,
+  fixLangBtn:l=>`ترجمة البنود العربية إلى ${l}`,fixH:"ترجمة مقترحة. راجعوها وعدّلوها، وألغوا تحديد ما لا تريدون استبداله:",fixApply:"استبدال البنود المحددة بالترجمة",fixDone:n=>`تم استبدال ${n} من البنود بالترجمة. يمكنكم مراجعتها في المراحل السابقة.`,
+  fixNothing:"لا توجد بنود مكتوبة بالعربية هنا.",fixNoAi:"الترجمة التلقائية غير متاحة في هذا العرض. افتحوا الصفحة في تطبيق Claude على الحاسوب أو في المتصفح، واسمحوا للصفحة باستعمال Claude عندما تُسألون.",trTask:l=>`ترجمة هذه المهمة إلى ${l}`,trPrevH:"ترجمة مقترحة:",trUse:"اعتماد الترجمة",trDone:"تمت الترجمة.",dlArabicQ:l=>`ما زالت في ملف الطالب بنود بالعربية، مع أنه ب${l}. ترجموها أولًا بالزر في الأعلى، أو نزّلوا الملف كما هو.`,dlAnyway:"تنزيل كما هو",
+  glSugH:"كلمات مقترحة، اختاروا ما يناسب طلابكم:",glAddSel:"إضافة الكلمات المحددة",glDismiss:"إغلاق",glNone:"لا توجد كلمات جديدة لاقتراحها.",glEmpty:"لم تُضف كلمات بعد.",glLimit:n=>`${n} كلمات. يُفضّل ألا تزيد عن 12 حتى لا يعتمد الطالب على العربية.`,
+  stuCardH:"ملف الطالب",stuCardP:l=>`ب${l}: المهارة بلغة الطالب، المهمتان للاختيار، ومرشد التقييم.`,dlStudent:"تنزيل ملف الطالب (Word)",
+  teaCardH:"مرشد التقييم للمعلم",teaCardP:"المهارة والدليل، تفاصيل المهمتين، المرشد الموحد، وورقة رصد الدرجات.",dlTeacher:"تنزيل مرشد المعلم (Word)",
+  checkAll:"علّموا كل بنود الفحص الذاتي لإتاحة التنزيل.",preparing:"يجري تجهيز الملف...",saved:"تم حفظ الملف.",declined:"تم إلغاء الحفظ.",
+  rateLim:"هناك نافذة حفظ مفتوحة. أغلقوها وحاولوا مجددًا.",saveFail:"تعذر حفظ الملف هنا.",noDocx:"مكتبة إنشاء ملفات Word لم تُحمَّل. أعيدوا فتح الصفحة.",noDl:"التنزيل غير متاح في هذا العرض. افتحوا الصفحة في تطبيق Claude أو في المتصفح.",
+  s5guideH:"بعد التنزيل",s5guide:["الملفان قابلان للتعديل في Word.","اعرضوا الخطة على طاقم آخر قبل تطبيقها مع الطلاب.","في لقاء المتابعة أحضروا 3 نماذج من أعمال الطلاب: ضعيف، متوسط، متميز."],
+  helpBtn:"توضيح ومثال",helpEx:"مثال",aiSuggest:"اقتراح صياغة",sugLabel:"صياغة مقترحة",critSugLabel:"صياغة مقترحة للمعيار",critName:"اسم المعيار",
+  accept:"اعتماد الصياغة",keepMine:"الإبقاء على صياغتي",writeFirst:"اكتبوا نصكم أولًا، ثم اطلبوا اقتراح صياغة له.",thinking:"جارٍ التفكير...",
+  errNG:"لم يُسمح باستعمال الذكاء الاصطناعي في هذه الصفحة.",errRL:"طلبات كثيرة. انتظروا قليلًا ثم حاولوا مجددًا.",errGen:"تعذر الحصول على اقتراح الآن."
+},
+he:{
+  title:"ومضات ذكية · Smart Sparks",tagline:"פלטפורמה לתכנון הערכה חלופית יצירתית",credit:"נבנתה על ידי המדריכה מונא מוסטפא - כנאענה",logoAlt:"הלוגו של ومضات ذكية",
+  intro:"הצוות ממלא את הסעיפים יחד בחמישה שלבים, ובסוף מקבל שני קובצי Word: משימה לתלמיד עם שתי אפשרויות לבחירה, ומחוון הערכה למורה. כל מה שבקבצים לקוח מהמילים שלכם. הכפתור «הצעת ניסוח» הוא אופציונלי, ושום הצעה לא נכנסת בלי אישורכם. אם אינכם בטוחים מה לכתוב בסעיף, לחצו על «הסבר ודוגמה» לידו.",
+  uiLang:"שפת הממשק",
+  rulesH:"התנאים הקבועים",
+  rules:["התכנון מתחיל מהמיומנות, לא מהכלי או מהפעילות.","לכל היותר שתי משימות, שבודקות את אותה מיומנות בשתי דרכים שונות.","לפחות משימה אחת רחוקה מכתיבה ומפתרון מסורתי, ודורשת חשיבה מסדר גבוה.","מחוון אחיד שמתאים לשתי המשימות.","מה שהתלמיד רואה נכתב בשפת המקצוע."],
+  btnExample:"מילוי בדוגמה להמחשה",btnClear:"התחלת טופס חדש",
+  exampleBanner:"הטופס מלא כרגע בדוגמה מתחום התזונה, להמחשה בלבד. מחקו אותה לפני שתתחילו בתכנון שלכם.",clearExample:"מחיקת הדוגמה",
+  stages:["פרטים","המיומנות","המשימות","המחוון","בדיקה וקבצים"],stepperAria:"שלבי התכנון",
+  prev:"הקודם",next:"הבא",yes:"כן",cancel:"ביטול",
+  confirmExample:"מה שכתבתם יוחלף בדוגמה. להמשיך?",confirmClear:"כל התוכן בטופס יימחק. להמשיך?",
+  s1h:"פרטי הצוות והיחידה",s1p:"בחרו יחידת לימוד אמיתית שתלמדו בקרוב.",
+  subject:"מקצוע",subjectPh:"לדוגמה: מדעים",subjects:["שפה ערבית","שפה עברית","שפה אנגלית","מתמטיקה","מדעים"],
+  grade:"כיתה",gradePh:"לדוגמה: ח׳",unit:"יחידת הלימוד",unitPh:"לדוגמה: מערכות אקולוגיות",
+  coordinator:"רכז/ת",date:"תאריך התכנון",team:"חברי הצוות",teamPh:"שמות מופרדים בפסיקים",
+  studentLang:"שפת קובץ התלמיד",langNames:{ar:"ערבית",he:"עברית",en:"אנגלית"},
+  helperAr:"הוספת פירוש בערבית למילים קשות בקובץ התלמיד",
+  slNote:"הכלל: מה שהתלמיד רואה נכתב בשפת המקצוע. בערבית, במדעים ובמתמטיקה כותבים בערבית, בעברית בעברית ובאנגלית באנגלית. שפת הקובץ משתנה אוטומטית כשכותבים את שם המקצוע, ולסעיפים שהתלמיד רואה יש סימן תזכורת. מה שמיועד למורה בלבד נכתב בשפה שנוחה לכם.",
+  s1guideH:"לפני שמתחילים",s1guide:["מלאו את הטופס יחד כצוות, על מכשיר אחד.","מה שאתם כותבים נשמר בדפדפן הזה, כך שאפשר לחזור אליו מאוחר יותר.","קובץ המורה נכתב בשפת הממשק שתבחרו למעלה."],
+  stuBadge:l=>`מופיע לתלמיד: נכתב ב${l}`,
+  s2h:"המיומנות והעדות",s2p:"הסכימו על מיומנות אחת ברורה, ותארו מה התלמיד עושה כדי להוכיח שהיא בידיו.",
+  unitSkills:"המיומנויות הנדרשות ביחידה לפי תוכנית הלימודים",unitSkillsPh:"כתבו את כל המיומנויות, ואז בחרו מתוכן",
+  skill:"המיומנות שבחרנו",skillHint:"נסחו אותה בפועל שאפשר לראות: «משווה ומנמק» ולא «מבין».",
+  skillWhy:"למה בחרנו בה?",evidence:"העדות: מה התלמיד יעשה או יאמר כדי להוכיח את המיומנות?",
+  skillStudent:"איך נסביר את המיומנות לתלמיד?",skillStudentHint:"מופיע בקובץ התלמיד תחת הכותרת «מה נבדוק במשימה הזו?»",skillStudentPh:"במשימה הזו תראו שאתם יודעים...",
+  guideQ:"שאלות לדיון",
+  s2guide:["איזו מיומנות המבחן הכתוב לא חושף אצל התלמידים שלנו?","מה אנחנו רוצים שהתלמיד יוכל לעשות אחרי היחידה, גם בעוד שנה?","האם המיומנות דורשת ניתוח, הערכה או יצירה, או רק זכירה וביצוע?","מה עושה תלמיד ששולט במיומנות אחרת מתלמיד שלא?"],
+  s3h:"שתי המשימות",s3p:"שתי משימות שבודקות את אותה מיומנות בשתי דרכים שונות. התלמיד בוחר אחת מהן, ולפחות אחת רחוקה מכתיבה.",
+  assistH:"תקועים בבחירת רעיון?",assistP:"נעזור לכם לכוון את החשיבה, מתוך המיומנות שכתבתם. ההחלטה נשארת שלכם.",assistBtn:"בקשת עזרה",
+  assistNeed:"כתבו קודם את «המיומנות שבחרנו» ואת «העדות» בשלב השני, כי הרעיונות נבנים עליהם.",assistBack:"חזרה לשלב השני",
+  assistQsH:"התחילו בשאלות האלה כצוות:",
+  assistQs:["איפה אנשים משתמשים במיומנות הזו מחוץ לבית הספר? באיזה מקצוע או מצב יומיומי?","למי התלמיד יכול להציג את העבודה שלו? (חברים, כיתה צעירה יותר, הורים, מבקרים, ועדה)","האם התלמיד יכול להראות את המיומנות בידיים, בקול, בגוף, או בעיצוב של משהו?","איזה מרחב בבית הספר נותן למיומנות הקשר אמיתי: הגינה המימית, הרובוטיקה, הנגרייה, החצר?"],
+  sparksH:"או צאו מאחת ההצעות האלה, ושאלו: איך היא מתאימה למיומנות שלנו?",
+  sparks:["מה דעתכם שהתלמיד יבחר תופעה מחיי היומיום או מסביבת בית הספר, ויסביר אותה בעזרת מה שלמד ביחידה?","מה דעתכם שהתלמיד ילמד את מה שלמד תלמידים מכיתה צעירה יותר, ויוערך לפי איכות ההסבר?","מה דעתכם שהתלמיד יעצב דגם בנגרייה או ברובוטיקה שממחיש רעיון מהיחידה, ויסביר את ההחלטות שלו?","מה דעתכם שהתלמיד יבצע מדידה או תצפית בגינה המימית, ויסיק ממנה מסקנות?","מה דעתכם שהתלמיד יציע פתרון לבעיה אמיתית בבית הספר, וישכנע בו את ההנהלה או את מועצת התלמידים?","מה דעתכם שהתלמיד יגלם דמות (מדען, סופר, מהנדס, עיתונאי) ויגן על עמדה?","מה דעתכם שהתלמיד ישווה בין שני טקסטים, שני פתרונות או שתי תופעות, ויכריע מה עדיף ולמה?","מה דעתכם שהתלמיד יבצע דיאלוג, פרסומת או ראיון בערבית, בעברית או באנגלית מול קהל אמיתי?"],
+  prefsH:"מה חשוב לכם ברעיון? (אופציונלי)",
+  prefs:["מחוץ לכיתה","שימוש במרחב לימודי","הצגה מול קהל אמיתי","עבודת כפיים או בנייה","תוצר דיגיטלי","דיאלוג או ביצוע בעל פה","קשר לקהילה או לבית","עבודה קבוצתית"],
+  noteLbl:"רעיונות ראשוניים או מגבלות שיש לכם (אופציונלי)",notePh:"לדוגמה: רוצים משהו שההורים משתתפים בו, או שיש לנו רק שני שיעורים",
+  assistGo:"הציעו לנו נקודות פתיחה",thinkingLong:"חושב... זה עשוי לקחת כחצי דקה.",
+  ideasQsH:"שאלות לצמצום הבחירה:",reveals:"חושפת:",discuss:"לדיון:",toTask:["התחלה למשימה הראשונה","התחלה למשימה השנייה"],
+  ideasFoot:"אלה נקודות פתיחה בלבד. קחו מהן, שלבו ביניהן או התעלמו מהן, ונסחו את המשימה במילים שלכם.",moreIdeas:"רעיונות נוספים",
+  moved:n=>`הרעיון הועבר כטיוטה: ${n}. פתחו את התיאור במילים שלכם והשלימו את שאר הסעיפים.`,
+  replaceQ:n=>`ב${n.replace(/^ה/,"")} כבר יש טקסט. להחליף את הכותרת והתיאור?`,replace:"החלפה",
+  s3guide:["האם המשימה מראה את המיומנות שבחרנו, או בודקת משהו אחר כמו כתב יד או שינון?","אם תלמיד חלש בכתיבה אבל שולט במיומנות, איזו משימה תעשה איתו צדק?","מה חושפת המשימה השנייה שהראשונה לא?","האם הגינה המימית, הרובוטיקה או הנגרייה משרתות את המיומנות שלכם? השימוש בהן הוא אפשרות, לא חובה."],
+  taskTag:n=>`אפשרות ${n}`,taskName:["המשימה הראשונה","המשימה השנייה"],
+  tTitle:"כותרת המשימה",tDesc:"תיאור המשימה לתלמיד",tDescHint:"בשפה שהתלמיד מבין, בפנייה ישירה אליו.",tPlace:"איפה היא מתבצעת?",tMode:"אופן העבודה",tPlaceOther:"פרטו את המקום",
+  tProduct:"מה התלמיד מגיש או מציג?",tMaterials:"חומרים וכלים",tTime:"הזמן העומד לרשות",tTimePh:"לדוגמה: שני שיעורים",
+  tReveals:"מה המשימה הזו חושפת שהאחרת לא?",teacherOnly:"מופיע בקובץ המורה בלבד.",
+  places:{class:"כיתה",robotics:"חדר רובוטיקה",carpentry:"נגרייה",water:"הגינה המימית",yard:"חצר בית הספר",outside:"מחוץ לבית הספר",other:"אחר"},
+  modes:{solo:"יחידני",pair:"בזוגות",group:"בקבוצה"},
+  s4h:"מחוון אחיד",s4p:"3 עד 4 קריטריונים שמתארים היבטים של המיומנות. כל קריטריון חייב להתאים לשתי המשימות: אם אי אפשר לתאר איך הוא בא לידי ביטוי באחת מהן, הוא מודד את התוצר ולא את המיומנות.",
+  critN:n=>`קריטריון ${n}`,critPh:"היבט של המיומנות",weight:"משקל %",optional:"אופציונלי",
+  levels:{4:"מצוין (4)",3:"טוב (3)",2:"דורש שיפור (2)",1:"בתחילת הדרך (1)"},
+  inA:"איך הוא בא לידי ביטוי במשימה הראשונה?",inB:"איך הוא בא לידי ביטוי במשימה השנייה?",
+  critAi:"הצעת ניסוח לקריטריון",removeCrit:"מחיקת הקריטריון",addCrit:"הוספת קריטריון",
+  weightSum:n=>`סכום המשקלות: ${n}%`,weightBad:" (צריך להיות 100%)",
+  s4guide:["חזרו ל«עדות» בשלב השני: זה חומר הגלם לקריטריונים.","האם שני מורים שונים ייתנו לתלמיד אותו ציון לפי המחוון?","האם ההבדל בין הרמות ברור וניתן לצפייה (כמות, איכות, עצמאות)?","המשקלות אופציונליים. אם משתמשים בהם, הסכום צריך להיות 100%."],
+  s5h:"בדיקה עצמית וקבצים",s5p:"סמנו את הסעיפים אחרי שבדקתם אותם בפועל. יצירת הקבצים מתאפשרת אחרי סימון כל הסעיפים.",
+  checks:["המיומנות מנוסחת בפועל שניתן לצפות בו.","המיומנות דורשת חשיבה מסדר גבוה, לא רק זכירה.","שתי המשימות בודקות את אותה מיומנות בשתי דרכים שונות באמת.","לפחות משימה אחת רחוקה מכתיבה ומפתרון מסורתי.","בשתי המשימות יש מקום ליצירתיות ולקבלת החלטות של התלמיד.","כל קריטריון במחוון מתאים לשתי המשימות.","אין קריטריון שמודד את צורת התוצר במקום את המיומנות.","ההבדל בין רמות המחוון ברור וניתן לצפייה.","התוכנית ישימה מבחינת זמן, מרחב ומשאבים."],
+  missingH:"חסר לפני יצירת הקבצים:",
+  miss:{unit:"שם היחידה (שלב 1)",skill:"המיומנות שבחרנו (שלב 2)",skillStudent:"הסבר המיומנות לתלמיד (שלב 2)",task:n=>`כותרת ותיאור: ${n} (שלב 3)`,crit:"לפחות קריטריון אחד (שלב 4)",critBoth:c=>`איך הקריטריון «${c}» בא לידי ביטוי בשתי המשימות (שלב 4)`,weights:"סכום המשקלות צריך להיות 100%, או השאירו אותם ריקים (שלב 4)"},
+  glH:"פירוש מילים קשות",glP:"בחרו מעט מילים שעלולות להיות קשות לתלמידים, לא משפטים שלמים. הפירוש בערבית יופיע באותיות קטנות ומוגבהות ליד המילה בקובץ התלמיד, כך שהתלמיד ממשיך לקרוא בשפת המקצוע. פירוש של כמה מילים קבועות בקובץ (כמו קריטריונים וחומרים) נוסף אוטומטית.",
+  glWord:"המילה כפי שהיא מופיעה בטקסט",glMeaning:"הפירוש בערבית",glAdd:"הוספת מילה",glRemove:"מחיקה",glSuggest:"הצעת מילים קשות מתוך הטקסט",glNoAi:"הוסיפו את המילים בעצמכם, או פתחו את הדף באפליקציית Claude כדי לקבל הצעות.",glNotFound:"המילה הזו לא מופיעה בטקסטים שהתלמיד רואה.",
+  langWarn:l=>`חלק מהסעיפים שהתלמיד רואה כתובים בערבית, אף שקובץ התלמיד ב${l}. עדיף לכתוב אותם מחדש ב${l} בשלבים הקודמים. אם צריך, אפשר להיעזר בתרגום האוטומטי ואז לבדוק אותו.`,
+  fixLangBtn:l=>`תרגום הסעיפים בערבית ל${l}`,fixH:"תרגום מוצע. עברו עליו ותקנו, ובטלו את הסימון במה שלא רוצים להחליף:",fixApply:"החלפת הסעיפים המסומנים בתרגום",fixDone:n=>`${n} סעיפים הוחלפו בתרגום. אפשר לבדוק אותם בשלבים הקודמים.`,
+  fixNothing:"אין כאן סעיפים כתובים בערבית.",fixNoAi:"התרגום האוטומטי אינו זמין בתצוגה הזו. פתחו את הדף באפליקציית Claude במחשב או בדפדפן, ואשרו לדף להשתמש ב-Claude כשתתבקשו.",trTask:l=>`תרגום המשימה ל${l}`,trPrevH:"תרגום מוצע:",trUse:"אישור התרגום",trDone:"התרגום הוכנס.",dlArabicQ:l=>`בקובץ התלמיד עדיין יש סעיפים בערבית, אף שהוא ב${l}. תרגמו אותם קודם בכפתור למעלה, או הורידו את הקובץ כמו שהוא.`,dlAnyway:"הורדה כמו שהוא",
+  glSugH:"מילים מוצעות, בחרו את המתאימות לתלמידים שלכם:",glAddSel:"הוספת המילים המסומנות",glDismiss:"סגירה",glNone:"אין מילים חדשות להציע.",glEmpty:"עדיין לא נוספו מילים.",glLimit:n=>`${n} מילים. עדיף לא יותר מ-12, כדי שהתלמיד לא יישען על הערבית.`,
+  stuCardH:"קובץ התלמיד",stuCardP:l=>`ב${l}: המיומנות בשפת התלמיד, שתי המשימות לבחירה והמחוון.`,dlStudent:"הורדת קובץ התלמיד (Word)",
+  teaCardH:"מחוון הערכה למורה",teaCardP:"המיומנות והעדות, פרטי שתי המשימות, המחוון האחיד ודף ריכוז ציונים.",dlTeacher:"הורדת מחוון המורה (Word)",
+  checkAll:"סמנו את כל סעיפי הבדיקה העצמית כדי לאפשר הורדה.",preparing:"מכין את הקובץ...",saved:"הקובץ נשמר.",declined:"השמירה בוטלה.",
+  rateLim:"חלון שמירה כבר פתוח. סגרו אותו ונסו שוב.",saveFail:"לא ניתן לשמור את הקובץ כאן.",noDocx:"ספריית יצירת קובצי Word לא נטענה. פתחו את הדף מחדש.",noDl:"ההורדה אינה זמינה בתצוגה הזו. פתחו את הדף באפליקציית Claude או בדפדפן.",
+  s5guideH:"אחרי ההורדה",s5guide:["אפשר לערוך את שני הקבצים ב-Word.","הציגו את התוכנית לצוות אחר לפני שתפעילו אותה עם התלמידים.","בפגישת המעקב הביאו 3 דוגמאות של עבודות תלמידים: חלשה, בינונית ומצטיינת."],
+  helpBtn:"הסבר ודוגמה",helpEx:"דוגמה",aiSuggest:"הצעת ניסוח",sugLabel:"ניסוח מוצע",critSugLabel:"ניסוח מוצע לקריטריון",critName:"שם הקריטריון",
+  accept:"אישור הניסוח",keepMine:"להשאיר את הניסוח שלי",writeFirst:"כתבו קודם את הטקסט שלכם, ואז בקשו הצעת ניסוח.",thinking:"חושב...",
+  errNG:"לא אושר שימוש בבינה מלאכותית בדף הזה.",errRL:"יותר מדי בקשות. המתינו מעט ונסו שוב.",errGen:"לא ניתן לקבל הצעה כרגע."
+},
+en:{
+  title:"Smart Sparks",tagline:"A platform for planning creative alternative assessment",credit:"Created by instructor Muna Mustafa - Kanaaneh",logoAlt:"Smart Sparks logo",
+  intro:"The team fills in the items together across five stages and ends with two Word files: a student task with two options to choose from, and an assessment guide for the teacher. Everything in the files comes from your own words. The “Suggest wording” button is optional, and no suggestion is used without your approval. If you are unsure what to write in a field, press “Explain with example” next to it.",
+  uiLang:"Platform language",
+  rulesH:"The fixed conditions",
+  rules:["Planning starts from the skill, not from the tool or the activity.","At most two tasks, assessing the same skill in two different ways.","At least one task is far from writing and traditional problem solving, and requires higher-order thinking.","One shared rubric that fits both tasks.","Whatever students see is written in the subject language."],
+  btnExample:"Fill with a sample",btnClear:"Start a new form",
+  exampleBanner:"The form is filled with a nutrition sample for illustration only. Clear it before you start your own plan.",clearExample:"Clear sample",
+  stages:["Details","Skill","Tasks","Rubric","Check & files"],stepperAria:"Planning stages",
+  prev:"Back",next:"Next",yes:"Yes",cancel:"Cancel",
+  confirmExample:"What you wrote will be replaced by the sample. Continue?",confirmClear:"Everything in the form will be cleared. Continue?",
+  s1h:"Team and unit details",s1p:"Choose a real unit you will teach soon.",
+  subject:"Subject",subjectPh:"e.g. Science",subjects:["Arabic","Hebrew","English","Mathematics","Science"],
+  grade:"Grade",gradePh:"e.g. 8th",unit:"Teaching unit",unitPh:"e.g. Ecosystems",
+  coordinator:"Coordinator",date:"Planning date",team:"Team members",teamPh:"Names separated by commas",
+  studentLang:"Student file language",langNames:{ar:"Arabic",he:"Hebrew",en:"English"},
+  helperAr:"Add Arabic meanings for difficult words to the student file",
+  slNote:"The rule: whatever students see is written in the subject language. Arabic, science and maths are written in Arabic, Hebrew in Hebrew and English in English. The file language switches automatically when you type the subject name, and student-facing items carry a reminder tag. Teacher-only items can be written in whichever language suits you.",
+  s1guideH:"Before you start",s1guide:["Fill in the form together as a team, on one device.","What you write is saved in this browser, so you can come back to it later.","The teacher file is written in the platform language you choose at the top."],
+  stuBadge:l=>`Shown to students: write in ${l}`,
+  s2h:"Skill and evidence",s2p:"Agree on one clear skill, and describe what a student does to show they have it.",
+  unitSkills:"Skills required in the unit (curriculum)",unitSkillsPh:"List all the skills, then choose from them",
+  skill:"The skill we chose",skillHint:"Phrase it with an observable verb: “compares and justifies”, not “understands”.",
+  skillWhy:"Why did we choose it?",evidence:"Evidence: what will the student do or say to show the skill?",
+  skillStudent:"How do we explain the skill to the student?",skillStudentHint:"Appears in the student file under “What will you show in this task?”",skillStudentPh:"In this task you will show that you can...",
+  guideQ:"Questions for discussion",
+  s2guide:["Which skill does the written test fail to reveal in our students?","What do we want students to be able to do after this unit, even a year from now?","Does the skill require analysis, evaluation or creation, or only recall and execution?","What does a student who has the skill do differently from one who does not?"],
+  s3h:"The two tasks",s3p:"Two tasks that assess the same skill in two different ways. The student chooses one, and at least one is far from writing.",
+  assistH:"Stuck choosing an idea?",assistP:"We help you steer your thinking, starting from the skill you wrote. The decision stays yours.",assistBtn:"Ask for help",
+  assistNeed:"First write “The skill we chose” and “Evidence” in stage 2, because the ideas are built on them.",assistBack:"Back to stage 2",
+  assistQsH:"Start with these questions as a team:",
+  assistQs:["Where do people use this skill outside school? In which job or everyday situation?","Who could the student present their work to? (peers, a younger class, parents, visitors, a panel)","Could the student show the skill with their hands, voice, body, or by designing something?","Which school space gives the skill a real context: the water garden, robotics, carpentry, the yard?"],
+  sparksH:"Or start from one of these suggestions and ask: how does it fit our skill?",
+  sparks:["What if the student picked a phenomenon from daily life or around the school and explained it using what they learned in the unit?","What if the student taught what they learned to a younger class, and was assessed on the quality of the explanation?","What if the student designed a model in carpentry or robotics that embodies an idea from the unit, and explained their decisions?","What if the student carried out a measurement or observation in the water garden and drew conclusions from it?","What if the student proposed a solution to a real school problem and persuaded the principal or the student council?","What if the student took on a role (scientist, writer, engineer, journalist) and defended a position?","What if the student compared two texts, solutions or phenomena and judged which is better and why?","What if the student performed a dialogue, an ad or an interview in Arabic, Hebrew or English for a real audience?"],
+  prefsH:"What matters to you in the idea? (optional)",
+  prefs:["Outside the classroom","Using a learning space","Presenting to a real audience","Hands-on or building","Digital product","Dialogue or oral performance","Community or home link","Group work"],
+  noteLbl:"Initial ideas or constraints (optional)",notePh:"e.g. we want parents involved, or we only have two lessons",
+  assistGo:"Suggest starting points",thinkingLong:"Thinking... this may take about half a minute.",
+  ideasQsH:"Questions to narrow the choice:",reveals:"Reveals:",discuss:"To discuss:",toTask:["Start task 1 from this","Start task 2 from this"],
+  ideasFoot:"These are starting points only. Take from them, combine them or ignore them, and phrase the task in your own words.",moreIdeas:"More ideas",
+  moved:n=>`The idea was copied to ${n} as a draft. Develop the description in your own words and complete the other fields.`,
+  replaceQ:n=>`${n} already has text. Replace the title and description?`,replace:"Replace",
+  s3guide:["Does the task show the skill we chose, or assess something else like handwriting or memorization?","If a student is weak at writing but has the skill, which task would be fair to them?","What does the second task reveal that the first does not?","Do the water garden, robotics or carpentry serve your skill? Using them is an option, not a requirement."],
+  taskTag:n=>`Option ${n}`,taskName:["Task 1","Task 2"],
+  tTitle:"Task title",tDesc:"Task description for the student",tDescHint:"In language the student understands, addressed directly to them.",tPlace:"Where does it take place?",tMode:"Work mode",tPlaceOther:"Specify the place",
+  tProduct:"What does the student produce or present?",tMaterials:"Materials and tools",tTime:"Time available",tTimePh:"e.g. two lessons",
+  tReveals:"What does this task reveal that the other does not?",teacherOnly:"Appears in the teacher file only.",
+  places:{class:"Classroom",robotics:"Robotics room",carpentry:"Carpentry workshop",water:"Water garden",yard:"School yard",outside:"Outside school",other:"Other"},
+  modes:{solo:"Individual",pair:"Pairs",group:"Group"},
+  s4h:"Shared rubric",s4p:"3 to 4 criteria describing aspects of the skill. Each criterion must fit both tasks: if you cannot describe how it shows up in one of them, it measures the product, not the skill.",
+  critN:n=>`Criterion ${n}`,critPh:"An aspect of the skill",weight:"Weight %",optional:"Optional",
+  levels:{4:"Excellent (4)",3:"Good (3)",2:"Needs work (2)",1:"Beginning (1)"},
+  inA:"How does it show up in task 1?",inB:"How does it show up in task 2?",
+  critAi:"Suggest wording for this criterion",removeCrit:"Remove criterion",addCrit:"Add criterion",
+  weightSum:n=>`Total weight: ${n}%`,weightBad:" (must be 100%)",
+  s4guide:["Go back to “Evidence” in stage 2: it is the raw material for the criteria.","Would two different teachers give a student the same score with this rubric?","Is the difference between levels clear and observable (amount, quality, independence)?","Weights are optional. If you use them, they must add up to 100%."],
+  s5h:"Self-check and files",s5p:"Tick the items once you have actually checked them. The files can be created after all items are ticked.",
+  checks:["The skill is phrased with an observable verb.","The skill requires higher-order thinking, not only recall.","The two tasks really assess the same skill in two different ways.","At least one task is far from writing and traditional problem solving.","Both tasks leave room for student creativity and decision-making.","Every rubric criterion fits both tasks.","No criterion measures the look of the product instead of the skill.","The difference between rubric levels is clear and observable.","The plan is feasible in terms of time, space and resources."],
+  missingH:"Missing before the files can be created:",
+  miss:{unit:"Unit name (stage 1)",skill:"The skill we chose (stage 2)",skillStudent:"Skill explanation for the student (stage 2)",task:n=>`Title and description of ${n} (stage 3)`,crit:"At least one criterion (stage 4)",critBoth:c=>`How the criterion “${c}” shows up in both tasks (stage 4)`,weights:"Weights must add up to 100%, or leave them empty (stage 4)"},
+  glH:"Meanings of difficult words",glP:"Choose a few words that may be hard for students, not whole sentences. Each word's Arabic meaning appears in small raised type next to it in the student file, so students keep reading in the subject language. Meanings for a few fixed words in the file (such as criteria and materials) are added automatically.",
+  glWord:"The word as it appears in the text",glMeaning:"Its meaning in Arabic",glAdd:"Add word",glRemove:"Remove",glSuggest:"Suggest difficult words from the text",glNoAi:"Add the words yourselves, or open the page in the Claude app to get suggestions.",glNotFound:"This word does not appear in the texts students see.",
+  langWarn:l=>`Some student-facing items are written in Arabic, although the student file is in ${l}. It is best to rewrite them in ${l} in the earlier stages. If needed, you can use automatic translation and then review it.`,
+  fixLangBtn:l=>`Translate the Arabic items into ${l}`,fixH:"Suggested translation. Review and edit it, and untick anything you do not want replaced:",fixApply:"Replace the selected items with the translation",fixDone:n=>`${n} items were replaced with the translation. You can review them in the earlier stages.`,
+  fixNothing:"There are no items written in Arabic here.",fixNoAi:"Automatic translation is not available in this view. Open the page in the Claude app on a computer or in a browser, and allow the page to use Claude when asked.",trTask:l=>`Translate this task into ${l}`,trPrevH:"Suggested translation:",trUse:"Use translation",trDone:"Translation applied.",dlArabicQ:l=>`The student file still has items in Arabic, although it is in ${l}. Translate them first with the button above, or download the file as it is.`,dlAnyway:"Download as is",
+  glSugH:"Suggested words, pick the ones that suit your students:",glAddSel:"Add selected words",glDismiss:"Close",glNone:"No new words to suggest.",glEmpty:"No words added yet.",glLimit:n=>`${n} words. Better to keep it to 12 or fewer so students do not lean on Arabic.`,
+  stuCardH:"Student file",stuCardP:l=>`In ${l}: the skill in student language, the two tasks to choose from, and the rubric.`,dlStudent:"Download student file (Word)",
+  teaCardH:"Teacher assessment guide",teaCardP:"The skill and evidence, details of both tasks, the shared rubric and a grade sheet.",dlTeacher:"Download teacher guide (Word)",
+  checkAll:"Tick all self-check items to enable downloads.",preparing:"Preparing the file...",saved:"File saved.",declined:"Save cancelled.",
+  rateLim:"A save window is already open. Close it and try again.",saveFail:"The file could not be saved here.",noDocx:"The Word library did not load. Reopen the page.",noDl:"Downloads are not available in this view. Open the page in the Claude app or in a browser.",
+  s5guideH:"After downloading",s5guide:["Both files can be edited in Word.","Present the plan to another team before using it with students.","At the follow-up meeting, bring 3 samples of student work: weak, average and excellent."],
+  helpBtn:"Explain with example",helpEx:"Example",aiSuggest:"Suggest wording",sugLabel:"Suggested wording",critSugLabel:"Suggested wording for the criterion",critName:"Criterion name",
+  accept:"Use this wording",keepMine:"Keep my wording",writeFirst:"Write your text first, then ask for a wording suggestion.",thinking:"Thinking...",
+  errNG:"AI use was not allowed on this page.",errRL:"Too many requests. Wait a moment and try again.",errGen:"Could not get a suggestion right now."
+}};
+
+// ===== Field help (one running example: maths, fractions in the water garden) =====
+const HELP={
+ar:{
+  subject:{t:"اسم الموضوع الذي يخطط له الطاقم.",e:"رياضيات"},
+  grade:{t:"الصف الذي ستُطبَّق عليه المهمة.",e:"السادس"},
+  unit:{t:"وحدة تعليمية حقيقية ستدرّسونها في الأسابيع القريبة، لا وحدة افتراضية. اسمها يظهر في عنوان الملفين.",e:"الكسور العادية"},
+  team:{t:"أسماء أعضاء الطاقم الذين شاركوا في التخطيط. تظهر في ملف المعلم فقط.",e:"سناء، محمد، رنا"},
+  studentLang:{t:"اللغة التي يُكتب بها ملف الطالب. تتغير تلقائيًا إلى العبرية أو الإنجليزية عند كتابة اسم الموضوع، ويمكنكم تغييرها يدويًا. معاني الكلمات الصعبة تُختار في المرحلة الخامسة.",e:"لغة إنجليزية ← ملف الطالب بالإنجليزية، ومعاني الكلمات الصعبة بالعربية بخط صغير بجانبها"},
+  unitSkills:{t:"انسخوا من المنهج أو من خطة الوحدة كل المهارات المطلوبة فيها، كل مهارة في سطر. هذه قائمة تختارون منها، ولا تظهر في أي ملف.",e:"مقارنة كسور وترتيبها\nتمثيل كسر على خط الأعداد\nحل مسائل كلامية بالكسور"},
+  skill:{t:"مهارة واحدة (أو اثنتان مترابطتان) ستفحصها المهمتان. ابدأوا بفعل يمكن رؤيته أو سماعه: يقارن، يبرر، يصمم، يستنتج، يقنع. تجنبوا أفعالًا مثل: يعرف، يفهم، يدرك.",e:"يقارن بين كسور ويبرر أيها أكبر باستعمال تمثيل مناسب."},
+  skillWhy:{t:"لماذا هذه المهارة بالذات؟ ماذا لاحظتم عند طلابكم، أو ما الذي لا يكشفه الامتحان؟ يظهر في ملف المعلم فقط.",e:"طلابنا يحلون تمارين المقارنة بطريقة آلية، لكنهم لا يستطيعون أن يشرحوا لماذا كسر أكبر من آخر."},
+  evidence:{t:"ماذا سنرى أو نسمع من طالب يملك المهارة؟ صفوا أفعالًا ملموسة. هذا البند هو المادة الخام لمعايير مرشد التصحيح في المرحلة الرابعة.",e:"يرتب الكسور بشكل صحيح، يستعمل تمثيلًا (رسم، خط أعداد، نموذج حقيقي)، ويشرح بكلماته لماذا الترتيب صحيح."},
+  skillStudent:{t:"المهارة نفسها بلغة يفهمها الطالب، موجهة إليه مباشرة. هذا أول ما يقرأه في ملف المهمة.",e:"في هذه المهمة ستُظهر قدرتك على مقارنة الكسور، وأن تشرح لغيرك لماذا كسر أكبر من آخر."},
+  "t-title":{t:"اسم قصير وواضح يساعد الطالب على تمييز هذه المهمة عن الأخرى عند الاختيار.",e:"المهمة الأولى: حوض الكسور\nالمهمة الثانية: مستشار المقصف"},
+  "t-desc":{t:"ماذا سيفعل الطالب بالضبط؟ اكتبوا بصيغة المخاطَب: المطلوب، لمن، وما الشكل النهائي. الطالب يقرأ هذا ليختار، فيجب أن يكون واضحًا دون شرح إضافي منكم.",e:"قسّم مع زميلك حوض الحديقة المائية إلى مناطق زراعة حسب الكسور المعطاة، ثم اشرح لزوار الحديقة لماذا خصصتما لكل نبتة هذه المساحة."},
+  "t-place":{t:"أين ستُنفَّذ المهمة؟ إن لم يكن المكان في القائمة، اختاروا «أخرى» واكتبوه.",e:"الحديقة المائية"},
+  "t-mode":{t:"هل يعمل الطالب وحده، مع زميل، أم في مجموعة؟ في العمل الجماعي فكّروا كيف ستقيّمون كل طالب على حدة.",e:"زوجي، وكل طالب يشرح جزءًا من التقسيم"},
+  "t-placeOther":{t:"اكتبوا المكان الذي ستُنفذ فيه المهمة إن لم يكن في القائمة.",e:"مطبخ المدرسة"},
+  "t-product":{t:"ما الذي سيُقيَّم: منتَج (نموذج، لوحة، فيديو) أو أداء (عرض، حوار، تجربة). الأفضل أن يكون أكثر من ورقة مكتوبة.",e:"مخطط لتقسيم الحوض وعرض شفهي للزوار (3 دقائق)."},
+  "t-materials":{t:"ما يحتاجه الطالب للتنفيذ، حتى يعرف مسبقًا ما سيتوفر له.",e:"شريط قياس، أوتاد، خيط، بطاقات"},
+  "t-time":{t:"كم حصة أو كم يومًا؟ هل يُنفَّذ جزء منها في البيت؟",e:"حصتان في الحديقة وحصة للعرض"},
+  "t-reveals":{t:"ما الذي ترونه في هذه المهمة ولا يظهر في الأخرى؟ إن كان الجواب «لا شيء»، فالمهمتان متشابهتان أكثر من اللازم.",e:"تكشف قدرة الطالب على استعمال الكسور في قياس حقيقي، وشرحها لجمهور من خارج الصف."},
+  "c-name":{t:"جانب واحد من المهارة باسم قصير، مشتق من بند «الدليل» في المرحلة الثانية. تجنبوا معايير تخص شكل المنتَج مثل الترتيب أو الألوان أو الخط.",e:"استعمال التمثيل"},
+  "c-weight":{t:"اختياري. نسبة هذا المعيار من الدرجة النهائية. إن استعملتم الأوزان، يجب أن يكون مجموعها 100%.",e:"30"},
+  "c-l4":{t:"ماذا يفعل الطالب في أعلى مستوى؟ صفوا ما ترونه فعلًا. الفرق بين المستويات يكون في العدد أو الجودة أو الاستقلالية، لا في كلمات مثل «جيد جدًا».",e:"يستعمل تمثيلين مختلفين بشكل صحيح ويربط بينهما."},
+  "c-l3":{t:"مستوى جيد: المهارة موجودة مع نقص بسيط.",e:"يستعمل تمثيلًا واحدًا بشكل صحيح."},
+  "c-l2":{t:"المهارة جزئية أو فيها أخطاء واضحة.",e:"يستعمل تمثيلًا فيه أخطاء."},
+  "c-l1":{t:"بداية: المهارة لم تظهر بعد.",e:"لا يستعمل تمثيلًا."},
+  "c-inA":{t:"كيف سيظهر هذا المعيار عمليًا في المهمة الأولى؟ إن لم تستطيعوا الإجابة، فالمعيار يقيس المنتَج لا المهارة: أعيدوا صياغته.",e:"في مخطط تقسيم الحوض"},
+  "c-inB":{t:"كيف سيظهر هذا المعيار عمليًا في المهمة الثانية؟ يجب أن يكون هو نفسه المعيار، لكن في سياق مختلف.",e:"في رسم الكميات على خط الأعداد"}
+},
+he:{
+  subject:{t:"שם המקצוע שהצוות מתכנן עבורו.",e:"מתמטיקה"},
+  grade:{t:"הכיתה שבה תופעל המשימה.",e:"ו׳"},
+  unit:{t:"יחידת לימוד אמיתית שתלמדו בשבועות הקרובים, לא יחידה דמיונית. שמה מופיע בכותרת שני הקבצים.",e:"שברים פשוטים"},
+  team:{t:"שמות חברי הצוות שהשתתפו בתכנון. מופיעים בקובץ המורה בלבד.",e:"סנאא, מוחמד, ראנה"},
+  studentLang:{t:"השפה שבה נכתב קובץ התלמיד. היא משתנה אוטומטית לעברית או לאנגלית כשכותבים את שם המקצוע, ואפשר לשנות אותה ידנית. את המילים הקשות בוחרים בשלב החמישי.",e:"שפה אנגלית ← קובץ התלמיד באנגלית, ופירוש בערבית למילים הקשות באותיות קטנות לידן"},
+  unitSkills:{t:"העתיקו מתוכנית הלימודים או מתוכנית היחידה את כל המיומנויות הנדרשות בה, כל מיומנות בשורה. זו רשימה לבחירה, והיא לא מופיעה באף קובץ.",e:"השוואה וסידור של שברים\nייצוג שבר על ציר המספרים\nפתרון בעיות מילוליות בשברים"},
+  skill:{t:"מיומנות אחת (או שתיים קשורות) ששתי המשימות יבדקו. התחילו בפועל שאפשר לראות או לשמוע: משווה, מנמק, מעצב, מסיק, משכנע. הימנעו מפעלים כמו: יודע, מבין, מכיר.",e:"משווה בין שברים ומנמק איזה מהם גדול יותר בעזרת ייצוג מתאים."},
+  skillWhy:{t:"למה דווקא המיומנות הזו? מה שמתם לב אצל התלמידים, או מה המבחן לא חושף? מופיע בקובץ המורה בלבד.",e:"התלמידים שלנו פותרים תרגילי השוואה באופן מכני, אבל לא מצליחים להסביר למה שבר אחד גדול מאחר."},
+  evidence:{t:"מה נראה או נשמע מתלמיד ששולט במיומנות? תארו פעולות מוחשיות. הסעיף הזה הוא חומר הגלם לקריטריונים של המחוון בשלב הרביעי.",e:"מסדר את השברים נכון, משתמש בייצוג (ציור, ציר מספרים, דגם מוחשי), ומסביר במילים שלו למה הסדר נכון."},
+  skillStudent:{t:"אותה מיומנות בשפה שהתלמיד מבין, בפנייה ישירה אליו. זה הדבר הראשון שהוא קורא בקובץ המשימה.",e:"במשימה הזו תראו שאתם יודעים להשוות בין שברים, ולהסביר לאחרים למה שבר אחד גדול מאחר."},
+  "t-title":{t:"שם קצר וברור שעוזר לתלמיד להבחין בין המשימות בזמן הבחירה.",e:"משימה ראשונה: ערוגת השברים\nמשימה שנייה: יועצי המזנון"},
+  "t-desc":{t:"מה בדיוק התלמיד יעשה? כתבו בפנייה ישירה: מה נדרש, למי, ומה התוצר הסופי. התלמיד קורא את זה כדי לבחור, לכן זה צריך להיות ברור בלי הסבר נוסף מכם.",e:"חלקו עם בן/בת הזוג את הערוגה בגינה המימית לאזורי שתילה לפי השברים הנתונים, ואז הסבירו למבקרים בגינה למה הקציתם לכל צמח את השטח הזה."},
+  "t-place":{t:"איפה תתבצע המשימה? אם המקום לא ברשימה, בחרו «אחר» וכתבו אותו.",e:"הגינה המימית"},
+  "t-mode":{t:"האם התלמיד עובד לבד, עם בן זוג או בקבוצה? בעבודה קבוצתית חשבו איך תעריכו כל תלמיד בנפרד.",e:"בזוגות, וכל תלמיד מסביר חלק מהחלוקה"},
+  "t-placeOther":{t:"כתבו את המקום שבו תתבצע המשימה אם הוא לא ברשימה.",e:"המטבח של בית הספר"},
+  "t-product":{t:"מה יוערך: תוצר (דגם, כרזה, סרטון) או ביצוע (הצגה, דיאלוג, ניסוי). עדיף שיהיה יותר מדף כתוב.",e:"תרשים חלוקת הערוגה והסבר בעל פה למבקרים (3 דקות)."},
+  "t-materials":{t:"מה התלמיד צריך לביצוע, כדי שיידע מראש מה יעמוד לרשותו.",e:"סרט מדידה, יתדות, חוט, כרטיסים"},
+  "t-time":{t:"כמה שיעורים או ימים? האם חלק מהעבודה נעשה בבית?",e:"שני שיעורים בגינה ושיעור אחד להצגה"},
+  "t-reveals":{t:"מה אתם רואים במשימה הזו שלא מופיע באחרת? אם התשובה היא «כלום», המשימות דומות מדי.",e:"חושפת את יכולת התלמיד להשתמש בשברים במדידה אמיתית, ולהסביר אותם לקהל מחוץ לכיתה."},
+  "c-name":{t:"היבט אחד של המיומנות בשם קצר, שנגזר מסעיף «העדות» בשלב השני. הימנעו מקריטריונים שנוגעים לצורת התוצר כמו סדר, צבעים או כתב יד.",e:"שימוש בייצוג"},
+  "c-weight":{t:"אופציונלי. החלק של הקריטריון בציון הסופי. אם משתמשים במשקלות, הסכום צריך להיות 100%.",e:"30"},
+  "c-l4":{t:"מה התלמיד עושה ברמה הגבוהה ביותר? תארו מה שרואים בפועל. ההבדל בין הרמות הוא בכמות, באיכות או בעצמאות, לא במילים כמו «טוב מאוד».",e:"משתמש בשני ייצוגים שונים נכון ומקשר ביניהם."},
+  "c-l3":{t:"רמה טובה: המיומנות קיימת עם חוסר קטן.",e:"משתמש בייצוג אחד נכון."},
+  "c-l2":{t:"המיומנות חלקית או שיש בה טעויות ברורות.",e:"משתמש בייצוג עם טעויות."},
+  "c-l1":{t:"בתחילת הדרך: המיומנות עדיין לא נראית.",e:"לא משתמש בייצוג."},
+  "c-inA":{t:"איך הקריטריון הזה יבוא לידי ביטוי בפועל במשימה הראשונה? אם אין לכם תשובה, הקריטריון מודד את התוצר ולא את המיומנות: נסחו אותו מחדש.",e:"בתרשים חלוקת הערוגה"},
+  "c-inB":{t:"איך הקריטריון הזה יבוא לידי ביטוי בפועל במשימה השנייה? זה אותו קריטריון, בהקשר אחר.",e:"בשרטוט הכמויות על ציר המספרים"}
+},
+en:{
+  subject:{t:"The subject the team is planning for.",e:"Mathematics"},
+  grade:{t:"The grade the task will be used with.",e:"6th"},
+  unit:{t:"A real unit you will teach in the coming weeks, not a hypothetical one. Its name appears in the title of both files.",e:"Simple fractions"},
+  team:{t:"Names of the team members who took part in planning. Shown in the teacher file only.",e:"Sanaa, Mohammad, Rana"},
+  studentLang:{t:"The language of the student file. It switches automatically to Hebrew or English when you type the subject name, and you can change it by hand. Difficult words are chosen in stage 5.",e:"English → student file in English, with Arabic meanings of difficult words in small type next to them"},
+  unitSkills:{t:"Copy from the curriculum or the unit plan all the skills it requires, one per line. This is a list to choose from and does not appear in any file.",e:"Comparing and ordering fractions\nRepresenting a fraction on a number line\nSolving word problems with fractions"},
+  skill:{t:"One skill (or two closely related ones) that both tasks will assess. Start with a verb you can see or hear: compares, justifies, designs, concludes, persuades. Avoid verbs such as knows, understands, realizes.",e:"Compares fractions and justifies which is larger using a suitable representation."},
+  skillWhy:{t:"Why this skill in particular? What have you noticed in your students, or what does the test not reveal? Shown in the teacher file only.",e:"Our students solve comparison exercises mechanically, but cannot explain why one fraction is larger than another."},
+  evidence:{t:"What will we see or hear from a student who has the skill? Describe concrete actions. This item is the raw material for the rubric criteria in stage 4.",e:"Orders the fractions correctly, uses a representation (drawing, number line, real model), and explains in their own words why the order is right."},
+  skillStudent:{t:"The same skill in language the student understands, addressed directly to them. It is the first thing they read in the task file.",e:"In this task you will show that you can compare fractions and explain to others why one fraction is larger than another."},
+  "t-title":{t:"A short, clear name that helps the student tell the tasks apart when choosing.",e:"Task 1: The fraction garden bed\nTask 2: Canteen advisers"},
+  "t-desc":{t:"What exactly will the student do? Write it addressed to the student: what is required, for whom, and what the final form is. The student reads this to choose, so it must be clear without extra explanation from you.",e:"With your partner, divide the water garden bed into planting zones according to the given fractions, then explain to garden visitors why you gave each plant that area."},
+  "t-place":{t:"Where will the task take place? If the place is not listed, choose “Other” and write it.",e:"Water garden"},
+  "t-mode":{t:"Does the student work alone, with a partner or in a group? For group work, think about how you will assess each student individually.",e:"Pairs, with each student explaining part of the division"},
+  "t-placeOther":{t:"Write the place where the task will take place if it is not in the list.",e:"School kitchen"},
+  "t-product":{t:"What will be assessed: a product (model, poster, video) or a performance (presentation, dialogue, experiment). Ideally more than a written sheet.",e:"A plan of the garden bed division and a 3-minute oral explanation to visitors."},
+  "t-materials":{t:"What the student needs to carry out the task, so they know in advance what will be available.",e:"Measuring tape, stakes, string, cards"},
+  "t-time":{t:"How many lessons or days? Is any part done at home?",e:"Two lessons in the garden and one for the presentation"},
+  "t-reveals":{t:"What do you see in this task that does not show up in the other? If the answer is “nothing”, the tasks are too similar.",e:"Reveals the student's ability to use fractions in real measurement and explain them to an audience outside the class."},
+  "c-name":{t:"One aspect of the skill, with a short name drawn from “Evidence” in stage 2. Avoid criteria about the look of the product, such as neatness, colours or handwriting.",e:"Use of representation"},
+  "c-weight":{t:"Optional. This criterion's share of the final score. If you use weights, they must add up to 100%.",e:"30"},
+  "c-l4":{t:"What does the student do at the top level? Describe what you actually see. Levels differ in amount, quality or independence, not in words like “very good”.",e:"Uses two different representations correctly and links them."},
+  "c-l3":{t:"Good level: the skill is there with a small gap.",e:"Uses one representation correctly."},
+  "c-l2":{t:"The skill is partial or has clear mistakes.",e:"Uses a representation with mistakes."},
+  "c-l1":{t:"Beginning: the skill has not appeared yet.",e:"Does not use a representation."},
+  "c-inA":{t:"How will this criterion show up in practice in task 1? If you cannot answer, the criterion measures the product, not the skill: rephrase it.",e:"In the garden bed division plan"},
+  "c-inB":{t:"How will this criterion show up in practice in task 2? It must be the same criterion, in a different context.",e:"In plotting the amounts on a number line"}
+}};
+
+// ===== Sample plan (nutrition) per platform language =====
+const EXAMPLES={
+ar:{subject:"علوم (مثال: تغذية)",grade:"الثامن",unit:"التغذية الصحية",unitSkills:"تصنيف مجموعات الغذاء\nقراءة بطاقة القيمة الغذائية\nاتخاذ قرار مبني على معايير وتبريره",
+  skill:"يتخذ قرارًا مبنيًا على معايير ويبرره.",skillWhy:"الطلاب يحفظون مجموعات الغذاء لكنهم لا يستعملونها عند الاختيار الفعلي.",evidence:"يحدد معايير واضحة، يقارن بين بدائل، يختار، ويشرح لماذا اختار هذا البديل وليس غيره.",
+  skillStudent:"في هذه المهمة ستُظهر قدرتك على اتخاذ قرار ذكي: أن تحدد ما المهم، تقارن بين خيارات، وتشرح لماذا اخترت ما اخترت.",
+  tasks:[{title:"فطور لضيف خاص",desc:"حضّر في المطبخ وجبة فطور لضيف له احتياجات خاصة (رياضي أو مريض سكري)، ثم اعرض أمام لجنة صغيرة لماذا اخترت كل مكوّن.",place:"other",placeOther:"مطبخ المدرسة",mode:"solo",product:"وجبة جاهزة وعرض شفهي (3 دقائق)",materials:"مكونات من قائمة محددة، بطاقات القيمة الغذائية",time:"حصتان",reveals:"قرار فردي سريع تحت قيود حقيقية."},
+    {title:"قائمة المقصف",desc:"صمّم مع مجموعتك قائمة طعام أسبوعية لمقصف المدرسة ضمن ميزانية محددة، واعرضها كلوحة أمام الصف.",place:"class",placeOther:"",mode:"group",product:"لوحة قائمة أسبوعية وعرض أمام الصف",materials:"قائمة أسعار، لوح كرتون، ألوان",time:"ثلاث حصص",reveals:"قرار جماعي مخطط يوازن بين عدة معايير والميزانية."}],
+  criteria:[{name:"تحديد المعايير",weight:"30",l4:"يحدد 3 معايير أو أكثر مرتبطة بالحاجة الحقيقية",l3:"يحدد معيارين مناسبين",l2:"يحدد معيارًا عامًا واحدًا",l1:"لا يحدد معايير",inA:"احتياجات الضيف",inB:"صحة، تنوع، ميزانية"},
+    {name:"المقارنة بين البدائل",weight:"30",l4:"يقارن بين 3 بدائل حسب المعايير",l3:"يقارن بين بديلين",l2:"يذكر بدائل دون مقارنة",l1:"يختار دون بدائل",inA:"بدائل لكل مكوّن في الوجبة",inB:"بدائل لكل يوم في القائمة"},
+    {name:"التبرير",weight:"40",l4:"يربط الاختيار بكل معيار ويعترف بالتنازلات",l3:"يربط الاختيار بمعظم المعايير",l2:"تبرير عام («لأنه صحي»)",l1:"لا تبرير",inA:"في العرض الشفهي أمام اللجنة",inB:"في عرض اللوحة وأسئلة الصف"}]},
+he:{subject:"מדעים (דוגמה: תזונה)",grade:"ח׳",unit:"תזונה בריאה",unitSkills:"מיון קבוצות מזון\nקריאת תווית ערכים תזונתיים\nקבלת החלטה על סמך קריטריונים ונימוקה",
+  skill:"מקבל החלטה על סמך קריטריונים ומנמק אותה.",skillWhy:"התלמידים משננים את קבוצות המזון אבל לא משתמשים בהן כשהם בוחרים בפועל.",evidence:"מגדיר קריטריונים ברורים, משווה בין חלופות, בוחר, ומסביר למה בחר בחלופה הזו ולא באחרת.",
+  skillStudent:"במשימה הזו תראו שאתם יודעים לקבל החלטה חכמה: לקבוע מה חשוב, להשוות בין אפשרויות, ולהסביר למה בחרתם במה שבחרתם.",
+  tasks:[{title:"ארוחת בוקר לאורח מיוחד",desc:"הכינו במטבח ארוחת בוקר לאורח עם צרכים מיוחדים (ספורטאי או חולה סוכרת), ואז הציגו לוועדה קטנה למה בחרתם כל רכיב.",place:"other",placeOther:"המטבח של בית הספר",mode:"solo",product:"ארוחה מוכנה והצגה בעל פה (3 דקות)",materials:"מצרכים מרשימה מוגדרת, תוויות ערכים תזונתיים",time:"שני שיעורים",reveals:"החלטה אישית מהירה תחת אילוצים אמיתיים."},
+    {title:"התפריט של המזנון",desc:"עצבו עם הקבוצה תפריט שבועי למזנון בית הספר במסגרת תקציב מוגדר, והציגו אותו ככרזה מול הכיתה.",place:"class",placeOther:"",mode:"group",product:"כרזת תפריט שבועי והצגה מול הכיתה",materials:"מחירון, בריסטול, צבעים",time:"שלושה שיעורים",reveals:"החלטה קבוצתית מתוכננת שמאזנת בין כמה קריטריונים לבין התקציב."}],
+  criteria:[{name:"הגדרת קריטריונים",weight:"30",l4:"מגדיר 3 קריטריונים או יותר שקשורים לצורך האמיתי",l3:"מגדיר שני קריטריונים מתאימים",l2:"מגדיר קריטריון כללי אחד",l1:"לא מגדיר קריטריונים",inA:"צורכי האורח",inB:"בריאות, גיוון, תקציב"},
+    {name:"השוואה בין חלופות",weight:"30",l4:"משווה בין 3 חלופות לפי הקריטריונים",l3:"משווה בין שתי חלופות",l2:"מזכיר חלופות בלי להשוות",l1:"בוחר בלי חלופות",inA:"חלופות לכל רכיב בארוחה",inB:"חלופות לכל יום בתפריט"},
+    {name:"נימוק",weight:"40",l4:"מקשר את הבחירה לכל קריטריון ומכיר בוויתורים",l3:"מקשר את הבחירה לרוב הקריטריונים",l2:"נימוק כללי («כי זה בריא»)",l1:"אין נימוק",inA:"בהצגה בעל פה מול הוועדה",inB:"בהצגת הכרזה ובשאלות הכיתה"}]},
+en:{subject:"Science (sample: nutrition)",grade:"8th",unit:"Healthy nutrition",unitSkills:"Classifying food groups\nReading a nutrition facts label\nMaking and justifying a criteria-based decision",
+  skill:"Makes a decision based on criteria and justifies it.",skillWhy:"Students memorize the food groups but do not use them when they actually choose.",evidence:"Sets clear criteria, compares alternatives, chooses, and explains why they chose this option and not another.",
+  skillStudent:"In this task you will show that you can make a smart decision: decide what matters, compare options, and explain why you chose what you chose.",
+  tasks:[{title:"Breakfast for a special guest",desc:"In the kitchen, prepare breakfast for a guest with special needs (an athlete or a person with diabetes), then explain to a small panel why you chose each ingredient.",place:"other",placeOther:"School kitchen",mode:"solo",product:"A ready meal and a 3-minute oral presentation",materials:"Ingredients from a set list, nutrition labels",time:"Two lessons",reveals:"A quick individual decision under real constraints."},
+    {title:"The canteen menu",desc:"With your group, design a weekly menu for the school canteen within a set budget, and present it as a poster to the class.",place:"class",placeOther:"",mode:"group",product:"A weekly menu poster and a class presentation",materials:"Price list, cardboard, colours",time:"Three lessons",reveals:"A planned group decision that balances several criteria and the budget."}],
+  criteria:[{name:"Setting criteria",weight:"30",l4:"Sets 3 or more criteria linked to the real need",l3:"Sets two suitable criteria",l2:"Sets one general criterion",l1:"Sets no criteria",inA:"The guest's needs",inB:"Health, variety, budget"},
+    {name:"Comparing alternatives",weight:"30",l4:"Compares 3 alternatives against the criteria",l3:"Compares two alternatives",l2:"Mentions alternatives without comparing",l1:"Chooses without alternatives",inA:"Alternatives for each ingredient",inB:"Alternatives for each day of the menu"},
+    {name:"Justification",weight:"40",l4:"Links the choice to every criterion and acknowledges trade-offs",l3:"Links the choice to most criteria",l2:"General justification (“because it's healthy”)",l1:"No justification",inA:"In the oral presentation to the panel",inB:"In the poster presentation and class questions"}]}};
+
+// ===== Word file labels =====
+const DOC={
+ar:{sTitle:"مهمة تقييم",subject:"الموضوع",grade:"الصف",nameLine:"اسم الطالب/ة: ______________________      التاريخ: ____________",
+  whatShow:"ماذا ستُظهر في هذه المهمة؟",chooseOne:"اختر مهمة واحدة من المهمتين",chooseNote:"المهمتان تُقيَّمان بالمعايير نفسها. اختر المهمة التي تستطيع أن تُظهر فيها قدرتك بأفضل شكل.",
+  task:["المهمة الأولى","المهمة الثانية"],where:"أين؟",mode:"طريقة العمل",produce:"ماذا ستُنتج أو تقدّم؟",materials:"المواد والأدوات",time:"الوقت المتاح",
+  howAssessed:"كيف ستُقيَّم؟",criterion:"المعيار",levels:["ممتاز (4)","جيد (3)","يحتاج تحسين (2)","بداية (1)"],
+  decision:"قراري",chosen:"المهمة التي اخترتها:",why:"لماذا اخترتها؟",
+  tTitle:"مرشد التقييم للمعلم",unit:"الوحدة",coord:"المركّز/ة",team:"أعضاء الطاقم",date:"تاريخ التخطيط",
+  skillH:"المهارة التي نفحصها",whyH:"لماذا اخترناها",evH:"الدليل على امتلاك المهارة",tasksH:"المهمتان",
+  rTitle:"العنوان",rDesc:"الوصف للطالب",rPlace:"المكان",rProduct:"المنتَج أو الأداء",rTime:"الوقت",rReveals:"ما الذي تكشفه ولا تكشفه الأخرى",
+  rubricH:"مرشد التصحيح الموحد",appearsH:"كيف يظهر كل معيار في المهمتين",inT:["في المهمة الأولى","في المهمة الثانية"],
+  sheetH:"ورقة رصد الدرجات",formulaW:"الدرجة النهائية = مجموع (مستوى المعيار ÷ 4 × وزن المعيار).",totalOf:n=>`المجموع من ${n}.`,
+  stName:"اسم الطالب/ة",taskCol:"المهمة",total:"المجموع",fileS:"مهمة الطالب",fileT:"مرشد المعلم",unitFallback:"وحدة"},
+he:{sTitle:"משימת הערכה",subject:"מקצוע",grade:"כיתה",nameLine:"שם התלמיד/ה: ______________________      תאריך: ____________",
+  whatShow:"מה נבדוק במשימה הזו?",chooseOne:"בחרו משימה אחת מתוך השתיים",chooseNote:"שתי המשימות נבדקות לפי אותם קריטריונים. בחרו את המשימה שבה תוכלו להראות את היכולת שלכם בצורה הטובה ביותר.",
+  task:["משימה ראשונה","משימה שנייה"],where:"איפה?",mode:"אופן העבודה",produce:"מה תגישו או תציגו?",materials:"חומרים וכלים",time:"הזמן העומד לרשותכם",
+  howAssessed:"איך תתבצע ההערכה?",criterion:"קריטריון",levels:["מצוין (4)","טוב (3)","דורש שיפור (2)","בתחילת הדרך (1)"],
+  decision:"ההחלטה שלי",chosen:"המשימה שבחרתי:",why:"למה בחרתי בה?",
+  tTitle:"מחוון הערכה למורה",unit:"יחידה",coord:"רכז/ת",team:"חברי הצוות",date:"תאריך התכנון",
+  skillH:"המיומנות שנבדקת",whyH:"למה בחרנו בה",evH:"העדות לשליטה במיומנות",tasksH:"שתי המשימות",
+  rTitle:"כותרת",rDesc:"תיאור לתלמיד",rPlace:"מקום",rProduct:"תוצר או ביצוע",rTime:"זמן",rReveals:"מה היא חושפת שהאחרת לא",
+  rubricH:"מחוון אחיד",appearsH:"איך כל קריטריון בא לידי ביטוי בשתי המשימות",inT:["במשימה הראשונה","במשימה השנייה"],
+  sheetH:"דף ריכוז ציונים",formulaW:"ציון סופי = סכום (רמת הקריטריון ÷ 4 × משקל הקריטריון).",totalOf:n=>`סה״כ מתוך ${n}.`,
+  stName:"שם התלמיד/ה",taskCol:"משימה",total:"סה״כ",fileS:"משימת תלמיד",fileT:"מחוון למורה",unitFallback:"יחידה"},
+en:{sTitle:"Assessment task",subject:"Subject",grade:"Grade",nameLine:"Student name: ______________________      Date: ____________",
+  whatShow:"What will you show in this task?",chooseOne:"Choose one of the two tasks",chooseNote:"Both tasks are assessed with the same criteria. Choose the task in which you can best show what you can do.",
+  task:["Task 1","Task 2"],where:"Where?",mode:"Work mode",produce:"What will you produce or present?",materials:"Materials and tools",time:"Time available",
+  howAssessed:"How will you be assessed?",criterion:"Criterion",levels:["Excellent (4)","Good (3)","Needs work (2)","Beginning (1)"],
+  decision:"My decision",chosen:"The task I chose:",why:"Why did I choose it?",
+  tTitle:"Teacher assessment guide",unit:"Unit",coord:"Coordinator",team:"Team members",date:"Planning date",
+  skillH:"The skill we assess",whyH:"Why we chose it",evH:"Evidence of the skill",tasksH:"The two tasks",
+  rTitle:"Title",rDesc:"Description for the student",rPlace:"Place",rProduct:"Product or performance",rTime:"Time",rReveals:"What it reveals that the other does not",
+  rubricH:"Shared rubric",appearsH:"How each criterion shows up in both tasks",inT:["In task 1","In task 2"],
+  sheetH:"Grade sheet",formulaW:"Final score = sum of (criterion level ÷ 4 × criterion weight).",totalOf:n=>`Total out of ${n}.`,
+  stName:"Student name",taskCol:"Task",total:"Total",fileS:"Student task",fileT:"Teacher guide",unitFallback:"unit"}};
+for(const l of ["ar","he","en"]){DOC[l].places=I18N[l].places;DOC[l].modes=I18N[l].modes;}
+
+// Arabic meanings for difficult words in the fixed text of the student file
+const FIXED_GLOSS={
+  en:[["assessed","تُقيَّم"],["criteria","معايير"],["Criterion","معيار"],["produce","تُنتج"],["present","تعرض"],["Materials","مواد"],["Excellent","ممتاز"],["Needs work","يحتاج تحسين"],["Beginning","بداية"]],
+  he:[["נבדקות","تُفحص"],["קריטריונים","معايير"],["קריטריון","معيار"],["תגישו","تُقدّموا"],["חומרים","مواد"],["ההערכה","التقييم"],["מצוין","ممتاز"],["דורש שיפור","يحتاج تحسين"],["בתחילת הדרך","بداية"],["אופן העבודה","طريقة العمل"]],
+  ar:[]};
+
+</script>
+<script id="builder">
+// Builds both Word files. o = {sl: student-file language, tl: teacher-file language, gloss: [[word, arabicMeaning], ...] or null}
+function buildDocs(D, s, o){
+  const F={ascii:"Arial",hAnsi:"Arial",cs:"Arial"};
+  const ACC="1F5C57", GRAY="6B7774";
+  // logo in the top-right corner of every page
+  const logoBytes=(typeof LOGO_B64==="string"&&LOGO_B64)?Uint8Array.from(atob(LOGO_B64),c=>c.charCodeAt(0)):null;
+  const logoHeader=()=>new D.Header({children:[new D.Paragraph({bidirectional:false,alignment:D.AlignmentType.RIGHT,
+    children:logoBytes?[new D.ImageRun({data:logoBytes,transformation:{width:70,height:60}})]:[]})]});
+  const reEsc=v=>v.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+  const kit=(lang,glossary)=>{
+    const rtl=lang!=="en";
+    const run=(t,x={})=>new D.TextRun({text:String(t??""),font:F,rightToLeft:x.rtl??rtl,size:x.size||24,sizeComplexScript:x.size||24,bold:!!x.bold,boldComplexScript:!!x.bold,color:x.color});
+    // difficult words: the word stays in the subject language, its Arabic meaning follows in small raised grey type (first occurrence per paragraph)
+    const G=(glossary||[]).filter(g=>g[0]&&g[0].trim()&&g[1]&&g[1].trim()).map(g=>[g[0].trim(),g[1].trim()]).sort((a,b)=>b[0].length-a[0].length);
+    const re=G.length?new RegExp(lang==="en"?`\\b(${G.map(g=>reEsc(g[0])).join("|")})\\b`:`(${G.map(g=>reEsc(g[0])).join("|")})`,lang==="en"?"gi":"g"):null;
+    const meaning=w=>{const lw=w.toLowerCase();const g=G.find(g=>g[0].toLowerCase()===lw);return g?g[1]:"";};
+    const runsFor=(text,x={})=>{
+      text=String(text??"");if(!re)return [run(text,x)];
+      const out=[],used=new Set();let last=0,m;re.lastIndex=0;
+      while((m=re.exec(text))){const key=m[0].toLowerCase();if(used.has(key))continue;used.add(key);
+        if(m.index>last)out.push(run(text.slice(last,m.index),x));
+        out.push(new D.TextRun({text:m[0],font:F,rightToLeft:x.rtl??rtl,size:x.size||24,sizeComplexScript:x.size||24,bold:!!x.bold,boldComplexScript:!!x.bold,color:x.color,underline:{type:D.UnderlineType.DOTTED,color:"8A9592"}}));
+        const sz=Math.round((x.size||24)*1.5);
+        out.push(new D.TextRun({text:"\u2009"+meaning(m[0]),font:F,rightToLeft:true,size:sz,sizeComplexScript:sz,superScript:true,color:GRAY}));
+        last=m.index+m[0].length;}
+      if(last<text.length)out.push(run(text.slice(last),x));
+      return out;};
+    const para=(children,x={})=>new D.Paragraph({bidirectional:x.rtl??rtl,children,spacing:{before:x.before||0,after:x.after??120,line:x.line||(re?380:300)},keepNext:x.keepNext});
+    const lines=(text,x={})=>{const ls=String(text||"").split(/\n+/).map(v=>v.trim()).filter(Boolean);return (ls.length?ls:[x.empty??"—"]).map(l=>para(runsFor(l,x),x));};
+    const h1=t=>para(runsFor(t,{size:36,bold:true,color:ACC}),{after:160});
+    const h2=t=>para(runsFor(t,{size:28,bold:true,color:ACC}),{before:280,after:80,keepNext:true});
+    const h3=t=>para(runsFor(t,{size:25,bold:true}),{before:200,after:60,keepNext:true});
+    const kv=(k,v)=>para([run(k+": ",{bold:true}),run(v||"—")]);
+    const cell=(v,c={})=>{
+      const kids=lines(v,{size:21,bold:c.head,after:40,line:re?360:260,empty:c.blank?" ":"—"});
+      return new D.TableCell({children:kids,shading:c.head?{fill:"E3EEEC",type:D.ShadingType.CLEAR,color:"auto"}:(c.side?{fill:"F5EBDC",type:D.ShadingType.CLEAR,color:"auto"}:undefined),margins:{top:80,bottom:80,left:110,right:110},width:c.w?{size:c.w,type:D.WidthType.PERCENTAGE}:undefined});};
+    const table=(rows,opt={})=>new D.Table({visuallyRightToLeft:rtl,width:{size:100,type:D.WidthType.PERCENTAGE},rows:rows.map((row,i)=>new D.TableRow({tableHeader:i===0&&opt.header!==false,cantSplit:true,children:row.map((c,j)=>cell(c,{head:i===0&&opt.header!==false,side:opt.sideHead&&j===0&&(i>0||opt.header===false),blank:opt.blank&&i>0,w:opt.widths?opt.widths[j]:undefined}))}))});
+    const gap=()=>para([run("")],{after:60});
+    const doc=children=>new D.Document({creator:"ومضات ذكية - Smart Sparks",styles:{default:{document:{run:{font:F,size:24,rightToLeft:rtl}}}},
+      sections:[{properties:{page:{margin:{top:1600,bottom:1000,left:1000,right:1000,header:400}}},headers:{default:logoHeader()},children}]});
+    return {run,runsFor,para,lines,h1,h2,h3,kv,table,gap,doc};
+  };
+
+  const T=s.tasks||[{},{}];
+  const named=(s.criteria||[]).map((c,i)=>({...c,i})).filter(c=>(c.name||"").trim());
+  const anyW=named.some(c=>String(c.weight||"").trim());
+  const cname=c=>c.name+(anyW&&String(c.weight||"").trim()?` (${c.weight}%)`:"");
+
+  // ---------- student file
+  const sl=o.sl||"ar", S=DOC[sl];
+  const k=kit(sl,sl!=="ar"&&o.gloss?o.gloss:null);
+  const placeOf=(L,t)=>t.place==="other"?(t.placeOther||L.places.other):(L.places[t.place]||"");
+  const st=[k.h1(S.sTitle+": "+(s.unit||""))];
+  const meta=[s.subject&&(S.subject+": "+s.subject),s.grade&&(S.grade+": "+s.grade)].filter(Boolean).join("   ·   ");
+  if(meta) st.push(k.para([k.run(meta,{color:GRAY})]));
+  st.push(k.para([k.run(S.nameLine)],{before:120,after:200}));
+  st.push(k.h2(S.whatShow),...k.lines(s.skillStudent||s.skill));
+  st.push(k.h2(S.chooseOne),...k.lines(S.chooseNote));
+  T.forEach((t,i)=>{
+    st.push(k.h3(`${S.task[i]}: ${t.title||""}`),...k.lines(t.desc));
+    st.push(k.table([[S.where,placeOf(S,t)],[S.mode,S.modes[t.mode]||""],[S.produce,t.product],[S.materials,t.materials],[S.time,t.time]],{header:false,sideHead:true,widths:[30,70]}),k.gap());
+  });
+  st.push(k.h2(S.howAssessed));
+  st.push(k.table([[S.criterion,...S.levels],...named.map(c=>[cname(c),c.l4,c.l3,c.l2,c.l1])],{widths:[20,20,20,20,20]}));
+  st.push(k.h2(S.decision));
+  st.push(k.para([k.run(S.chosen+"   ",{bold:true}),k.run(`☐ ${S.task[0]}      ☐ ${S.task[1]}`)]));
+  st.push(k.para([k.run(S.why+" ________________________________________________")],{before:120}));
+  st.push(k.para([k.run("______________________________________________________________")],{before:120}));
+
+  // ---------- teacher file
+  const tl=o.tl||"ar", Q=DOC[tl], m=kit(tl);
+  const te=[m.h1(Q.tTitle+": "+(s.unit||""))];
+  te.push(m.kv(Q.subject,s.subject),m.kv(Q.grade,s.grade),m.kv(Q.unit,s.unit),m.kv(Q.coord,s.coordinator),m.kv(Q.team,s.team),m.kv(Q.date,s.date));
+  te.push(m.h2(Q.skillH),...m.lines(s.skill));
+  te.push(m.h3(Q.whyH),...m.lines(s.skillWhy));
+  te.push(m.h3(Q.evH),...m.lines(s.evidence));
+  te.push(m.h2(Q.tasksH));
+  const row=(label,f)=>[label,f(T[0]||{}),f(T[1]||{})];
+  te.push(m.table([["",Q.task[0],Q.task[1]],row(Q.rTitle,t=>t.title),row(Q.rDesc,t=>t.desc),row(Q.rPlace,t=>placeOf(Q,t)),row(Q.mode,t=>Q.modes[t.mode]||""),
+    row(Q.rProduct,t=>t.product),row(Q.materials,t=>t.materials),row(Q.rTime,t=>t.time),row(Q.rReveals,t=>t.reveals)],{sideHead:true,widths:[24,38,38]}));
+  te.push(m.h2(Q.rubricH),m.table([[Q.criterion,...Q.levels],...named.map(c=>[cname(c),c.l4,c.l3,c.l2,c.l1])],{widths:[20,20,20,20,20]}));
+  te.push(m.h2(Q.appearsH),m.table([[Q.criterion,...Q.inT],...named.map(c=>[c.name,c.inA,c.inB])],{widths:[24,38,38]}));
+  te.push(m.h2(Q.sheetH));
+  te.push(m.para([m.run(anyW?Q.formulaW:Q.totalOf(named.length*4),{size:21,color:GRAY})]));
+  const head=[Q.stName,Q.taskCol,...named.map(c=>c.name),Q.total];
+  te.push(m.table([head,...Array.from({length:14},()=>head.map(()=>" "))],{blank:true}));
+
+  return {student:k.doc(st),teacher:m.doc(te)};
+}
+
+</script>
+<script>
+(function(){
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const KEY="alt-assess-planner-v1", UIKEY="alt-assess-ui-lang";
+const LANGS=["ar","he","en"];
+let L="ar";
+try{const v=localStorage.getItem(UIKEY);if(LANGS.includes(v))L=v;}catch(e){}
+const t=k=>{const v=I18N[L][k];return v===undefined?I18N.ar[k]:v;};
+const esc=x=>String(x??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const PLACES=["class","robotics","carpentry","water","yard","outside","other"], MODES=["solo","pair","group"];
+const NCHECK=9;
+
+// ---------- state
+const blankTask=()=>({title:"",desc:"",place:"class",placeOther:"",mode:"solo",product:"",materials:"",time:"",reveals:""});
+const blankCrit=()=>({name:"",weight:"",l4:"",l3:"",l2:"",l1:"",inA:"",inB:""});
+const EMPTY=()=>({subject:"",grade:"",unit:"",coordinator:"",date:"",team:"",studentLang:"ar",helperAr:false,slManual:false,
+  unitSkills:"",skill:"",skillWhy:"",evidence:"",skillStudent:"",tasks:[blankTask(),blankTask()],criteria:[blankCrit(),blankCrit(),blankCrit()],
+  checks:Array(NCHECK).fill(false),gloss:[],example:false});
+const OLD_PLACE={"الصف":"class","غرفة الروبوتيكا":"robotics","ورشة النجارة":"carpentry","الحديقة المائية":"water","ساحة المدرسة":"yard","خارج المدرسة":"outside","أخرى":"other"};
+const OLD_MODE={"فردي":"solo","زوجي":"pair","مجموعة":"group"};
+function normalize(s){
+  const b=EMPTY();const o=Object.assign(b,s||{});
+  o.tasks=[0,1].map(i=>{const x=Object.assign(blankTask(),(s&&s.tasks&&s.tasks[i])||{});
+    if(!PLACES.includes(x.place))x.place=OLD_PLACE[x.place]||"class";if(!MODES.includes(x.mode))x.mode=OLD_MODE[x.mode]||"solo";return x;});
+  o.criteria=((s&&s.criteria)||b.criteria).map(c=>Object.assign(blankCrit(),c));if(!o.criteria.length)o.criteria=[blankCrit()];
+  o.checks=Array.from({length:NCHECK},(_,i)=>!!(s&&s.checks&&s.checks[i]));
+  if(!LANGS.includes(o.studentLang))o.studentLang="ar";
+  o.gloss=Array.isArray(s&&s.gloss)?s.gloss.filter(g=>g&&typeof g==="object").map(g=>({w:String(g.w||""),m:String(g.m||"")})):[];delete o.trans;
+  return o;
+}
+let S;try{S=normalize(JSON.parse(localStorage.getItem(KEY)||"null"));}catch(e){S=EMPTY();}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+let cur=0, sample=null, downloads=null, lastIdeas=[], glSug=[];
+const stuOn=()=>S.studentLang!=="ar";
+
+// ---------- markup helpers
+const helpKey=id=>id.replace(/^t\d-/,"t-").replace(/^c\d+-/,"c-");
+function fld(id,label,control,o={}){
+  const h=(HELP[L]||HELP.ar)[helpKey(id)];
+  const badge=o.stu&&stuOn()?`<span class="stu-badge">${esc(t("stuBadge")(t("langNames")[S.studentLang]))}</span>`:"";
+  return `<div class="field${o.cls?" "+o.cls:""}"${o.attrs?" "+o.attrs:""}>
+    <div class="lbl-row"><label for="${id}">${esc(label)}</label>${badge}${h?`<button type="button" class="help-btn" aria-expanded="false">${esc(t("helpBtn"))}</button>`:""}</div>
+    ${h?`<div class="help" hidden><p>${esc(h.t)}</p>${h.e?`<div class="ex"><span>${esc(t("helpEx"))}</span><p>${esc(h.e).replace(/\n/g,"<br>")}</p></div>`:""}</div>`:""}
+    ${o.hint?`<span class="hint">${esc(o.hint)}</span>`:""}${control}${o.ai?`<div class="ai-row"><button type="button" class="ai-btn" data-ai-for="${id}" data-ai-kind="${o.ai}" hidden>${esc(t("aiSuggest"))}</button></div>`:""}</div>`;
+}
+const inp=(k,ph="",type="text")=>`<input type="${type}" id="${k}" data-k="${k}" value="${esc(S[k])}"${ph?` placeholder="${esc(ph)}"`:""}>`;
+const ta=(k,ph="")=>`<textarea id="${k}" data-k="${k}"${ph?` placeholder="${esc(ph)}"`:""}>${esc(S[k])}</textarea>`;
+const guide=(h,items)=>`<aside class="guide"><h3>${esc(h)}</h3><ul>${items.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></aside>`;
+const head=(h,p)=>`<div class="stage-head"><h2>${esc(h)}</h2><p>${esc(p)}</p></div>`;
+
+// ---------- header / chrome
+function renderChrome(){
+  const rtl=L!=="en";
+  document.documentElement.lang=L;document.documentElement.dir=rtl?"rtl":"ltr";
+  const w=$(".wrap");w.dir=rtl?"rtl":"ltr";w.lang=L;document.title=t("title");
+  $("#hdr").innerHTML=`
+    <div class="brand-band">
+      <img class="brand-logo" src="data:image/jpeg;base64,${LOGO_B64}" alt="${esc(t("logoAlt"))}" width="88" height="76">
+      <div class="brand-text">
+        <p class="brand-name" lang="ar" dir="rtl">ومضات ذكية <span lang="en" dir="ltr">SMART SPARKS</span></p>
+        <h1>${esc(t("tagline"))}</h1>
+        <p class="brand-credit">${esc(t("credit"))}</p>
+      </div>
+    </div>
+    <div class="top-row">
+      <div class="lang-switch" role="group" aria-label="${esc(t("uiLang"))}"><span class="ls-label">${esc(t("uiLang"))}</span>
+        ${LANGS.map(l=>`<button type="button" data-ui="${l}" lang="${l}" aria-pressed="${l===L}">${{ar:"العربية",he:"עברית",en:"English"}[l]}</button>`).join("")}</div></div>
+    <p>${esc(t("intro"))}</p>
+    <details class="rules"><summary>${esc(t("rulesH"))}</summary><ol>${t("rules").map(r=>`<li>${esc(r)}</li>`).join("")}</ol></details>
+    <div class="toolbar"><button class="btn quiet" id="btnExample" type="button">${esc(t("btnExample"))}</button><button class="btn quiet" id="btnClear" type="button">${esc(t("btnClear"))}</button></div>
+    <div id="confirmZone"></div>
+    <div id="exampleBanner" class="banner" ${S.example?"":"hidden"}><span>${esc(t("exampleBanner"))}</span><button class="btn" type="button" id="btnClearFromBanner">${esc(t("clearExample"))}</button></div>`;
+  $(".stepper").setAttribute("aria-label",t("stepperAria"));
+  $("#prev").textContent=t("prev");$("#next").textContent=t("next");
+}
+function renderStepper(){
+  $("#stepper").innerHTML=t("stages").map((n,i)=>`<li><button type="button" data-go="${i}" ${i===cur?'aria-current="step"':''} class="${i<cur?'done':''}"><span class="n">${i+1}</span>${esc(n)}</button></li>`).join("");
+}
+function go(i,scroll=true){cur=Math.max(0,Math.min(4,i));$$("[data-stage]").forEach(s=>s.hidden=+s.dataset.stage!==cur);renderStepper();
+  $("#prev").disabled=cur===0;$("#next").hidden=cur===4;if(cur===4)renderStage(4);if(scroll)window.scrollTo({top:0,behavior:"smooth"});}
+
+// ---------- stages
+const R=[];
+R[0]=()=>`${head(t("s1h"),t("s1p"))}
+  <div class="fields">
+    <div class="row">${fld("subject",t("subject"),`<input type="text" id="subject" data-k="subject" list="subjects" value="${esc(S.subject)}" placeholder="${esc(t("subjectPh"))}"><datalist id="subjects">${t("subjects").map(x=>`<option value="${esc(x)}">`).join("")}</datalist>`)}
+      ${fld("grade",t("grade"),inp("grade",t("gradePh")))}</div>
+    ${fld("unit",t("unit"),inp("unit",t("unitPh")))}
+    <div class="langbox">
+      ${fld("studentLang",t("studentLang"),`<select id="studentLang" data-k="studentLang">${LANGS.map(l=>`<option value="${l}" ${S.studentLang===l?"selected":""}>${esc(t("langNames")[l])}</option>`).join("")}</select>`)}
+      <label class="check-inline" id="helperWrap" ${stuOn()?"":"hidden"}><input type="checkbox" id="helperAr" data-k="helperAr" ${S.helperAr?"checked":""}><span>${esc(t("helperAr"))}</span></label>
+      <p class="hint">${esc(t("slNote"))}</p>
+    </div>
+    <div class="row">${fld("coordinator",t("coordinator"),inp("coordinator"))}${fld("date",t("date"),inp("date","","date"))}</div>
+    ${fld("team",t("team"),inp("team",t("teamPh")))}
+  </div>${guide(t("s1guideH"),t("s1guide"))}`;
+R[1]=()=>`${head(t("s2h"),t("s2p"))}
+  <div class="fields">
+    ${fld("unitSkills",t("unitSkills"),ta("unitSkills",t("unitSkillsPh")))}
+    ${fld("skill",t("skill"),ta("skill"),{hint:t("skillHint"),ai:"skill"})}
+    ${fld("skillWhy",t("skillWhy"),ta("skillWhy"),{ai:"teacher"})}
+    ${fld("evidence",t("evidence"),ta("evidence"),{ai:"teacher"})}
+    ${fld("skillStudent",t("skillStudent"),ta("skillStudent",t("skillStudentPh")),{hint:t("skillStudentHint"),ai:"student",stu:true})}
+  </div>${guide(t("guideQ"),t("s2guide"))}`;
+function taskCard(x,i){
+  const id=k=>`t${i}-${k}`, a=k=>`id="${id(k)}" data-t="${i}" data-k="${k}"`;
+  return `<div class="task"><h3><span class="tag">${esc(t("taskTag")(i+1))}</span> ${esc(t("taskName")[i])}</h3>
+    ${stuOn()?`<div class="task-tr"><button type="button" class="ai-btn tr-task" data-trtask="${i}">${esc(t("trTask")(t("langNames")[S.studentLang]))}</button><span class="status" id="trs${i}" role="status"></span></div>`:""}
+    ${fld(id("title"),t("tTitle"),`<input type="text" ${a("title")} value="${esc(x.title)}">`,{stu:true})}
+    ${fld(id("desc"),t("tDesc"),`<textarea ${a("desc")}>${esc(x.desc)}</textarea>`,{hint:t("tDescHint"),ai:"student",stu:true})}
+    <div class="row">
+      ${fld(id("place"),t("tPlace"),`<select ${a("place")}>${PLACES.map(p=>`<option value="${p}" ${p===x.place?"selected":""}>${esc(t("places")[p])}</option>`).join("")}</select>`)}
+      ${fld(id("mode"),t("tMode"),`<select ${a("mode")}>${MODES.map(p=>`<option value="${p}" ${p===x.mode?"selected":""}>${esc(t("modes")[p])}</option>`).join("")}</select>`)}
+    </div>
+    ${fld(id("placeOther"),t("tPlaceOther"),`<input type="text" ${a("placeOther")} value="${esc(x.placeOther)}">`,{stu:true,attrs:`id="${id("otherwrap")}" ${x.place==="other"?"":"hidden"}`})}
+    ${fld(id("product"),t("tProduct"),`<textarea class="short" ${a("product")}>${esc(x.product)}</textarea>`,{ai:"student",stu:true})}
+    <div class="row">
+      ${fld(id("materials"),t("tMaterials"),`<input type="text" ${a("materials")} value="${esc(x.materials)}">`,{stu:true})}
+      ${fld(id("time"),t("tTime"),`<input type="text" ${a("time")} value="${esc(x.time)}" placeholder="${esc(t("tTimePh"))}">`,{stu:true})}
+    </div>
+    ${fld(id("reveals"),t("tReveals"),`<textarea class="short" ${a("reveals")}>${esc(x.reveals)}</textarea>`,{hint:t("teacherOnly"),ai:"teacher"})}
+  </div>`;
+}
+R[2]=()=>`${head(t("s3h"),t("s3p"))}
+  <div class="fields">
+    <div class="assist">
+      <div class="assist-head"><div><h3>${esc(t("assistH"))}</h3><p>${esc(t("assistP"))}</p></div>
+        <button class="btn wood" type="button" id="assistOpen" aria-expanded="false" aria-controls="assistBody">${esc(t("assistBtn"))}</button></div>
+      <div id="assistBody" class="assist-body" hidden>
+        <div id="assistNeedSkill" class="missing" hidden>${esc(t("assistNeed"))} <button type="button" class="btn" id="assistBack">${esc(t("assistBack"))}</button></div>
+        <div class="assist-steps"><p class="lbl">${esc(t("assistQsH"))}</p><ol>${t("assistQs").map(q=>`<li>${esc(q)}</li>`).join("")}</ol></div>
+        <div class="assist-steps"><p class="lbl">${esc(t("sparksH"))}</p><ul class="sparks">${t("sparks").map(q=>`<li>${esc(q)}</li>`).join("")}</ul></div>
+        <div id="assistAi" hidden>
+          <p class="lbl">${esc(t("prefsH"))}</p>
+          <div class="chips">${t("prefs").map((p,i)=>`<label><input type="checkbox" id="pref${i}" value="${esc(p)}">${esc(p)}</label>`).join("")}</div>
+          <div class="field"><label for="assistNote">${esc(t("noteLbl"))}</label><input type="text" id="assistNote" placeholder="${esc(t("notePh"))}"></div>
+          <div class="assist-actions"><button class="btn primary" type="button" id="assistGo">${esc(t("assistGo"))}</button><span class="status" id="assistStatus" role="status"></span></div>
+          <div id="assistOut"></div>
+        </div>
+      </div>
+    </div>
+    <div class="tasks">${S.tasks.map(taskCard).join("")}</div>
+  </div>${guide(t("guideQ"),t("s3guide"))}`;
+R[3]=()=>`${head(t("s4h"),t("s4p"))}
+  <div class="fields">
+    ${S.criteria.map((c,i)=>{const id=k=>`c${i}-${k}`,a=k=>`id="${id(k)}" data-c="${i}" data-k="${k}"`;
+      return `<div class="crit">
+      <div class="crit-head">
+        ${fld(id("name"),t("critN")(i+1),`<input type="text" ${a("name")} value="${esc(c.name)}" placeholder="${esc(t("critPh"))}">`,{stu:true})}
+        ${fld(id("weight"),t("weight"),`<input type="text" inputmode="numeric" ${a("weight")} value="${esc(c.weight)}" placeholder="${esc(t("optional"))}">`,{cls:"w"})}
+      </div>
+      <div class="levels">${[4,3,2,1].map(l=>fld(id("l"+l),t("levels")[l],`<textarea ${a("l"+l)}>${esc(c["l"+l])}</textarea>`,{cls:"lv"+l,stu:true})).join("")}</div>
+      <div class="both">${fld(id("inA"),t("inA"),`<input type="text" ${a("inA")} value="${esc(c.inA)}">`)}${fld(id("inB"),t("inB"),`<input type="text" ${a("inB")} value="${esc(c.inB)}">`)}</div>
+      <div id="c${i}-slot"></div>
+      <div class="crit-actions"><button type="button" class="ai-btn" data-ai-crit="${i}" hidden>${esc(t("critAi"))}</button>
+        <button type="button" class="btn quiet" data-remove="${i}" ${S.criteria.length<=1?"disabled":""}>${esc(t("removeCrit"))}</button></div>
+    </div>`;}).join("")}
+    <div class="crit-actions"><button class="btn" type="button" id="addCrit" ${S.criteria.length>=5?"disabled":""}>${esc(t("addCrit"))}</button><span class="weight-sum" id="weightSum"></span></div>
+  </div>${guide(t("guideQ"),t("s4guide"))}`;
+
+// every text the student sees, used for word suggestions and the "word not found" check
+function stuTexts(){
+  const out=[S.skillStudent];
+  S.tasks.forEach(x=>out.push(x.title,x.desc,x.product,x.materials,x.time,x.place==="other"?x.placeOther:""));
+  S.criteria.forEach(c=>out.push(c.name,c.l4,c.l3,c.l2,c.l1));
+  return out.filter(v=>(v||"").trim());
+}
+// student-facing fields that still contain Arabic text
+const AR=/[\u0600-\u06FF]/;
+function arabicFields(){
+  const out=[],lv=t("levels");
+  if(AR.test(S.skillStudent))out.push({key:"s|skillStudent",label:t("transSkill"),src:S.skillStudent});
+  S.tasks.forEach((x,i)=>{const n=t("taskName")[i];
+    [["title","tTitle"],["desc","tDesc"],["product","tProduct"],["materials","tMaterials"],["time","tTime"],["placeOther","tPlaceOther"]].forEach(([k,lk])=>{
+      if((k!=="placeOther"||x.place==="other")&&AR.test(x[k]||""))out.push({key:`t|${i}|${k}`,label:`${n}: ${t(lk)}`,src:x[k]});});});
+  S.criteria.forEach((c,i)=>[["name",t("critName")],["l4",lv[4]],["l3",lv[3]],["l2",lv[2]],["l1",lv[1]]].forEach(([k,lb])=>{
+    if(AR.test(c[k]||""))out.push({key:`c|${i}|${k}`,label:`${t("critN")(i+1)}: ${lb}`,src:c[k]});}));
+  return out;
+}
+function setField(key,v){const p=key.split("|");if(p[0]==="s")S[p[1]]=v;else if(p[0]==="t")S.tasks[+p[1]][p[2]]=v;else S.criteria[+p[1]][p[2]]=v;}
+let fixSug=[];
+async function fixLanguage(){
+  const items=arabicFields();if(!items.length){setStatus("fixStatus",t("fixNothing"));return;}
+  if(!sample){setStatus("fixStatus",t("fixNoAi"),"err");return;}
+  const obj={};items.forEach(x=>obj[x.key]=x.src);
+  const btn=$("#fixLang");btn.disabled=true;setStatus("fixStatus",t("thinkingLong"));
+  try{
+    const res=await sample.json(`Translate each value in this JSON object from Arabic into ${LN[S.studentLang]}. The texts are parts of an assessment task sheet for Arabic-speaking students${S.grade?" in grade "+S.grade:""} who are learning ${LN[S.studentLang]} as an additional language. Keep the meaning exactly, address the student directly where the original does, and use simple, clear language suited to their level. Correct obvious spelling mistakes in the source silently. Keep names and numbers. Return only a JSON object with the same keys.
+
+${JSON.stringify(obj)}`,{cache:false});
+    fixSug=items.filter(x=>typeof res[x.key]==="string"&&res[x.key].trim()).map(x=>({...x,to:res[x.key].trim()}));
+    if(!fixSug.length)throw {code:"empty"};
+    const wd=S.studentLang==="en"?"ltr":"rtl";
+    $("#fixBox").innerHTML=`<div class="fix-list"><p class="lbl">${esc(t("fixH"))}</p>
+      ${fixSug.map((x,i)=>`<div class="fix-row"><label class="check-inline"><input type="checkbox" data-fx="${i}" checked><span>${esc(x.label)}</span></label>
+        <div class="fix-pair"><p class="fix-src" dir="rtl" lang="ar">${esc(x.src)}</p><textarea class="short" id="fx${i}" dir="${wd}" lang="${S.studentLang}" aria-label="${esc(x.label)}">${esc(x.to)}</textarea></div></div>`).join("")}
+      <div class="assist-actions"><button type="button" class="btn primary" id="fixApply">${esc(t("fixApply"))}</button><button type="button" class="btn" id="fixCancel">${esc(t("cancel"))}</button></div></div>`;
+    setStatus("fixStatus","");
+  }catch(err){const c=err&&err.code;setStatus("fixStatus",errText(c)+(c&&c!=="not_granted"&&c!=="rate_limited"?` (${c})`:""),"err");aiFailed(err);}
+  finally{const b2=$("#fixLang");if(b2)b2.disabled=false;}
+}
+async function translateTask(i,b){
+  const keys=["title","desc","product","materials","time","placeOther"],x=S.tasks[i],obj={};
+  keys.forEach(k=>{if(AR.test(x[k]||""))obj[k]=x[k];});
+  if(!Object.keys(obj).length){setStatus("trs"+i,t("fixNothing"));return;}
+  if(!sample){setStatus("trs"+i,t("fixNoAi"),"err");return;}
+  b.disabled=true;setStatus("trs"+i,t("thinkingLong"));
+  try{
+    const res=await sample.json(`Translate each value in this JSON object from Arabic into ${LN[S.studentLang]}. It is one task on an assessment task sheet for Arabic-speaking students${S.grade?" in grade "+S.grade:""} learning ${LN[S.studentLang]} as an additional language. Keep the meaning exactly, address the student directly, and use simple, clear language. Correct obvious spelling mistakes in the source silently. Return only a JSON object with the same keys.
+
+${JSON.stringify(obj)}`,{cache:false});
+    const wd=S.studentLang==="en"?"ltr":"rtl",got=Object.keys(obj).filter(k=>typeof res[k]==="string"&&res[k].trim());
+    if(!got.length)throw {code:"empty"};
+    const card=b.closest(".task");card.querySelector(".tr-prev")?.remove();
+    const box=document.createElement("div");box.className="suggest tr-prev";
+    box.innerHTML=`<span class="s-label">${esc(t("trPrevH"))}</span>${got.map(k=>`<p dir="${wd}"><strong>${esc(t({title:"tTitle",desc:"tDesc",product:"tProduct",materials:"tMaterials",time:"tTime",placeOther:"tPlaceOther"}[k]))}:</strong> ${esc(res[k].trim())}</p>`).join("")}
+      <div class="s-actions"><button type="button" class="btn primary">${esc(t("trUse"))}</button><button type="button" class="btn">${esc(t("keepMine"))}</button></div>`;
+    b.closest(".task-tr").after(box);setStatus("trs"+i,"");
+    const [ok,no]=box.querySelectorAll(".s-actions button");
+    ok.onclick=e=>{e.stopPropagation();got.forEach(k=>x[k]=res[k].trim());save();renderStage(2);renderStage(4);setStatus("trs"+i,t("trDone"),"ok");};
+    no.onclick=e=>{e.stopPropagation();box.remove();};
+  }catch(err){const c=err&&err.code;setStatus("trs"+i,errText(c)+(c&&c!=="not_granted"&&c!=="rate_limited"?` (${c})`:""),"err");aiFailed(err);}
+  finally{b.disabled=false;}
+}
+const langMismatch=()=>stuOn()&&/[\u0600-\u06FF]/.test(stuTexts().join(" "));
+const helperOn=()=>stuOn()&&S.helperAr;
+const inText=w=>{w=(w||"").trim();if(!w)return true;const all=stuTexts().join("\n");return S.studentLang==="en"?all.toLowerCase().includes(w.toLowerCase()):all.includes(w);};
+function glossRows(){
+  if(!S.gloss.length)return `<p class="hint">${esc(t("glEmpty"))}</p>`;
+  const wd=S.studentLang==="en"?"ltr":"rtl";
+  return S.gloss.map((g,i)=>`<div class="gl-row">
+    <div class="field"><label for="gw${i}" class="sr">${esc(t("glWord"))}</label><input type="text" id="gw${i}" data-gi="${i}" data-gk="w" dir="${wd}" lang="${S.studentLang}" value="${esc(g.w)}" placeholder="${esc(t("glWord"))}">
+      ${inText(g.w)?"":`<span class="hint warn">${esc(t("glNotFound"))}</span>`}</div>
+    <div class="field"><label for="gm${i}" class="sr">${esc(t("glMeaning"))}</label><input type="text" id="gm${i}" data-gi="${i}" data-gk="m" dir="rtl" lang="ar" value="${esc(g.m)}" placeholder="${esc(t("glMeaning"))}"></div>
+    <button type="button" class="btn quiet" data-glrm="${i}" aria-label="${esc(t("glRemove"))}: ${esc(g.w)}">${esc(t("glRemove"))}</button></div>`).join("")+
+    (S.gloss.length>12?`<p class="hint warn">${esc(t("glLimit")(S.gloss.length))}</p>`:"");
+}
+R[4]=()=>`${head(t("s5h"),t("s5p"))}
+  <div class="fields">
+    <div class="checks">${t("checks").map((c,i)=>`<label><input type="checkbox" id="chk${i}" data-chk="${i}" ${S.checks[i]?"checked":""}><span>${esc(c)}</span></label>`).join("")}</div>
+    <div id="missing" class="missing" hidden></div>
+    ${helperOn()?`<div class="trans">
+      <div class="trans-head"><div><h3>${esc(t("glH"))}</h3><p>${esc(t("glP"))}</p></div>
+        <button type="button" class="btn" id="glSuggest" ${sample?"":"hidden"}>${esc(t("glSuggest"))}</button></div>
+      ${sample?"":`<p class="hint">${esc(t("glNoAi"))}</p>`}
+      <div id="glSugBox"></div>
+      <div class="gl-head" aria-hidden="true"><span>${esc(t("glWord"))}</span><span>${esc(t("glMeaning"))}</span><span></span></div>
+      <div id="glRows">${glossRows()}</div>
+      <div><button type="button" class="btn" id="glAdd">${esc(t("glAdd"))}</button></div>
+      <p class="status" id="glStatus" role="status"></p>
+    </div>`:""}
+    ${langMismatch()?`<div class="missing fixlang"><p>${esc(t("langWarn")(t("langNames")[S.studentLang]))}</p>
+      <div class="assist-actions"><button type="button" class="btn primary" id="fixLang">${esc(t("fixLangBtn")(t("langNames")[S.studentLang]))}</button><span class="status" id="fixStatus" role="status"></span></div>
+      <div id="fixBox"></div></div>`:""}
+    <div class="out">
+      <div class="card"><h3>${esc(t("stuCardH"))}</h3><p>${esc(t("stuCardP")(t("langNames")[S.studentLang]))}</p><button class="btn primary" type="button" id="dlStudent" disabled>${esc(t("dlStudent"))}</button></div>
+      <div class="card"><h3>${esc(t("teaCardH"))}</h3><p>${esc(t("teaCardP"))}</p><button class="btn wood" type="button" id="dlTeacher" disabled>${esc(t("dlTeacher"))}</button></div>
+    </div>
+    <p class="status" id="status" role="status"></p>
+  </div>${guide(t("s5guideH"),t("s5guide"))}`;
+
+function renderStage(i){const sec=$(`[data-stage="${i}"]`);sec.innerHTML=R[i]();if(i===3)updateWeights();if(i===4)gate();showAiButtons();}
+function renderAll(){renderChrome();for(let i=0;i<5;i++)renderStage(i);go(cur,false);}
+
+// ---------- weights, gating
+function updateWeights(){const el=$("#weightSum");if(!el)return;const ws=S.criteria.map(c=>parseFloat(c.weight)).filter(n=>!isNaN(n));const sum=ws.reduce((a,b)=>a+b,0);
+  el.textContent=ws.length?t("weightSum")(sum)+(sum!==100?t("weightBad"):""):"";}
+function missing(){const M=t("miss"),m=[];
+  if(!S.unit.trim())m.push(M.unit);if(!S.skill.trim())m.push(M.skill);if(!S.skillStudent.trim())m.push(M.skillStudent);
+  S.tasks.forEach((x,i)=>{if(!x.title.trim()||!x.desc.trim())m.push(M.task(t("taskName")[i]))});
+  const named=S.criteria.filter(c=>c.name.trim());if(!named.length)m.push(M.crit);
+  named.forEach(c=>{if(!c.inA.trim()||!c.inB.trim())m.push(M.critBoth(c.name))});
+  const ws=S.criteria.map(c=>parseFloat(c.weight)).filter(n=>!isNaN(n));if(ws.length&&ws.reduce((a,b)=>a+b,0)!==100)m.push(M.weights);
+  return m;}
+function setStatus(id,msg,kind){const s=$("#"+id);if(!s)return;s.textContent=msg;s.className="status "+(kind||"");}
+function gate(){const box=$("#missing");if(!box)return;const m=missing(),all=S.checks.every(Boolean);
+  if(m.length){box.hidden=false;box.innerHTML=`<strong>${esc(t("missingH"))}</strong><ul>${m.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`}else box.hidden=true;
+  const ok=!m.length&&all;$("#dlStudent").disabled=!ok;$("#dlTeacher").disabled=!ok;
+  if(!m.length&&!all)setStatus("status",t("checkAll"));else if(ok)setStatus("status","");}
+
+// ---------- student-file language
+function detectLang(x){x=String(x||"");if(/عبر|עבר|hebrew/i.test(x))return "he";if(/[اإأ]نجل|انكل|אנגל|english/i.test(x))return "en";return null;}
+function applyStudentLang(lang,fromAuto){
+  if(lang===S.studentLang)return;S.studentLang=lang;S.helperAr=lang!=="ar";
+  const sel=$("#studentLang");if(sel)sel.value=lang;const hw=$("#helperWrap");if(hw)hw.hidden=lang==="ar";const hc=$("#helperAr");if(hc)hc.checked=S.helperAr;
+  for(let i=1;i<5;i++)renderStage(i);
+}
+
+// ---------- input binding (one delegated listener)
+document.addEventListener("input",e=>{
+  const el=e.target;if(!el.closest("#form"))return;
+  const d=el.dataset,v=el.type==="checkbox"?el.checked:el.value;
+  if(d.t!=null){S.tasks[+d.t][d.k]=v;if(d.k==="place"){const w=$(`#t${d.t}-otherwrap`);if(w)w.hidden=v!=="other";}}
+  else if(d.c!=null){S.criteria[+d.c][d.k]=v;if(d.k==="weight")updateWeights();}
+  else if(d.gi!=null){S.gloss[+d.gi][d.gk]=v;}
+  else if(d.chk!=null){S.checks[+d.chk]=v;gate();}
+  else if(d.k){
+    if(d.k==="studentLang"){S.slManual=true;applyStudentLang(v);save();return;}
+    S[d.k]=v;
+    if(d.k==="helperAr")renderStage(4);
+    if(d.k==="subject"&&!S.slManual)applyStudentLang(detectLang(v)||"ar",true);
+  }else return;
+  if(S.example&&!el.closest(".assist")){S.example=false;const b=$("#exampleBanner");if(b)b.hidden=true;}
+  save();
+});
+
+document.addEventListener("change",e=>{if(e.target.dataset&&e.target.dataset.gk==="w")renderStage(4);});
+
+// ---------- clicks (one delegated listener)
+function askConfirm(msg,yes){const z=$("#confirmZone");z.innerHTML=`<div class="inline-confirm"><span>${esc(msg)}</span><button type="button" class="btn primary" id="cfYes">${esc(t("yes"))}</button><button type="button" class="btn" id="cfNo">${esc(t("cancel"))}</button></div>`;
+  $("#cfYes").onclick=()=>{z.innerHTML="";yes()};$("#cfNo").onclick=()=>{z.innerHTML=""};}
+const hasContent=()=>[S.unit,S.skill,S.evidence,S.tasks[0].title,S.tasks[1].title,S.criteria[0]&&S.criteria[0].name].some(v=>(v||"").trim());
+function loadExample(){const ex=JSON.parse(JSON.stringify(EXAMPLES[L]));S=normalize(Object.assign(EMPTY(),ex,{example:true}));save();cur=0;renderAll();}
+function clearAll(){S=EMPTY();save();cur=0;renderAll();}
+document.addEventListener("click",e=>{
+  const b=e.target.closest("button");if(!b)return;
+  if(b.dataset.ui){L=b.dataset.ui;try{localStorage.setItem(UIKEY,L)}catch(_){}lastIdeas=[];renderAll();return;}
+  if(b.dataset.go!=null){go(+b.dataset.go);return;}
+  if(b.classList.contains("help-btn")){const p=b.closest(".field").querySelector(".help");p.hidden=!p.hidden;b.setAttribute("aria-expanded",String(!p.hidden));return;}
+  switch(b.id){
+    case "prev":go(cur-1);return; case "next":go(cur+1);return;
+    case "btnExample":(hasContent()&&!S.example)?askConfirm(t("confirmExample"),loadExample):loadExample();return;
+    case "btnClear":hasContent()?askConfirm(t("confirmClear"),clearAll):clearAll();return;
+    case "btnClearFromBanner":clearAll();return;
+    case "addCrit":if(S.criteria.length<5){S.criteria.push(blankCrit());save();renderStage(3);}return;
+    case "assistOpen":{const body=$("#assistBody");body.hidden=!body.hidden;b.setAttribute("aria-expanded",String(!body.hidden));$("#assistNeedSkill").hidden=!!S.skill.trim();return;}
+    case "assistBack":go(1);return;
+    case "assistGo":askIdeas(false);return;
+    case "assistMore":askIdeas(true);return;
+    case "dlStudent":dl("student");return; case "dlAnyway":dl("student",true);return; case "dlTeacher":dl("teacher");return;
+    case "glAdd":S.gloss.push({w:"",m:""});save();renderStage(4);$(`#gw${S.gloss.length-1}`)?.focus();return;
+    case "glSuggest":suggestWords();return;
+    case "fixLang":fixLanguage();return;
+    case "fixCancel":fixSug=[];$("#fixBox").innerHTML="";return;
+    case "fixApply":{let n=0;fixSug.forEach((x,i)=>{const cb=document.querySelector(`[data-fx="${i}"]`),ta=$(`#fx${i}`);if(cb&&cb.checked&&ta&&ta.value.trim()){setField(x.key,ta.value.trim());n++;}});
+      fixSug=[];save();for(let j=1;j<5;j++)renderStage(j);setStatus("status",t("fixDone")(n),"ok");return;}
+    case "glDismiss":glSug=[];$("#glSugBox").innerHTML="";return;
+    case "glAddSel":{const pick=$$("#glSugBox input:checked").map(i=>glSug[+i.dataset.sg]).filter(Boolean);
+      pick.forEach(p=>{if(!S.gloss.some(g=>g.w.trim().toLowerCase()===p.w.toLowerCase()))S.gloss.push({w:p.w,m:p.m})});glSug=[];save();renderStage(4);return;}
+  }
+  if(b.dataset.glrm!=null){S.gloss.splice(+b.dataset.glrm,1);save();renderStage(4);return;}
+  if(b.dataset.remove!=null){S.criteria.splice(+b.dataset.remove,1);save();renderStage(3);return;}
+  if(b.dataset.trtask!=null){translateTask(+b.dataset.trtask,b);return;}
+  if(b.dataset.aiFor){suggest(b);return;}
+  if(b.dataset.aiCrit!=null){suggestCrit(b);return;}
+  if(b.dataset.idea!=null){useIdea(+b.dataset.idea,+b.dataset.to);return;}
+});
+
+// ---------- downloads
+async function dl(which,force){
+  if(which==="student"&&!force&&langMismatch()){
+    setStatus("status","");$("#status").innerHTML=`<span class="inline-confirm"><span>${esc(t("dlArabicQ")(t("langNames")[S.studentLang]))}</span><button type="button" class="btn" id="dlAnyway">${esc(t("dlAnyway"))}</button></span>`;
+    document.querySelector(".fixlang")?.scrollIntoView({behavior:"smooth",block:"center"});return;}
+  if(typeof docx==="undefined"){setStatus("status",t("noDocx"),"err");return;}
+  if(!downloads){setStatus("status",t("noDl"),"err");return;}
+  const btn=$(which==="student"?"#dlStudent":"#dlTeacher");btn.disabled=true;setStatus("status",t("preparing"));
+  try{
+    const gloss=helperOn()?[...S.gloss.map(g=>[g.w,g.m]),...(FIXED_GLOSS[S.studentLang]||[])]:null;
+    const docs=buildDocs(docx,S,{sl:S.studentLang,tl:L,gloss});
+    const blob=await docx.Packer.toBlob(docs[which]);
+    const fl=which==="student"?S.studentLang:L;
+    const base=(S.unit||DOC[fl].unitFallback).replace(/[\\/:*?"<>|]/g," ").trim();
+    await downloads.save({filename:(which==="student"?DOC[fl].fileS:DOC[fl].fileT)+" - "+base+".docx",data:blob});
+    setStatus("status",t("saved"),"ok");
+  }catch(err){const c=err&&err.code;setStatus("status",c==="declined"?t("declined"):c==="rate_limited"?t("rateLim"):t("saveFail"),"err");}
+  finally{btn.disabled=false;gate();}
+}
+
+// ---------- AI
+function showAiButtons(){$$(".ai-btn:not(.tr-task)").forEach(b=>b.hidden=!sample);const a=$("#assistAi");if(a)a.hidden=!sample;}
+function errText(c){return c==="not_granted"?t("errNG"):c==="rate_limited"?t("errRL"):t("errGen");}
+function aiFailed(err){if(err&&err.code==="not_granted"){sample=null;showAiButtons();}}
+const LN={ar:"Arabic (Modern Standard Arabic)",he:"Hebrew",en:"English"};
+function audience(kind){
+  const g=S.grade?` in grade ${S.grade}`:"";
+  if(kind==="student")return `students${g}. Address them directly in short, clear, motivating sentences suited to their age.`+(stuOn()?` If the text is in ${LN[S.studentLang]}, remember the students are Arabic speakers learning ${LN[S.studentLang]} as an additional language, so keep the vocabulary simple.`:"");
+  if(kind==="skill")return "teachers. Phrase the skill as a short sentence that starts with an observable verb where possible, without changing its content.";
+  return "teachers. Use precise, clear professional language.";
+}
+const rephrasePrompt=(text,kind)=>`You are a language editor for teachers at an Arab school. Rewrite the text below in the SAME language it is written in. Do not translate it.
+Audience: ${audience(kind)}
+Rules: keep the meaning and ideas exactly as they are. Add no new ideas, examples or details, and remove nothing. Fix spelling and grammar. Keep any line breaks.
+Return only the rewritten text, with no introduction, explanation or formatting.
+
+Text:
+${text}`;
+async function suggest(b){
+  if(!sample)return;
+  const field=document.getElementById(b.dataset.aiFor);const text=field.value.trim();
+  const host=b.closest(".field");host.querySelector(".suggest")?.remove();
+  const box=document.createElement("div");box.className="suggest";host.appendChild(box);
+  if(!text){box.innerHTML=`<span class="s-label">${esc(t("writeFirst"))}</span>`;setTimeout(()=>box.remove(),3500);return;}
+  box.innerHTML=`<span class="s-label">${esc(t("sugLabel"))}</span><div class="s-text" dir="auto">${esc(t("thinking"))}</div>`;
+  b.disabled=true;
+  try{
+    const {text:out}=await sample(rephrasePrompt(text,b.dataset.aiKind),{modelTier:"quick",onText:({text})=>{box.querySelector(".s-text").textContent=text}});
+    const final=out.trim();box.querySelector(".s-text").textContent=final;
+    const acts=document.createElement("div");acts.className="s-actions";
+    acts.innerHTML=`<button type="button" class="btn primary">${esc(t("accept"))}</button><button type="button" class="btn">${esc(t("keepMine"))}</button>`;box.appendChild(acts);
+    acts.children[0].onclick=e=>{e.stopPropagation();field.value=final;field.dispatchEvent(new Event("input",{bubbles:true}));box.remove()};
+    acts.children[1].onclick=e=>{e.stopPropagation();box.remove()};
+  }catch(err){box.querySelector(".s-text").textContent=errText(err&&err.code);setTimeout(()=>box.remove(),4000);aiFailed(err);}
+  finally{b.disabled=false;}
+}
+async function suggestCrit(b){
+  if(!sample)return;const i=+b.dataset.aiCrit,c=S.criteria[i];
+  const src={name:c.name,l4:c.l4,l3:c.l3,l2:c.l2,l1:c.l1};if(!Object.values(src).some(v=>v.trim()))return;
+  const slot=$(`#c${i}-slot`);slot.innerHTML=`<div class="suggest"><span class="s-label">${esc(t("critSugLabel"))}</span><div class="s-text">${esc(t("thinking"))}</div></div>`;
+  b.disabled=true;
+  try{
+    const res=await sample.json(`You are a language editor for teachers at an Arab school. Below is one criterion of an assessment rubric with descriptions of four levels.
+Rewrite each field clearly, in the SAME language it is written in (do not translate). Make the difference between levels clear and observable where possible, but keep the content of each level as the teachers wrote it: add no new criteria or ideas and remove nothing. An empty field stays empty.
+Return only a JSON object with the keys name, l4, l3, l2, l1.
+
+${JSON.stringify(src)}`,{modelTier:"quick"});
+    const keys={name:t("critName"),l4:t("levels")[4],l3:t("levels")[3],l2:t("levels")[2],l1:t("levels")[1]};
+    slot.innerHTML=`<div class="suggest"><span class="s-label">${esc(t("critSugLabel"))}</span><div class="s-text" dir="auto">${Object.keys(keys).map(k=>`<strong>${esc(keys[k])}:</strong> ${esc(res[k]||"")}`).join("<br>")}</div>
+      <div class="s-actions"><button type="button" class="btn primary" id="c${i}-accept">${esc(t("accept"))}</button><button type="button" class="btn" id="c${i}-reject">${esc(t("keepMine"))}</button></div></div>`;
+    $(`#c${i}-accept`).onclick=e=>{e.stopPropagation();Object.keys(keys).forEach(k=>{if(typeof res[k]==="string")S.criteria[i][k]=res[k]});save();renderStage(3);};
+    $(`#c${i}-reject`).onclick=e=>{e.stopPropagation();slot.innerHTML=""};
+  }catch(err){slot.innerHTML=`<div class="suggest"><span class="s-label">${esc(errText(err&&err.code))}</span></div>`;setTimeout(()=>{slot.innerHTML=""},4000);aiFailed(err);}
+  finally{b.disabled=false;}
+}
+
+// ---------- "Ask for help": idea starters phrased as suggestions to the team
+const LEAD={ar:"ما رأيكم أن",he:"מה דעתכם ש",en:"What if the student"};
+const STRIP={ar:/^ما رأيكم (في )?أن\s*/,he:/^מה דעתכם (על כך )?ש\s*/,en:/^what if\s+/i};
+function ideaPrompt(prefs,note,avoid){
+  return `You are a pedagogical mentor helping a team of teachers at an Arab school think about an alternative assessment task. Your role is to open directions for their thinking, not to decide for them.
+Subject: ${S.subject||"not specified"}
+Grade: ${S.grade||"not specified"}
+Unit: ${S.unit||"not specified"}
+The skill they chose: ${S.skill}
+Evidence of the skill, as they described it: ${S.evidence||"not written"}
+Spaces available at the school: a robotics room, a carpentry workshop, a water garden and the school yard, plus the classroom and the surrounding community.
+${prefs.length?"What matters to the team in the idea: "+prefs.join("; "):""}
+${note?"Team notes: "+note:""}
+${avoid.length?"Do not repeat these ideas suggested earlier: "+avoid.join("; "):""}
+
+Conditions: every idea assesses that same skill and requires higher-order thinking, and most are far from writing and traditional problem solving. Make the ideas genuinely varied in form and place, and realistic for an ordinary school. Write each idea as a short starting point (one or two sentences), not a finished task, so the team develops it themselves. Phrase the "seed" field as a suggestion addressed to the team that starts with "${LEAD[L]}" and ends with a question mark.
+Write all text in ${LN[L]}.
+Return only JSON in this shape:
+{"questions":["two or three questions that help the team narrow the choice"],"ideas":[{"title":"short title","seed":"the starting point","place":"the place","reveals":"what it reveals about the skill","question":"one question left for the team to develop the idea"}]}
+Give exactly 4 ideas.`;
+}
+let shownIdeas=[];
+async function askIdeas(more){
+  if(!sample)return;if(!S.skill.trim()){$("#assistNeedSkill").hidden=false;return;}
+  const prefs=$$(".chips input:checked").map(i=>i.value),note=$("#assistNote").value.trim();
+  const btn=$("#assistGo");btn.disabled=true;setStatus("assistStatus",t("thinkingLong"));
+  try{
+    const res=await sample.json(ideaPrompt(prefs,note,more?lastIdeas:[]),{cache:false});
+    const ideas=Array.isArray(res.ideas)?res.ideas.slice(0,4):[],qs=Array.isArray(res.questions)?res.questions:[];
+    if(!ideas.length)throw {code:"empty"};
+    lastIdeas=lastIdeas.concat(ideas.map(x=>x.title||"")).slice(-12);shownIdeas=ideas;
+    $("#assistOut").innerHTML=`<div class="ideas">
+      ${qs.length?`<div class="ideas-qs"><strong>${esc(t("ideasQsH"))}</strong><ul>${qs.map(q=>`<li>${esc(q)}</li>`).join("")}</ul></div>`:""}
+      <div class="idea-grid">${ideas.map((x,i)=>`<div class="idea"><h3>${esc(x.title)}</h3>${x.place?`<span class="meta">${esc(x.place)}</span>`:""}<p>${esc(x.seed)}</p>
+        ${x.reveals?`<p class="rev"><strong>${esc(t("reveals"))}</strong> ${esc(x.reveals)}</p>`:""}${x.question?`<p class="q"><strong>${esc(t("discuss"))}</strong> ${esc(x.question)}</p>`:""}
+        <div class="use">${[0,1].map(j=>`<button type="button" class="btn" data-idea="${i}" data-to="${j}">${esc(t("toTask")[j])}</button>`).join("")}</div></div>`).join("")}</div>
+      <div class="ideas-foot"><span>${esc(t("ideasFoot"))}</span><button type="button" class="btn" id="assistMore">${esc(t("moreIdeas"))}</button></div>
+      <div id="assistConfirm"></div></div>`;
+    setStatus("assistStatus","");
+  }catch(err){setStatus("assistStatus",errText(err&&err.code),"err");aiFailed(err);}
+  finally{btn.disabled=false;}
+}
+function useIdea(i,ti){
+  const x=shownIdeas[i];if(!x)return;const task=S.tasks[ti],name=t("taskName")[ti];
+  let draft=String(x.seed||"").trim().replace(STRIP[L],"").replace(/[؟?]\s*$/,".");
+  if(L==="en")draft=draft.charAt(0).toUpperCase()+draft.slice(1);
+  const apply=()=>{task.title=x.title||"";task.desc=draft;if(!task.reveals.trim()&&x.reveals)task.reveals=x.reveals;save();
+    const out=$("#assistOut").innerHTML;renderStage(2);$("#assistBody").hidden=false;$("#assistOpen").setAttribute("aria-expanded","true");$("#assistOut").innerHTML=out;
+    $("#assistConfirm").innerHTML=`<p class="status ok">${esc(t("moved")(name))}</p>`;
+    document.getElementById(`t${ti}-desc`)?.scrollIntoView({behavior:"smooth",block:"center"});};
+  if(task.title.trim()||task.desc.trim()){
+    $("#assistConfirm").innerHTML=`<div class="inline-confirm"><span>${esc(t("replaceQ")(name))}</span><button type="button" class="btn primary" id="aYes">${esc(t("replace"))}</button><button type="button" class="btn" id="aNo">${esc(t("cancel"))}</button></div>`;
+    $("#aYes").onclick=e=>{e.stopPropagation();apply()};$("#aNo").onclick=e=>{e.stopPropagation();$("#assistConfirm").innerHTML=""};
+  }else apply();
+}
+
+// ---------- difficult words (Arabic meaning next to the word, never whole-sentence translation)
+async function suggestWords(){
+  if(!sample)return;
+  const texts=stuTexts();if(!texts.length){setStatus("glStatus",t("glNone"));return;}
+  const have=S.gloss.map(g=>g.w.trim()).filter(Boolean);
+  const btn=$("#glSuggest");btn.disabled=true;setStatus("glStatus",t("thinkingLong"));
+  try{
+    const res=await sample.json(`You help a teacher prepare a student task sheet written in ${LN[S.studentLang]} for Arabic-speaking students${S.grade?" in grade "+S.grade:""} who are learning ${LN[S.studentLang]} as an additional language.
+From the texts below, pick up to 10 words or short phrases that are likely to be hard for these students and are important for understanding the task. Skip simple everyday words, names and numbers${have.length?", and skip these words already chosen: "+have.join(", "):""}.
+For each, copy the word exactly as it appears in the text (same form and spelling), and give its meaning in this context in Modern Standard Arabic, in 1 to 3 words. Do not translate whole sentences.
+Return only a JSON array like [{"w":"word as in the text","m":"Arabic meaning"}].
+
+Texts:
+${texts.map(x=>"- "+x.replace(/\n+/g," ")).join("\n")}`,{cache:false});
+    glSug=(Array.isArray(res)?res:[]).filter(x=>x&&typeof x.w==="string"&&typeof x.m==="string"&&x.w.trim()&&x.m.trim()&&inText(x.w)&&!have.some(h=>h.toLowerCase()===x.w.trim().toLowerCase())).map(x=>({w:x.w.trim(),m:x.m.trim()})).slice(0,10);
+    if(!glSug.length){setStatus("glStatus",t("glNone"));return;}
+    const wd=S.studentLang==="en"?"ltr":"rtl";
+    $("#glSugBox").innerHTML=`<div class="gl-sug"><p class="lbl">${esc(t("glSugH"))}</p><div class="chips">${glSug.map((x,i)=>`<label><input type="checkbox" data-sg="${i}" checked><span dir="${wd}">${esc(x.w)}</span> <span class="gl-m" dir="rtl" lang="ar">${esc(x.m)}</span></label>`).join("")}</div>
+      <div class="assist-actions"><button type="button" class="btn primary" id="glAddSel">${esc(t("glAddSel"))}</button><button type="button" class="btn" id="glDismiss">${esc(t("glDismiss"))}</button></div></div>`;
+    setStatus("glStatus","");
+  }catch(err){setStatus("glStatus",errText(err&&err.code),"err");aiFailed(err);}
+  finally{const b2=$("#glSuggest");if(b2)b2.disabled=false;}
+}
+
+// ---------- boot
+renderAll();go(0,false);
+if(window.claude&&claude.use){
+  claude.use("sample").then(s=>{sample=s;showAiButtons();if(cur===4)renderStage(4);}).catch(()=>{});
+  claude.use("downloads").then(d=>{downloads=d}).catch(()=>{});
+}
+})();
+
+</script>
+
+</body></html>
