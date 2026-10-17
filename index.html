@@ -179,6 +179,34 @@ textarea.short{min-height:60px}
 .intro .brand-band .brand-credit{font-size:.88rem;color:var(--brand-gold)}
 .top-row{justify-content:flex-end}
 @media (max-width:480px){.brand-band{gap:12px;padding:12px}.brand-logo{width:64px}.brand-name{font-size:1.25rem}.brand-band h1{font-size:1.02rem}}
+/* creative layer */
+.claude-box{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;border:1.5px solid var(--accent);border-radius:var(--r);padding:14px 16px;background:var(--surface)}
+.claude-box .cb-text{flex:1 1 320px}.claude-box p{font-size:.88rem;color:var(--muted);margin-top:4px}
+.key-prev h4{font-family:var(--f-display);font-size:.95rem;margin:8px 0 4px}
+.kp-wrap{overflow-x:auto}.kp{border-collapse:collapse;width:100%;min-width:560px;font-size:.82rem}
+.kp th,.kp td{border:1px solid var(--line);padding:6px 8px;vertical-align:top;text-align:start}.kp th{background:var(--accent-soft)}
+.sug-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.btn.ai-sug{border-color:var(--accent);color:var(--accent);font-weight:600}
+.sug-note{font-size:.86rem;background:var(--accent-soft);border-radius:8px;padding:8px 12px;color:var(--ink)}
+.back-main{display:inline-block;margin-top:10px;color:var(--accent);font-weight:600;text-decoration:none;font-size:.92rem}
+.back-main:hover{text-decoration:underline}
+.kind-sel{font-weight:600;border-color:var(--wood)!important;background:var(--wood-soft)!important}
+.part-head{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;border-radius:var(--r);padding:12px 14px}
+.part-head p{font-size:.88rem;color:var(--muted);margin-top:2px}
+.part-a{background:var(--accent-soft);border-inline-start:4px solid var(--accent)}
+.part-b{background:var(--wood-soft);border-inline-start:4px solid var(--wood);margin-top:10px}
+.form-task{display:grid;gap:10px}
+.form-task h4{font-family:var(--f-display);font-size:1rem;margin:0}
+.form-task-head{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
+.form-crit{border-color:var(--wood)}
+.w-fixed{display:block;padding:8px 10px;font-weight:700;color:var(--wood)}
+.br-ov{position:fixed;inset:0;background:rgba(10,16,14,.55);display:grid;place-items:center;padding:16px;z-index:50}
+.br-box{background:var(--surface);color:var(--ink);border-radius:var(--r);padding:18px;max-width:640px;width:100%;max-height:92vh;overflow:auto;display:grid;gap:10px;box-shadow:0 12px 40px rgba(0,0,0,.25)}
+.br-steps{margin:0;padding-inline-start:20px;font-size:.9rem;color:var(--muted)}
+.br-prompt{min-height:120px;font-size:.8rem;background:var(--bg)}
+.br-reply{min-height:110px}
+.br-lbl{font-weight:600}
+.br-box a.btn{text-decoration:none;display:inline-block}
 </style>
 <div class="wrap" dir="rtl" lang="ar">
   <header class="intro" id="hdr"></header>
@@ -583,6 +611,250 @@ const FIXED_GLOSS={
   he:[["נבדקות","تُفحص"],["קריטריונים","معايير"],["קריטריון","معيار"],["תגישו","تُقدّموا"],["חומרים","مواد"],["ההערכה","التقييم"],["מצוין","ممتاز"],["דורש שיפור","يحتاج تحسين"],["בתחילת הדרך","بداية"],["אופן העבודה","طريقة العمل"]],
   ar:[]};
 
+
+// ===== Creative assessment layer: task types + rubric split 50% skill / 50% form, delivery, technology =====
+const KINDS=["presentation","poster","video","podcast","interview","model","digitalGame","physicalGame"];
+const KIND_ICON={presentation:"🎤",poster:"🖼",video:"🎬",podcast:"🎙",interview:"🗣",model:"🧱",digitalGame:"🕹",physicalGame:"🎲"};
+const KIND_NAMES={
+  ar:{presentation:"تقديم وعرض",poster:"عارضة",video:"إنشاء فيديو",podcast:"بودكاست",interview:"تمثيل مقابلة",model:"بناء مجسم توضيحي",digitalGame:"إنشاء لعبة محوسبة",physicalGame:"إنتاج لعبة عملية"},
+  he:{presentation:"הצגה ומצגת",poster:"תצוגה (פוסטר)",video:"יצירת סרטון",podcast:"פודקאסט",interview:"המחזת ראיון",model:"בניית מודל המחשה",digitalGame:"יצירת משחק ממוחשב",physicalGame:"הפקת משחק מוחשי"},
+  en:{presentation:"Presentation",poster:"Poster display",video:"Video production",podcast:"Podcast",interview:"Interview role-play",model:"Explanatory model",digitalGame:"Digital game",physicalGame:"Hands-on game"}
+};
+// what "form", "delivery" and "technology" mean for each task type (one phrase each)
+const FORM_FOCUS={
+  ar:{
+    presentation:["تنظيم العرض وتسلسل الشرائح، وضوح العناوين، والتصميم البصري المتناسق","الإلقاء بثقة، التواصل البصري مع الجمهور، إدارة الوقت والإجابة عن الأسئلة","توظيف برامج العرض والوسائط المتعددة (صور، فيديو، رسوم متحركة) بفعالية ودون مبالغة"],
+    poster:["تنظيم العارضة وتوزيع عناصرها، وضوح العناوين، تناسق الألوان والصور، ونظافة الإخراج","شرح محتوى العارضة للزوار بثقة ووضوح، والإجابة عن أسئلتهم","دمج عناصر رقمية داعمة (رمز QR، رسوم أو صور مصمَّمة رقميًا، مصادر موثّقة)"],
+    video:["القصة المصوّرة (Storyboard)، تسلسل المشاهد، المقدمة والخاتمة، ووضوح الصورة","وضوح السرد والتعليق الصوتي، الثقة أمام الكاميرا، والتزام المدة المحددة","التصوير والمونتاج والانتقالات، النصوص على الشاشة، الموسيقى والمؤثرات، وجودة الصوت"],
+    podcast:["هيكل الحلقة (مقدمة جاذبة، محاور واضحة، خاتمة)، الإيقاع، والفواصل الانتقالية","وضوح الإلقاء وسلامة اللغة، تنويع نبرة الصوت، الطلاقة والحيوية، والتزام المدة","جودة التسجيل، المونتاج الصوتي، الموسيقى والمؤثرات، وتجهيز الحلقة للنشر"],
+    interview:["بناء أسئلة المقابلة وتسلسلها المنطقي، توزيع الأدوار، والتحضير المسبق (سيناريو مكتوب)","الأداء التمثيلي وتقمّص الشخصيات، وضوح الصوت، التفاعل الطبيعي بين المتحاورين، والتواصل البصري","تسجيل المقابلة صوتًا أو صورة ومونتاجها، أو توظيف عناصر رقمية داعمة (خلفيات، عناوين، مؤثرات)"],
+    model:["دقة المجسم وتناسق أجزائه ونِسَبه، جودة التنفيذ والتشطيب، والبطاقات التوضيحية","شرح المجسم وأجزائه بثقة ووضوح، والإجابة عن أسئلة الزملاء والمعلم","توظيف أدوات رقمية في التخطيط أو البناء أو الشرح (تصميم رقمي، صور، رمز QR لشرح مسجّل)"],
+    digitalGame:["تصميم واجهة اللعبة ومراحلها، وضوح القواعد والتعليمات، وترابط المستويات مع المحتوى","تقديم اللعبة وشرح فكرتها وطريقة اللعب للزملاء بثقة، وتوجيههم أثناء التجربة","البرمجة أو استخدام أداة إنشاء الألعاب (مثل Scratch أو Wordwall أو Genially)، عمل اللعبة دون أخطاء، والتغذية الراجعة للاعب"],
+    physicalGame:["جودة مكوّنات اللعبة (لوح، بطاقات، قطع)، وضوح القواعد المكتوبة، المتانة والجاذبية البصرية","شرح قواعد اللعبة للزملاء بثقة، وإدارة جولة لعب تجريبية","توظيف أدوات رقمية في التصميم أو الطباعة (تصميم البطاقات رقميًا، رموز QR، مؤقت أو تطبيق مساعد)"]
+  },
+  he:{
+    presentation:["ארגון המצגת ורצף השקופיות, כותרות ברורות ועיצוב חזותי אחיד","הצגה בביטחון, קשר עין עם הקהל, ניהול זמן ומענה לשאלות","שימוש יעיל בתוכנות מצגת ובמולטימדיה (תמונות, וידאו, אנימציה) ללא הגזמה"],
+    poster:["ארגון התצוגה ופריסת הרכיבים, כותרות ברורות, התאמת צבעים ותמונות וגימור נקי","הסבר תוכן התצוגה למבקרים בביטחון ובבהירות, ומענה לשאלותיהם","שילוב רכיבים דיגיטליים תומכים (קוד QR, גרפיקה דיגיטלית, מקורות מתועדים)"],
+    video:["לוח תכנון (Storyboard), רצף הסצנות, פתיחה וסיום, ובהירות התמונה","בהירות הקריינות, ביטחון מול המצלמה ועמידה במשך הזמן שנקבע","צילום, עריכה ומעברים, טקסטים על המסך, מוזיקה ואפקטים, ואיכות הסאונד"],
+    podcast:["מבנה הפרק (פתיחה מושכת, צירים ברורים, סיום), קצב ומעברים","בהירות ההגשה ותקינות השפה, גיוון בטון הדיבור, שטף וחיוניות, ועמידה בזמן","איכות ההקלטה, עריכת אודיו, מוזיקה ואפקטים, והכנת הפרק לפרסום"],
+    interview:["בניית שאלות הראיון ורצפן ההגיוני, חלוקת תפקידים והכנה מוקדמת (תסריט כתוב)","משחק וכניסה לדמויות, בהירות הקול, אינטראקציה טבעית בין המשתתפים וקשר עין","הקלטת הראיון באודיו או בווידאו ועריכתו, או שילוב רכיבים דיגיטליים תומכים"],
+    model:["דיוק המודל, התאמה ופרופורציה בין חלקיו, איכות הביצוע והגימור, ותוויות הסבר","הסבר המודל וחלקיו בביטחון ובבהירות, ומענה לשאלות","שימוש בכלים דיגיטליים לתכנון, לבנייה או להסבר (עיצוב דיגיטלי, תמונות, קוד QR להסבר מוקלט)"],
+    digitalGame:["עיצוב ממשק המשחק ושלביו, בהירות החוקים וההוראות, וקשר בין השלבים לתוכן","הצגת המשחק, הסבר הרעיון ואופן המשחק לחברים בביטחון, והנחייתם בזמן הניסוי","תכנות או שימוש בכלי ליצירת משחקים (כמו Scratch, Wordwall או Genially), משחק שעובד ללא תקלות, ומשוב לשחקן"],
+    physicalGame:["איכות רכיבי המשחק (לוח, קלפים, חלקים), בהירות החוקים הכתובים, עמידות ומראה מושך","הסבר חוקי המשחק לחברים בביטחון וניהול סבב משחק לניסיון","שימוש בכלים דיגיטליים בעיצוב או בהדפסה (עיצוב קלפים דיגיטלי, קודי QR, טיימר או יישומון עזר)"]
+  },
+  en:{
+    presentation:["organization and flow of the slides, clear headings and a consistent visual design","confident delivery, eye contact with the audience, time management and answering questions","effective use of presentation software and multimedia (images, video, animation) without overdoing it"],
+    poster:["layout and organization of the poster, clear headings, matching colors and images, and a clean finish","explaining the poster to visitors confidently and clearly, and answering their questions","integrating supporting digital elements (QR code, digitally designed graphics, cited sources)"],
+    video:["storyboard, sequence of scenes, opening and closing, and image clarity","clear narration and voice-over, confidence on camera, and keeping to the set length","filming, editing and transitions, on-screen text, music and effects, and sound quality"],
+    podcast:["episode structure (engaging intro, clear segments, closing), pacing and transitions","clear, correct speech, varied tone of voice, fluency and energy, and keeping to time","recording quality, audio editing, music and effects, and preparing the episode for publishing"],
+    interview:["writing the interview questions in a logical order, assigning roles, and preparing a written script","acting and staying in character, clear voices, natural interaction between speakers, and eye contact","recording and editing the interview (audio or video), or using supporting digital elements"],
+    model:["accuracy of the model, proportion and fit of its parts, build quality and finish, and explanatory labels","explaining the model and its parts confidently and clearly, and answering questions","using digital tools to plan, build or explain (digital design, photos, a QR code to a recorded explanation)"],
+    digitalGame:["design of the game interface and levels, clear rules and instructions, and links between levels and content","presenting the game, explaining its idea and how to play confidently, and guiding classmates while they try it","coding or using a game-making tool (such as Scratch, Wordwall or Genially), a game that runs without errors, and feedback to the player"],
+    physicalGame:["quality of the game components (board, cards, pieces), clearly written rules, durability and visual appeal","explaining the rules to classmates confidently and running a trial round","using digital tools for design or printing (digitally designed cards, QR codes, a timer or helper app)"]
+  }
+};
+const FORM_W=[20,15,15];
+const FORM_GEN={
+  ar:{names:["الشكل والتنسيق","التقديم المتمكّن","استخدام التكنولوجيا"],
+    g:[f=>["متقن ومتميز في: "+f+". العمل جذاب ومنظّم ويخدم الفكرة تمامًا.","جيد في: "+f+"، مع جوانب قليلة تحتاج تحسينًا بسيطًا.","مقبول في: "+f+"؛ تظهر عيوب واضحة تؤثر على وضوح العمل.","ضعيف في: "+f+"؛ يحتاج توجيهًا ودعمًا لإنجازه."],
+       f=>["تقديم واثق ومتمكّن: "+f+". يشدّ الجمهور ويجيب بثقة.","تقديم واضح في معظمه: "+f+"، مع تردد بسيط.","تقديم متردد أو غير واضح في أجزاء منه: "+f+".","يجد صعوبة واضحة في التقديم: "+f+"، ويحتاج دعمًا."],
+       f=>["يوظّف التكنولوجيا بإتقان وإبداع: "+f+"، وتضيف قيمة حقيقية للعمل.","يوظّف التكنولوجيا بشكل مناسب: "+f+"، مع هفوات بسيطة.","توظيف محدود أو شكلي للتكنولوجيا: "+f+".","لا يوظّف التكنولوجيا، أو يوظّفها بشكل يعيق العمل: "+f+"."]]},
+  he:{names:["עיצוב וארגון","הצגה בביטחון","שימוש בטכנולוגיה"],
+    g:[f=>["מוקפד ובולט: "+f+". העבודה מושכת, מאורגנת ומשרתת את הרעיון.","טוב: "+f+", עם היבטים מעטים הדורשים שיפור קל.","סביר: "+f+"; ליקויים ברורים הפוגעים בבהירות.","חלש: "+f+"; נדרשת הכוונה ותמיכה."],
+       f=>["הצגה בטוחה ומיומנת: "+f+". מרתק את הקהל ועונה בביטחון.","הצגה ברורה ברובה: "+f+", עם היסוס קל.","הצגה מהססת או לא ברורה בחלקה: "+f+".","קושי ניכר בהצגה: "+f+", נדרשת תמיכה."],
+       f=>["שימוש מיומן ויצירתי בטכנולוגיה: "+f+", המוסיף ערך של ממש.","שימוש מתאים בטכנולוגיה: "+f+", עם פספוסים קלים.","שימוש מוגבל או שטחי בטכנולוגיה: "+f+".","אין שימוש בטכנולוגיה, או שהשימוש מפריע לעבודה: "+f+"."]]},
+  en:{names:["Form & organization","Confident delivery","Use of technology"],
+    g:[f=>["Polished and outstanding: "+f+". The work is engaging, well organized and fully serves the idea.","Good: "+f+", with a few aspects needing minor improvement.","Acceptable: "+f+"; clear flaws affect clarity.","Weak: "+f+"; needs guidance and support."],
+       f=>["Confident, skilled delivery: "+f+". Engages the audience and answers confidently.","Mostly clear delivery: "+f+", with slight hesitation.","Hesitant or partly unclear delivery: "+f+".","Clear difficulty with delivery: "+f+"; needs support."],
+       f=>["Skilled, creative use of technology: "+f+", adding real value.","Appropriate use of technology: "+f+", with minor slips.","Limited or superficial use of technology: "+f+".","No use of technology, or use that hinders the work: "+f+"."]]}
+};
+function makeForm(kind,lang){
+  const G=FORM_GEN[lang]||FORM_GEN.ar, F=(FORM_FOCUS[lang]||FORM_FOCUS.ar)[kind];
+  if(!F)return [];
+  return G.g.map((gen,i)=>{const l=gen(F[i]);return {name:G.names[i],weight:String(FORM_W[i]),l4:l[0],l3:l[1],l2:l[2],l1:l[3]};});
+}
+// effective skill-criteria weights: as entered, or 50% split equally when left empty
+function skillWeights(crits){
+  const named=crits.filter(c=>(c.name||"").trim());
+  const entered=named.map(c=>parseFloat(c.weight));
+  if(named.length&&entered.every(n=>!isNaN(n)))return entered;
+  const n=named.length||1,base=Math.floor(50/n),rest=50-base*n;
+  return named.map((_,i)=>base+(i<rest?1:0));
+}
+
+// ----- wording for the creative layer (overrides/extends the tables above)
+(function(){
+const P={
+ar:{
+  intro:"يعبّئ الطاقم البنود معًا في خمس مراحل، وفي النهاية يحصل على ملفَي Word: ملف للطالب يشرح مركّبات المهمة وفيه خياران يختار منهما واحدًا، ومرشد تقييم للمعلم. نصف العلامة على فهم المهارة بمعايير موحدة للمهمتين، والنصف الآخر على الشكل والتقديم واستخدام التكنولوجيا حسب نوع كل مهمة. زر «اقتراح صياغة» اختياري: يجهّز لكم برومبت تنسخونه إلى Claude ثم تلصقون الرد، ولا يُعتمد أي اقتراح إلا بموافقتكم.",
+  s3p:"مهمتان إبداعيتان تفحصان المهارة نفسها بطريقتين مختلفتين، ولكل منهما نوع (فيديو، بودكاست، مجسم...). الطالب يختار واحدة منهما.",
+  s4h:"مرشد التصحيح",s4p:"قسمان: أولًا معايير المهارة (50%) — معياران إلى أربعة تصف جوانب المهارة وتصلح للمهمتين. ثانيًا الشكل والتقديم والتكنولوجيا (50%) — تُولَّد تلقائيًا حسب نوع كل مهمة، ويمكنكم تعديل صياغتها.",
+  weightSum:n=>`مجموع أوزان معايير المهارة: ${n}%`,weightBad:" (يجب أن يكون 50%)",
+  kindLbl:"نوع المهمة الإبداعية",kindPick:"اختاروا نوع المهمة...",
+  partA:"أولًا: فهم المهارة — 50%",partAP:"معايير موحدة تصلح للمهمتين. اتركوا الأوزان فارغة لتوزيع 50% بالتساوي، أو أدخلوها بمجموع 50%.",splitBtn:"وزّعوا 50% بالتساوي",
+  partB:"ثانيًا: الشكل والتقديم واستخدام التكنولوجيا — 50%",partBP:"تُولَّد حسب نوع كل مهمة: الشكل والتنسيق 20%، التقديم المتمكّن 15%، استخدام التكنولوجيا 15%. عدّلوا الصياغة كما تشاؤون.",
+  regen:"إعادة التوليد حسب نوع المهمة",regenQ:"ستُستبدل تعديلاتكم على معايير هذه المهمة. هل تريدون المتابعة؟",noKind:n=>`اختاروا نوع ${n} في المرحلة 3 لتظهر معاييرها هنا.`,
+  backMain:"العودة إلى المنصة الذكية للتقييم البديل",
+  importOk:"وصلت بيانات المهمة من المنصة الذكية للتقييم البديل ✓ أكملوا المراحل بالترتيب.",importQ:"وصلت بيانات مهمة جديدة من المنصة الذكية للتقييم البديل. هل تستبدلون بها الخطة الحالية؟",importBad:"تعذّرت قراءة البيانات المرسلة.",
+  brH:"اقتراح عبر Claude",brSteps:["انسخوا البرومبت","الصقوه في محادثة مع Claude","انسخوا رد Claude والصقوه هنا"],brCopy:"نسخ البرومبت",brOpen:"فتح Claude",brPasteLbl:"رد Claude",brPastePh:"الصقوا هنا رد Claude كما هو",brUse:"استعمال الرد",brCopied:"تم النسخ ✓",brBad:"لم نتمكن من قراءة الرد. تأكدوا أنكم نسختم رد Claude كاملًا.",brEmpty:"الصقوا رد Claude أولًا.",
+  glNoAi:"أضيفوا الكلمات بأنفسكم، أو اطلبوا اقتراحات عبر Claude.",
+  stuCardP:l=>`ب${l}: شرح مركّبات المهمة، المهمتان للاختيار، ومعايير التقييم.`,
+  teaCardP:"المهارة والدليل، تفاصيل المهمتين، مرشد التصحيح بقسميه (50% مهارة، 50% شكل وتقديم وتكنولوجيا)، وورقة رصد الدرجات.",
+  saved:"تم تنزيل الملف."
+},
+he:{
+  intro:"הצוות ממלא את הסעיפים יחד בחמישה שלבים, ובסוף מקבל שני קובצי Word: קובץ לתלמיד שמסביר את רכיבי המשימה ובו שתי אפשרויות לבחירה, ומחוון הערכה למורה. מחצית מהציון על הבנת המיומנות לפי קריטריונים אחידים לשתי המשימות, והמחצית השנייה על העיצוב, ההצגה והשימוש בטכנולוגיה לפי סוג כל משימה. הכפתור «הצעת ניסוח» אופציונלי: הוא מכין פרומפט שמעתיקים ל-Claude ואז מדביקים את התשובה, ושום הצעה לא נכנסת בלי אישורכם.",
+  s3p:"שתי משימות יצירתיות שבודקות את אותה מיומנות בשתי דרכים שונות, ולכל אחת סוג (סרטון, פודקאסט, מודל...). התלמיד בוחר אחת מהן.",
+  s4h:"מחוון",s4p:"שני חלקים: א. קריטריוני המיומנות (50%) — שניים עד ארבעה קריטריונים שמתאימים לשתי המשימות. ב. עיצוב, הצגה וטכנולוגיה (50%) — נוצרים אוטומטית לפי סוג כל משימה, וניתן לערוך את ניסוחם.",
+  weightSum:n=>`סכום משקלות קריטריוני המיומנות: ${n}%`,weightBad:" (צריך להיות 50%)",
+  kindLbl:"סוג המשימה היצירתית",kindPick:"בחרו סוג משימה...",
+  partA:"א. הבנת המיומנות — 50%",partAP:"קריטריונים אחידים לשתי המשימות. השאירו את המשקלות ריקים לחלוקה שווה של 50%, או מלאו אותם בסכום של 50%.",splitBtn:"חלקו 50% באופן שווה",
+  partB:"ב. עיצוב, הצגה ושימוש בטכנולוגיה — 50%",partBP:"נוצרים לפי סוג כל משימה: עיצוב וארגון 20%, הצגה בביטחון 15%, שימוש בטכנולוגיה 15%. ערכו את הניסוח כרצונכם.",
+  regen:"יצירה מחדש לפי סוג המשימה",regenQ:"השינויים שלכם בקריטריונים של משימה זו יוחלפו. להמשיך?",noKind:n=>`בחרו את סוג ${n} בשלב 3 כדי שהקריטריונים שלה יופיעו כאן.`,
+  backMain:"חזרה לפלטפורמה החכמה להערכה חלופית",
+  importOk:"פרטי המשימה התקבלו מהפלטפורמה החכמה להערכה חלופית ✓ השלימו את השלבים לפי הסדר.",importQ:"התקבלו פרטי משימה חדשה מהפלטפורמה החכמה. להחליף בהם את התוכנית הנוכחית?",importBad:"לא ניתן לקרוא את הנתונים שנשלחו.",
+  brH:"הצעה דרך Claude",brSteps:["העתיקו את הפרומפט","הדביקו אותו בשיחה עם Claude","העתיקו את תשובת Claude והדביקו כאן"],brCopy:"העתקת הפרומפט",brOpen:"פתיחת Claude",brPasteLbl:"תשובת Claude",brPastePh:"הדביקו כאן את תשובת Claude כמות שהיא",brUse:"שימוש בתשובה",brCopied:"הועתק ✓",brBad:"לא הצלחנו לקרוא את התשובה. ודאו שהעתקתם את כל תשובת Claude.",brEmpty:"הדביקו קודם את תשובת Claude.",
+  glNoAi:"הוסיפו את המילים בעצמכם, או בקשו הצעות דרך Claude.",
+  stuCardP:l=>`ב${l}: הסבר רכיבי המשימה, שתי המשימות לבחירה וקריטריוני ההערכה.`,
+  teaCardP:"המיומנות והעדות, פרטי שתי המשימות, המחוון בשני חלקיו (50% מיומנות, 50% עיצוב, הצגה וטכנולוגיה) ודף ריכוז ציונים.",
+  saved:"הקובץ הורד."
+},
+en:{
+  intro:"The team fills in the items together in five stages and ends with two Word files: a student file explaining the task components with two options to choose from, and a teacher assessment guide. Half the grade is on understanding the skill, with criteria shared by both tasks; the other half is on form, delivery and use of technology, according to each task's type. The “Suggest wording” button is optional: it prepares a prompt you copy into Claude and then paste the reply back, and no suggestion is used without your approval.",
+  s3p:"Two creative tasks that assess the same skill in two different ways, each with a type (video, podcast, model...). The student chooses one.",
+  s4h:"Assessment guide",s4p:"Two parts: A. Skill criteria (50%) — two to four criteria describing the skill that fit both tasks. B. Form, delivery and technology (50%) — generated automatically from each task's type; you can edit the wording.",
+  weightSum:n=>`Skill-criteria weights total: ${n}%`,weightBad:" (must be 50%)",
+  kindLbl:"Creative task type",kindPick:"Choose a task type...",
+  partA:"A. Understanding the skill — 50%",partAP:"Criteria shared by both tasks. Leave weights empty to split 50% equally, or enter weights that total 50%.",splitBtn:"Split 50% equally",
+  partB:"B. Form, delivery and use of technology — 50%",partBP:"Generated from each task's type: form & organization 20%, confident delivery 15%, use of technology 15%. Edit the wording as you like.",
+  regen:"Regenerate from task type",regenQ:"Your edits to this task's criteria will be replaced. Continue?",noKind:n=>`Choose the type of ${n} in stage 3 to see its criteria here.`,
+  backMain:"Back to the Smart Alternative Assessment Platform",
+  importOk:"Task details arrived from the Smart Alternative Assessment Platform ✓ Complete the stages in order.",importQ:"New task details arrived from the Smart Alternative Assessment Platform. Replace the current plan with them?",importBad:"Could not read the data that was sent.",
+  brH:"Suggestion via Claude",brSteps:["Copy the prompt","Paste it into a chat with Claude","Copy Claude's reply and paste it here"],brCopy:"Copy prompt",brOpen:"Open Claude",brPasteLbl:"Claude's reply",brPastePh:"Paste Claude's reply here as it is",brUse:"Use the reply",brCopied:"Copied ✓",brBad:"We could not read the reply. Make sure you copied all of Claude's reply.",brEmpty:"Paste Claude's reply first.",
+  glNoAi:"Add the words yourselves, or ask Claude for suggestions.",
+  stuCardP:l=>`In ${l}: the task components, the two tasks to choose from, and the assessment criteria.`,
+  teaCardP:"The skill and evidence, both tasks in detail, the two-part guide (50% skill, 50% form, delivery and technology), and a grade sheet.",
+  saved:"File downloaded."
+}};
+const RULE={ar:"مرشد التصحيح من قسمين: 50% لفهم المهارة بمعايير موحدة للمهمتين، و50% للشكل والتقديم واستخدام التكنولوجيا حسب نوع كل مهمة.",
+  he:"המחוון בשני חלקים: 50% להבנת המיומנות לפי קריטריונים אחידים לשתי המשימות, ו-50% לעיצוב, להצגה ולשימוש בטכנולוגיה לפי סוג כל משימה.",
+  en:"The guide has two parts: 50% for understanding the skill, with criteria shared by both tasks, and 50% for form, delivery and use of technology, according to each task's type."};
+const CHK={ar:["كل معيار في قسم المهارة يصلح للمهمتين معًا.","معايير الشكل والتقديم والتكنولوجيا مناسبة لنوع كل مهمة، ووزنها معًا 50%."],
+  he:["כל קריטריון בחלק המיומנות מתאים לשתי המשימות.","קריטריוני העיצוב, ההצגה והטכנולוגיה מתאימים לסוג כל משימה, ומשקלם יחד 50%."],
+  en:["Every skill criterion fits both tasks.","The form, delivery and technology criteria fit each task's type, and together weigh 50%."]};
+const GUIDE={ar:"أوزان معايير المهارة مجموعها 50%. إن تركتموها فارغة تُوزَّع بالتساوي.",he:"סכום משקלות קריטריוני המיומנות הוא 50%. אם תשאירו אותם ריקים, הם יחולקו באופן שווה.",en:"Skill-criteria weights total 50%. If you leave them empty, they are split equally."};
+const MISS={ar:{weights:"مجموع أوزان معايير المهارة يجب أن يكون 50% أو اتركوها فارغة (المرحلة 4)",kind:n=>`نوع ${n} الإبداعي (المرحلة 3)`},
+  he:{weights:"סכום משקלות קריטריוני המיומנות צריך להיות 50%, או השאירו אותם ריקים (שלב 4)",kind:n=>`סוג ${n} (שלב 3)`},
+  en:{weights:"Skill-criteria weights must total 50%, or leave them empty (stage 4)",kind:n=>`The type of ${n} (stage 3)`}};
+const DOCP={
+  ar:{chooseNote:"نصف العلامة (50%) على فهم المهارة، بالمعايير نفسها في المهمتين. النصف الآخر (50%) على الشكل والتقديم واستخدام التكنولوجيا حسب المهمة التي تختارها. اختر المهمة التي تستطيع أن تُظهر فيها قدرتك بأفضل شكل.",
+    kind:"نوع المهمة",partA:"أولًا: فهم المهارة (50%) — للمهمتين",partB:(t,k)=>`ثانيًا: الشكل والتقديم واستخدام التكنولوجيا (50%) — ${t}: ${k}`,partBT:"ثانيًا: الشكل والتقديم واستخدام التكنولوجيا (50%)",
+    rubricH:"مرشد التصحيح",weight:"الوزن",formulaW:"الدرجة النهائية من 100 = مجموع (مستوى المعيار ÷ 4 × وزن المعيار). معايير المهارة مجموعها 50%، ومعايير الشكل والتقديم والتكنولوجيا للمهمة التي اختارها الطالب مجموعها 50%.",
+    sumA:"المهارة (50)",sumB:"الشكل والتقديم (50)"},
+  he:{chooseNote:"מחצית מהציון (50%) על הבנת המיומנות, לפי אותם קריטריונים בשתי המשימות. המחצית השנייה (50%) על העיצוב, ההצגה והשימוש בטכנולוגיה לפי המשימה שתבחרו. בחרו את המשימה שבה תוכלו להראות את היכולת שלכם בצורה הטובה ביותר.",
+    kind:"סוג המשימה",partA:"א. הבנת המיומנות (50%) — לשתי המשימות",partB:(t,k)=>`ב. עיצוב, הצגה ושימוש בטכנולוגיה (50%) — ${t}: ${k}`,partBT:"ב. עיצוב, הצגה ושימוש בטכנולוגיה (50%)",
+    rubricH:"מחוון",weight:"משקל",formulaW:"ציון סופי מתוך 100 = סכום (רמת הקריטריון ÷ 4 × משקל הקריטריון). סכום קריטריוני המיומנות 50%, וסכום קריטריוני העיצוב, ההצגה והטכנולוגיה של המשימה שהתלמיד בחר 50%.",
+    sumA:"מיומנות (50)",sumB:"עיצוב והצגה (50)"},
+  en:{chooseNote:"Half of the grade (50%) is on understanding the skill, with the same criteria in both tasks. The other half (50%) is on form, delivery and use of technology for the task you choose. Choose the task in which you can best show what you can do.",
+    kind:"Task type",partA:"A. Understanding the skill (50%) — both tasks",partB:(t,k)=>`B. Form, delivery and use of technology (50%) — ${t}: ${k}`,partBT:"B. Form, delivery and use of technology (50%)",
+    rubricH:"Assessment guide",weight:"Weight",formulaW:"Final grade out of 100 = sum of (criterion level ÷ 4 × criterion weight). Skill criteria total 50%; the form, delivery and technology criteria of the task the student chose total 50%.",
+    sumA:"Skill (50)",sumB:"Form & delivery (50)"}};
+["ar","he","en"].forEach(l=>{
+  Object.assign(I18N[l],P[l]);
+  I18N[l].rules=I18N[l].rules.slice();I18N[l].rules[3]=RULE[l];
+  I18N[l].checks=I18N[l].checks.slice();I18N[l].checks[5]=CHK[l][0];I18N[l].checks[6]=CHK[l][1];
+  I18N[l].s4guide=I18N[l].s4guide.slice();I18N[l].s4guide[3]=GUIDE[l];
+  I18N[l].miss=Object.assign({},I18N[l].miss,MISS[l]);
+  Object.assign(DOC[l],DOCP[l]);
+});
+// sample tasks get a creative type
+const EXK={ar:["presentation","poster"],he:["presentation","poster"],en:["presentation","poster"]};
+Object.keys(EXK).forEach(l=>{if(EXAMPLES[l]&&EXAMPLES[l].tasks)EXAMPLES[l].tasks.forEach((x,i)=>{x.kind=EXK[l][i];});(EXAMPLES[l].criteria||[]).forEach(c=>{if(c.weight)c.weight=String(parseFloat(c.weight)/2);});});
+})();
+
+
+// ===== Built-in suggestions: task details per type, and skill criteria (all editable) =====
+const TASK_TPL={
+  ar:{
+    _with:(u,sk,k)=>(u?` حول «${u}»`:"")+(sk?`، تُظهر ${["poster","podcast","interview","digitalGame","physicalGame"].includes(k)?"فيها":"فيه"} المهارة: ${sk}`:""),
+    presentation:{d:x=>`حضّر عرضًا تقديميًا قصيرًا (5–7 دقائق) أمام الصف${x}. استعن بشرائح منظمة وأمثلة من الحياة، وكن مستعدًا للإجابة عن أسئلة زملائك.`,p:"عرض تقديمي (شرائح) وتقديم شفهي 5–7 دقائق",m:"حاسوب، برنامج عرض (PowerPoint أو Canva أو Google Slides)، جهاز عرض",t:"حصتان للتحضير وحصة للعرض",mode:"solo",r:"قدرة الطالب على شرح المهارة شفهيًا والدفاع عن أفكاره أمام جمهور."},
+    poster:{d:x=>`صمّم عارضة (بوستر) واضحة وجذابة${x}. نظّم المعلومات بعناوين ورسوم وصور، ثم اشرح عارضتك لزوار المعرض.`,p:"عارضة مطبوعة أو مرسومة وشرح قصير للزوار",m:"لوح كرتون أو ورق كبير، ألوان، صور مطبوعة، رمز QR (اختياري)",t:"حصتان للتصميم وحصة للعرض",mode:"pair",r:"قدرة الطالب على تنظيم المعرفة بصريًا واختيار الأهم وتلخيصه."},
+    video:{d:x=>`صوّر فيديو تعليميًا قصيرًا (2–3 دقائق)${x}. خطّط المشاهد أولًا (Storyboard)، اكتب نص التعليق الصوتي، ثم صوّر وحرّر الفيديو.`,p:"فيديو 2–3 دقائق مع قصة مصوّرة ونص التعليق",m:"هاتف أو جهاز لوحي، تطبيق مونتاج (CapCut أو Clipchamp أو Canva)، سماعة أو ميكروفون",t:"ثلاث حصص",mode:"pair",r:"قدرة الطالب على تبسيط المهارة وشرحها بالصورة والصوت لجمهور حقيقي."},
+    podcast:{d:x=>`سجّل حلقة بودكاست قصيرة (3–5 دقائق)${x}. خطّط محاور الحلقة، اكتب نصًا أو أسئلة لضيف، ثم سجّل وحرّر الصوت.`,p:"حلقة صوتية 3–5 دقائق مع خطة المحاور",m:"هاتف أو حاسوب، تطبيق تسجيل ومونتاج (Audacity أو Soundtrap)، مكان هادئ",t:"حصتان إلى ثلاث حصص",mode:"pair",r:"قدرة الطالب على التعبير الشفهي عن المهارة وبناء حجة متسلسلة دون اعتماد على الصورة."},
+    interview:{d:x=>`مثّل مع زميلك مقابلة بين صحفي وخبير أو شخصية مرتبطة بالموضوع${x}. اكتبا أسئلة متدرجة وأجوبة دقيقة، ثم قدّما المقابلة أمام الصف أو سجّلاها.`,p:"سيناريو مكتوب ومقابلة تمثيلية 4–6 دقائق",m:"ورقة السيناريو، أدوات بسيطة للشخصيات، هاتف للتسجيل (اختياري)",t:"حصتان للتحضير وحصة للتقديم",mode:"pair",r:"قدرة الطالب على توظيف المهارة في حوار حيّ والإجابة عن أسئلة غير متوقعة."},
+    model:{d:x=>`ابنِ مجسمًا توضيحيًا${x}. خطّط التصميم برسم أولي، اختر المواد المناسبة، ثم اشرح مجسمك وأجزاءه أمام الصف.`,p:"مجسم توضيحي مع بطاقات شرح وعرض قصير",m:"كرتون، خشب أو مواد معاد تدويرها، غراء، ألوان، أدوات قص",t:"ثلاث حصص",mode:"group",r:"قدرة الطالب على تجسيد المفهوم بيديه واتخاذ قرارات تصميم مبرّرة."},
+    digitalGame:{d:x=>`أنشئ لعبة محوسبة قصيرة${x}. صمّم مراحل أو أسئلة تتدرج في صعوبتها، أضف تغذية راجعة للاعب، ثم جرّب اللعبة مع زملائك.`,p:"لعبة محوسبة (3 مراحل أو 10 أسئلة على الأقل) وتجربتها مع الزملاء",m:"حاسوب، أداة إنشاء ألعاب (Scratch أو Wordwall أو Genially)",t:"ثلاث حصص",mode:"pair",r:"قدرة الطالب على تحويل المهارة إلى قواعد وتحديات، وهذا يتطلب فهمًا عميقًا لها."},
+    physicalGame:{d:x=>`صمّم لعبة عملية (لوحية أو بطاقات)${x}. اكتب قواعد واضحة، اصنع مكوّنات اللعبة، ثم أدِر جولة لعب تجريبية مع زملائك.`,p:"لعبة عملية بمكوّناتها وقواعد مكتوبة وجولة تجريبية",m:"كرتون، بطاقات، نرد أو قطع، ألوان، طابعة (اختياري)",t:"ثلاث حصص",mode:"group",r:"قدرة الطالب على بناء قواعد وأسئلة تختبر المهارة، وشرحها للآخرين."}
+  },
+  he:{
+    _with:(u,sk,k)=>(u?` בנושא «${u}»`:"")+(sk?`, ${["poster","presentation"].includes(k)?"שבה":"שבו"} תראו את המיומנות: ${sk}`:""),
+    presentation:{d:x=>`הכינו מצגת קצרה (5–7 דקות) לכיתה${x}. השתמשו בשקופיות מאורגנות ובדוגמאות מהחיים, והיו מוכנים לענות על שאלות.`,p:"מצגת והצגה בעל פה 5–7 דקות",m:"מחשב, תוכנת מצגות (PowerPoint, Canva או Google Slides), מקרן",t:"שני שיעורי הכנה ושיעור הצגה",mode:"solo",r:"יכולת התלמיד להסביר את המיומנות בעל פה ולהגן על רעיונותיו מול קהל."},
+    poster:{d:x=>`עצבו תצוגה (פוסטר) ברורה ומושכת${x}. ארגנו את המידע בכותרות, באיורים ובתמונות, ואז הסבירו את התצוגה למבקרים.`,p:"פוסטר מודפס או מצויר והסבר קצר למבקרים",m:"בריסטול או נייר גדול, צבעים, תמונות מודפסות, קוד QR (אופציונלי)",t:"שני שיעורי עיצוב ושיעור הצגה",mode:"pair",r:"יכולת התלמיד לארגן ידע באופן חזותי ולבחור את העיקר."},
+    video:{d:x=>`צלמו סרטון לימודי קצר (2–3 דקות)${x}. תכננו קודם את הסצנות (Storyboard), כתבו קריינות, ואז צלמו וערכו.`,p:"סרטון 2–3 דקות עם לוח תכנון וטקסט קריינות",m:"טלפון או טאבלט, אפליקציית עריכה (CapCut, Clipchamp או Canva), מיקרופון",t:"שלושה שיעורים",mode:"pair",r:"יכולת התלמיד לפשט את המיומנות ולהסבירה בתמונה ובקול לקהל אמיתי."},
+    podcast:{d:x=>`הקליטו פרק פודקאסט קצר (3–5 דקות)${x}. תכננו את צירי הפרק, כתבו טקסט או שאלות לאורח, ואז הקליטו וערכו.`,p:"פרק שמע 3–5 דקות עם תכנון הצירים",m:"טלפון או מחשב, אפליקציית הקלטה ועריכה (Audacity או Soundtrap), מקום שקט",t:"שניים עד שלושה שיעורים",mode:"pair",r:"יכולת התלמיד להביע את המיומנות בעל פה ולבנות טיעון רציף ללא תמונה."},
+    interview:{d:x=>`המחיזו עם חבר ראיון בין עיתונאי למומחה או לדמות הקשורה לנושא${x}. כתבו שאלות מדורגות ותשובות מדויקות, והציגו או הקליטו.`,p:"תסריט כתוב וראיון מומחז 4–6 דקות",m:"דף תסריט, אביזרים פשוטים, טלפון להקלטה (אופציונלי)",t:"שני שיעורי הכנה ושיעור הצגה",mode:"pair",r:"יכולת התלמיד להפעיל את המיומנות בשיחה חיה ולענות על שאלות לא צפויות."},
+    model:{d:x=>`בנו מודל המחשה${x}. תכננו בסקיצה, בחרו חומרים מתאימים, והסבירו את המודל וחלקיו לכיתה.`,p:"מודל המחשה עם כרטיסי הסבר והצגה קצרה",m:"קרטון, עץ או חומרים ממוחזרים, דבק, צבעים, כלי חיתוך",t:"שלושה שיעורים",mode:"group",r:"יכולת התלמיד לגלם את המושג בידיים ולקבל החלטות עיצוב מנומקות."},
+    digitalGame:{d:x=>`צרו משחק ממוחשב קצר${x}. עצבו שלבים או שאלות בקושי עולה, הוסיפו משוב לשחקן, ונסו את המשחק עם חברים.`,p:"משחק ממוחשב (3 שלבים או 10 שאלות לפחות) וניסוי עם חברים",m:"מחשב, כלי ליצירת משחקים (Scratch, Wordwall או Genially)",t:"שלושה שיעורים",mode:"pair",r:"יכולת התלמיד להפוך את המיומנות לחוקים ולאתגרים, דבר הדורש הבנה עמוקה."},
+    physicalGame:{d:x=>`עצבו משחק מוחשי (לוח או קלפים)${x}. כתבו חוקים ברורים, הכינו את רכיבי המשחק, ונהלו סבב ניסיון עם חברים.`,p:"משחק מוחשי עם רכיבים, חוקים כתובים וסבב ניסיון",m:"קרטון, קלפים, קובייה או חלקים, צבעים, מדפסת (אופציונלי)",t:"שלושה שיעורים",mode:"group",r:"יכולת התלמיד לבנות חוקים ושאלות שבודקים את המיומנות ולהסבירם לאחרים."}
+  },
+  en:{
+    _with:(u,sk)=>(u?` about “${u}”`:"")+(sk?`, showing the skill: ${sk}`:""),
+    presentation:{d:x=>`Prepare a short presentation (5–7 minutes) for the class${x}. Use well-organized slides and real-life examples, and be ready to answer questions.`,p:"Slide presentation and a 5–7 minute talk",m:"Computer, presentation software (PowerPoint, Canva or Google Slides), projector",t:"Two lessons to prepare, one to present",mode:"solo",r:"The student's ability to explain the skill orally and defend ideas in front of an audience."},
+    poster:{d:x=>`Design a clear, attractive poster${x}. Organize the information with headings, diagrams and images, then explain your poster to visitors.`,p:"Printed or hand-drawn poster and a short explanation to visitors",m:"Poster board or large paper, colors, printed images, QR code (optional)",t:"Two lessons to design, one to present",mode:"pair",r:"The student's ability to organize knowledge visually and pick out what matters."},
+    video:{d:x=>`Film a short educational video (2–3 minutes)${x}. Plan the scenes first (storyboard), write the voice-over, then film and edit.`,p:"2–3 minute video with storyboard and voice-over script",m:"Phone or tablet, editing app (CapCut, Clipchamp or Canva), microphone",t:"Three lessons",mode:"pair",r:"The student's ability to simplify the skill and explain it with image and sound to a real audience."},
+    podcast:{d:x=>`Record a short podcast episode (3–5 minutes)${x}. Plan the segments, write a script or guest questions, then record and edit.`,p:"3–5 minute audio episode with segment plan",m:"Phone or computer, recording/editing app (Audacity or Soundtrap), a quiet place",t:"Two to three lessons",mode:"pair",r:"The student's ability to express the skill orally and build a connected argument without visuals."},
+    interview:{d:x=>`With a classmate, role-play an interview between a journalist and an expert or a figure linked to the topic${x}. Write graded questions and accurate answers, then perform or record it.`,p:"Written script and a 4–6 minute role-played interview",m:"Script sheet, simple props, phone to record (optional)",t:"Two lessons to prepare, one to perform",mode:"pair",r:"The student's ability to use the skill in live dialogue and handle unexpected questions."},
+    model:{d:x=>`Build an explanatory model${x}. Plan it with a sketch, choose suitable materials, then explain the model and its parts to the class.`,p:"Explanatory model with label cards and a short presentation",m:"Cardboard, wood or recycled materials, glue, colors, cutting tools",t:"Three lessons",mode:"group",r:"The student's ability to embody the concept by hand and make justified design decisions."},
+    digitalGame:{d:x=>`Create a short digital game${x}. Design levels or questions of increasing difficulty, add feedback for the player, and test it with classmates.`,p:"Digital game (at least 3 levels or 10 questions) tested with classmates",m:"Computer, game-making tool (Scratch, Wordwall or Genially)",t:"Three lessons",mode:"pair",r:"The student's ability to turn the skill into rules and challenges, which takes deep understanding."},
+    physicalGame:{d:x=>`Design a hands-on game (board or cards)${x}. Write clear rules, make the components, and run a trial round with classmates.`,p:"Hands-on game with components, written rules and a trial round",m:"Cardboard, cards, dice or pieces, colors, printer (optional)",t:"Three lessons",mode:"group",r:"The student's ability to build rules and questions that test the skill and explain them to others."}
+  }
+};
+// where each skill criterion shows up in a task of each type [content, talk]
+const KIND_WHERE={
+  ar:{presentation:["الشرائح والعرض","الإجابة عن أسئلة الجمهور"],poster:["العارضة","شرحها للزوار"],video:["الفيديو ونص التعليق","التعليق الصوتي"],podcast:["الحلقة","الإلقاء أو الحوار"],interview:["أسئلة المقابلة وأجوبتها","الحوار بين الشخصيات"],model:["المجسم وأجزائه","شرح المجسم أمام الصف"],digitalGame:["مراحل اللعبة وأسئلتها","تقديم اللعبة للزملاء"],physicalGame:["بطاقات اللعبة وقواعدها","إدارة جولة اللعب"]},
+  he:{presentation:["השקופיות וההצגה","מענה לשאלות הקהל"],poster:["התצוגה","הסברה למבקרים"],video:["הסרטון וטקסט הקריינות","הקריינות"],podcast:["הפרק","ההגשה או השיחה"],interview:["שאלות הראיון ותשובותיו","השיחה בין הדמויות"],model:["המודל וחלקיו","הסבר המודל לכיתה"],digitalGame:["שלבי המשחק ושאלותיו","הצגת המשחק לחברים"],physicalGame:["קלפי המשחק וחוקיו","ניהול סבב המשחק"]},
+  en:{presentation:["the slides and talk","answering audience questions"],poster:["the poster","explaining it to visitors"],video:["the video and its script","the voice-over"],podcast:["the episode","the delivery or dialogue"],interview:["the interview questions and answers","the dialogue between characters"],model:["the model and its parts","explaining the model to the class"],digitalGame:["the game levels and questions","presenting the game to classmates"],physicalGame:["the game cards and rules","running the game round"]}
+};
+const CRIT_TPL={
+  ar:{
+    c:[{name:"دقة فهم المهارة",l:sk=>[`يُظهر فهمًا دقيقًا وعميقًا${sk?` لـ«${sk}»`:" للمهارة"}، دون أخطاء مفاهيمية، ويستعمل المصطلحات بشكل صحيح.`,"فهم صحيح في معظمه، مع أخطاء بسيطة لا تمسّ الفكرة الأساسية.","فهم جزئي؛ تظهر أخطاء مفاهيمية واضحة أو خلط في المصطلحات.","فهم محدود أو غير صحيح، ويحتاج دعمًا ليُظهر المهارة."],w:(a,b)=>`في دقة المحتوى في ${a}`},
+       {name:"توظيف المهارة في موقف جديد",l:()=>["يطبّق المهارة بشكل صحيح ومستقل في موقف جديد، ويبتكر أمثلة من عنده.","يطبّق المهارة بشكل صحيح في موقف مألوف، بقليل من المساعدة.","يطبّق المهارة جزئيًا أو بأخطاء، ويعتمد على الأمثلة التي قُدّمت له.","لا يتمكن من تطبيق المهارة دون مساعدة مباشرة."],w:(a,b)=>`في الأمثلة والمواقف التي يختارها في ${a}`},
+       {name:"التفسير والتبرير",l:()=>["يفسّر قراراته واستنتاجاته بأدلة واضحة ومنطقية، ويربطها بالمهارة.","يفسّر معظم قراراته تفسيرًا صحيحًا، بأدلة محدودة.","تفسير عام أو سطحي، دون أدلة كافية.","لا يقدّم تفسيرًا لقراراته."],w:(a,b)=>`في شرح قراراته خلال ${b}`}]},
+  he:{
+    c:[{name:"דיוק בהבנת המיומנות",l:sk=>[`מפגין הבנה מדויקת ועמוקה${sk?` של «${sk}»`:" של המיומנות"}, ללא טעויות מושגיות, ומשתמש במונחים נכון.`,"הבנה נכונה ברובה, עם טעויות קלות שאינן פוגעות ברעיון המרכזי.","הבנה חלקית; טעויות מושגיות ברורות או בלבול במונחים.","הבנה מוגבלת או שגויה; זקוק לתמיכה כדי להראות את המיומנות."],w:(a,b)=>`בדיוק התוכן ב${a}`},
+       {name:"יישום המיומנות במצב חדש",l:()=>["מיישם את המיומנות נכון ובאופן עצמאי במצב חדש, ויוצר דוגמאות משלו.","מיישם נכון במצב מוכר, בעזרה מועטה.","מיישם חלקית או עם טעויות, ונשען על הדוגמאות שניתנו לו.","אינו מצליח ליישם ללא עזרה ישירה."],w:(a,b)=>`בדוגמאות ובמצבים שהוא בוחר ב${a}`},
+       {name:"הסבר ונימוק",l:()=>["מסביר את החלטותיו ומסקנותיו בראיות ברורות והגיוניות, וקושר אותן למיומנות.","מסביר נכון את רוב החלטותיו, עם ראיות מעטות.","הסבר כללי או שטחי, ללא ראיות מספיקות.","אינו מסביר את החלטותיו."],w:(a,b)=>`בהסבר החלטותיו במהלך ${b}`}]},
+  en:{
+    c:[{name:"Accurate understanding of the skill",l:sk=>[`Shows accurate, deep understanding${sk?` of “${sk}”`:" of the skill"}, with no conceptual errors, using terms correctly.`,"Mostly correct understanding, with minor errors that do not affect the main idea.","Partial understanding; clear conceptual errors or mixed-up terms.","Limited or incorrect understanding; needs support to show the skill."],w:(a,b)=>`In the accuracy of the content in ${a}`},
+       {name:"Applying the skill in a new situation",l:()=>["Applies the skill correctly and independently in a new situation, creating own examples.","Applies it correctly in a familiar situation, with a little help.","Applies it partly or with errors, relying on examples given.","Cannot apply the skill without direct help."],w:(a,b)=>`In the examples and situations chosen in ${a}`},
+       {name:"Explaining and justifying",l:()=>["Explains decisions and conclusions with clear, logical evidence linked to the skill.","Explains most decisions correctly, with limited evidence.","General or superficial explanation, without enough evidence.","Does not explain decisions."],w:(a,b)=>`In explaining decisions during ${b}`}]}
+};
+function suggestTask(kind,lang,unit,skill){
+  const T=TASK_TPL[lang]||TASK_TPL.ar, x=T[kind];if(!x)return null;
+  const sk=String(skill||"").trim().replace(/[.。]+$/,"");
+  return {desc:x.d(T._with(String(unit||"").trim(),sk,kind)),product:x.p,materials:x.m,time:x.t,mode:x.mode,reveals:x.r};
+}
+function suggestCriteria(lang,uiLang,skill,kinds){
+  const C=(CRIT_TPL[lang]||CRIT_TPL.ar).c, Wh=KIND_WHERE[uiLang]||KIND_WHERE.ar, Wt=(CRIT_TPL[uiLang]||CRIT_TPL.ar).c;
+  const sk=String(skill||"").trim().replace(/[.。]+$/,"");
+  const n=C.length,base=Math.floor(50/n),rest=50-base*n;
+  return C.map((c,i)=>{const l=c.l(sk),at=k=>k&&Wh[k]?Wt[i].w(Wh[k][0],Wh[k][1]):"";
+    return {name:c.name,weight:String(base+(i<rest?1:0)),l4:l[0],l3:l[1],l2:l[2],l1:l[3],inA:at(kinds[0]),inB:at(kinds[1])};});
+}
+(function(){
+const P={
+  ar:{sugTaskNote:"عبّأنا تفاصيل مقترحة حسب نوع المهمة. عدّلوها كما تشاؤون.",sugTaskBtn:"اقتراح تفاصيل جاهزة",sugTaskAi:"اقتراح أدق عبر Claude",sugTaskQ:"ستُستبدل تفاصيل هذه المهمة بالاقتراح. متابعة؟",
+    sugCritBtn:"إعادة الاقتراح التلقائي",keyAiH:"اقتراح آخر لمفتاح التقييم عبر Claude",keyAiP:"عبّأنا مفتاح التقييم تلقائيًا. إن أردتم بديلًا مفصّلًا على موضوعكم، نجهّز لكم برومبت فيه كل ما كتبتموه في المراحل السابقة (المادة، الصف، المهارة، الدليل، المهمتان ونوعاهما). انسخوه إلى Claude، والصقوا الرد هنا، ثم قارنوا واعتمدوا ما يناسبكم.",keyAiBtn:"اطلب اقتراحًا من Claude",keyUse:"اعتماد المفتاح المقترح",keyAgain:"اقتراح آخر",keyDone:"تم اعتماد مفتاح التقييم المقترح. يمكنكم تعديل أي بند فيه.",sugCritAi:"اقتراح معايير مفصّلة عبر Claude",sugCritQ:"ستُستبدل معايير المهارة الحالية بالاقتراح. متابعة؟",sugCritNote:"اقترحنا معايير للمهارة مع مستوياتها وأوزانها وكيف تظهر في كل مهمة. هذه نقطة انطلاق: عدّلوا الصياغة لتناسب مهارتكم بدقة.",
+    sugPrev:"اقتراح Claude:",sugUse:"اعتماد الاقتراح",needSkillFirst:"اكتبوا المهارة في المرحلة 2 أولًا للحصول على اقتراح أدق.",needKindFirst:"اختاروا نوع المهمة أولًا."},
+  he:{sugTaskNote:"מילאנו פרטים מוצעים לפי סוג המשימה. ערכו כרצונכם.",sugTaskBtn:"הצעת פרטים מוכנים",sugTaskAi:"הצעה מדויקת יותר דרך Claude",sugTaskQ:"פרטי המשימה יוחלפו בהצעה. להמשיך?",
+    sugCritBtn:"הצעה אוטומטית מחדש",keyAiH:"הצעה נוספת למחוון דרך Claude",keyAiP:"מילאנו את המחוון אוטומטית. אם תרצו חלופה מפורטת המותאמת לנושא שלכם, נכין פרומפט עם כל מה שכתבתם בשלבים הקודמים (מקצוע, כיתה, מיומנות, עדות, שתי המשימות וסוגיהן). העתיקו ל-Claude, הדביקו כאן את התשובה, השוו ובחרו.",keyAiBtn:"בקשו הצעה מ-Claude",keyUse:"אישור המחוון המוצע",keyAgain:"הצעה נוספת",keyDone:"המחוון המוצע אושר. אפשר לערוך כל סעיף בו.",sugCritAi:"הצעת קריטריונים מפורטים דרך Claude",sugCritQ:"קריטריוני המיומנות הנוכחיים יוחלפו בהצעה. להמשיך?",sugCritNote:"הצענו קריטריונים למיומנות עם רמות, משקלות ואופן ההופעה בכל משימה. זו נקודת פתיחה: התאימו את הניסוח למיומנות שלכם.",
+    sugPrev:"הצעת Claude:",sugUse:"אישור ההצעה",needSkillFirst:"כתבו קודם את המיומנות בשלב 2 כדי לקבל הצעה מדויקת.",needKindFirst:"בחרו קודם את סוג המשימה."},
+  en:{sugTaskNote:"We filled in suggested details for this task type. Edit them as you like.",sugTaskBtn:"Suggest ready details",sugTaskAi:"More precise suggestion via Claude",sugTaskQ:"This task's details will be replaced by the suggestion. Continue?",
+    sugCritBtn:"Re-suggest automatically",keyAiH:"Another marking-key suggestion via Claude",keyAiP:"We filled in the marking key automatically. For a detailed alternative tailored to your topic, we prepare a prompt with everything you entered (subject, grade, skill, evidence, both tasks and their types). Copy it into Claude, paste the reply here, then compare and choose.",keyAiBtn:"Ask Claude for a suggestion",keyUse:"Use the suggested key",keyAgain:"Another suggestion",keyDone:"The suggested marking key is in place. You can edit any part of it.",sugCritAi:"Detailed criteria via Claude",sugCritQ:"The current skill criteria will be replaced. Continue?",sugCritNote:"We suggested skill criteria with levels, weights and how each shows up in every task. It is a starting point: adjust the wording to fit your skill precisely.",
+    sugPrev:"Claude's suggestion:",sugUse:"Use the suggestion",needSkillFirst:"Write the skill in stage 2 first for a more precise suggestion.",needKindFirst:"Choose the task type first."}};
+["ar","he","en"].forEach(l=>Object.assign(I18N[l],P[l]));
+})();
+
 </script>
 <script id="builder">
 // Builds both Word files. o = {sl: student-file language, tl: teacher-file language, gloss: [[word, arabicMeaning], ...] or null}
@@ -631,6 +903,13 @@ function buildDocs(D, s, o){
   const T=s.tasks||[{},{}];
   const named=(s.criteria||[]).map((c,i)=>({...c,i})).filter(c=>(c.name||"").trim());
   const anyW=named.some(c=>String(c.weight||"").trim());
+  const ws=skillWeights(s.criteria||[]);
+  const kindOf=(lang,t)=>(KIND_NAMES[lang]||KIND_NAMES.ar)[t.kind]||"";
+  const W6=[18,19,19,19,17,8];
+  const skillRows=L=>[[L.criterion,...L.levels,L.weight],...named.map((c,j)=>[c.name,c.l4,c.l3,c.l2,c.l1,ws[j]+"%"])];
+  const formRows=(L,t)=>[[L.criterion,...L.levels,L.weight],...(t.form||[]).filter(c=>(c.name||"").trim()).map(c=>[c.name,c.l4,c.l3,c.l2,c.l1,(c.weight||"")+"%"])];
+  const rubricBlock=(x,L,lang)=>{const out=[x.h3(L.partA),x.table(skillRows(L),{widths:W6})];
+    T.forEach((t,i)=>{if((t.form||[]).length)out.push(x.h3(L.partB(L.task[i],kindOf(lang,t))),x.table(formRows(L,t),{widths:W6}));});return out;};
   const cname=c=>c.name+(anyW&&String(c.weight||"").trim()?` (${c.weight}%)`:"");
 
   // ---------- student file
@@ -645,10 +924,10 @@ function buildDocs(D, s, o){
   st.push(k.h2(S.chooseOne),...k.lines(S.chooseNote));
   T.forEach((t,i)=>{
     st.push(k.h3(`${S.task[i]}: ${t.title||""}`),...k.lines(t.desc));
-    st.push(k.table([[S.where,placeOf(S,t)],[S.mode,S.modes[t.mode]||""],[S.produce,t.product],[S.materials,t.materials],[S.time,t.time]],{header:false,sideHead:true,widths:[30,70]}),k.gap());
+    st.push(k.table([[S.kind,kindOf(sl,t)],[S.where,placeOf(S,t)],[S.mode,S.modes[t.mode]||""],[S.produce,t.product],[S.materials,t.materials],[S.time,t.time]],{header:false,sideHead:true,widths:[30,70]}),k.gap());
   });
   st.push(k.h2(S.howAssessed));
-  st.push(k.table([[S.criterion,...S.levels],...named.map(c=>[cname(c),c.l4,c.l3,c.l2,c.l1])],{widths:[20,20,20,20,20]}));
+  st.push(...rubricBlock(k,S,sl));
   st.push(k.h2(S.decision));
   st.push(k.para([k.run(S.chosen+"   ",{bold:true}),k.run(`☐ ${S.task[0]}      ☐ ${S.task[1]}`)]));
   st.push(k.para([k.run(S.why+" ________________________________________________")],{before:120}));
@@ -663,13 +942,14 @@ function buildDocs(D, s, o){
   te.push(m.h3(Q.evH),...m.lines(s.evidence));
   te.push(m.h2(Q.tasksH));
   const row=(label,f)=>[label,f(T[0]||{}),f(T[1]||{})];
-  te.push(m.table([["",Q.task[0],Q.task[1]],row(Q.rTitle,t=>t.title),row(Q.rDesc,t=>t.desc),row(Q.rPlace,t=>placeOf(Q,t)),row(Q.mode,t=>Q.modes[t.mode]||""),
+  te.push(m.table([["",Q.task[0],Q.task[1]],row(Q.rTitle,t=>t.title),row(Q.kind,t=>kindOf(tl,t)),row(Q.rDesc,t=>t.desc),row(Q.rPlace,t=>placeOf(Q,t)),row(Q.mode,t=>Q.modes[t.mode]||""),
     row(Q.rProduct,t=>t.product),row(Q.materials,t=>t.materials),row(Q.rTime,t=>t.time),row(Q.rReveals,t=>t.reveals)],{sideHead:true,widths:[24,38,38]}));
-  te.push(m.h2(Q.rubricH),m.table([[Q.criterion,...Q.levels],...named.map(c=>[cname(c),c.l4,c.l3,c.l2,c.l1])],{widths:[20,20,20,20,20]}));
+  te.push(m.h2(Q.rubricH),...rubricBlock(m,Q,tl));
   te.push(m.h2(Q.appearsH),m.table([[Q.criterion,...Q.inT],...named.map(c=>[c.name,c.inA,c.inB])],{widths:[24,38,38]}));
   te.push(m.h2(Q.sheetH));
-  te.push(m.para([m.run(anyW?Q.formulaW:Q.totalOf(named.length*4),{size:21,color:GRAY})]));
-  const head=[Q.stName,Q.taskCol,...named.map(c=>c.name),Q.total];
+  te.push(m.para([m.run(Q.formulaW,{size:21,color:GRAY})]));
+  const fnames=((T.find(t=>(t.form||[]).length)||{}).form||[]).map(c=>c.name).filter(Boolean);
+  const head=[Q.stName,Q.taskCol,...named.map((c,j)=>c.name+" ("+ws[j]+"%)"),...(fnames.length?fnames:(FORM_GEN[tl]||FORM_GEN.ar).names).map((n,j)=>n+" ("+FORM_W[j]+"%)"),Q.total];
   te.push(m.table([head,...Array.from({length:14},()=>head.map(()=>" "))],{blank:true}));
 
   return {student:k.doc(st),teacher:m.doc(te)};
@@ -687,19 +967,25 @@ const t=k=>{const v=I18N[L][k];return v===undefined?I18N.ar[k]:v;};
 const esc=x=>String(x??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const PLACES=["class","robotics","carpentry","water","yard","outside","other"], MODES=["solo","pair","group"];
 const NCHECK=9;
+const MAIN_URL="https://munakanaanih-sys.github.io/Muna-assess-mate/";
 
 // ---------- state
-const blankTask=()=>({title:"",desc:"",place:"class",placeOther:"",mode:"solo",product:"",materials:"",time:"",reveals:""});
+const blankTask=()=>({kind:"",form:[],formAuto:true,title:"",desc:"",place:"class",placeOther:"",mode:"solo",product:"",materials:"",time:"",reveals:""});
 const blankCrit=()=>({name:"",weight:"",l4:"",l3:"",l2:"",l1:"",inA:"",inB:""});
 const EMPTY=()=>({subject:"",grade:"",unit:"",coordinator:"",date:"",team:"",studentLang:"ar",helperAr:false,slManual:false,
   unitSkills:"",skill:"",skillWhy:"",evidence:"",skillStudent:"",tasks:[blankTask(),blankTask()],criteria:[blankCrit(),blankCrit(),blankCrit()],
-  checks:Array(NCHECK).fill(false),gloss:[],example:false});
+  checks:Array(NCHECK).fill(false),gloss:[],example:false,critSug:false});
 const OLD_PLACE={"الصف":"class","غرفة الروبوتيكا":"robotics","ورشة النجارة":"carpentry","الحديقة المائية":"water","ساحة المدرسة":"yard","خارج المدرسة":"outside","أخرى":"other"};
 const OLD_MODE={"فردي":"solo","زوجي":"pair","مجموعة":"group"};
 function normalize(s){
   const b=EMPTY();const o=Object.assign(b,s||{});
   o.tasks=[0,1].map(i=>{const x=Object.assign(blankTask(),(s&&s.tasks&&s.tasks[i])||{});
-    if(!PLACES.includes(x.place))x.place=OLD_PLACE[x.place]||"class";if(!MODES.includes(x.mode))x.mode=OLD_MODE[x.mode]||"solo";return x;});
+    if(!PLACES.includes(x.place))x.place=OLD_PLACE[x.place]||"class";if(!MODES.includes(x.mode))x.mode=OLD_MODE[x.mode]||"solo";
+    if(!KINDS.includes(x.kind))x.kind="";
+    x.form=Array.isArray(x.form)?x.form.filter(c=>c&&typeof c==="object").map(c=>Object.assign({name:"",weight:"",l4:"",l3:"",l2:"",l1:""},c)):[];
+    if(x.kind&&!x.form.length){x.form=makeForm(x.kind,LANGS.includes(s&&s.studentLang)?s.studentLang:"ar");x.formAuto=true;}
+    if(!x.kind)x.form=[];x.formAuto=x.formAuto!==false;
+    return x;});
   o.criteria=((s&&s.criteria)||b.criteria).map(c=>Object.assign(blankCrit(),c));if(!o.criteria.length)o.criteria=[blankCrit()];
   o.checks=Array.from({length:NCHECK},(_,i)=>!!(s&&s.checks&&s.checks[i]));
   if(!LANGS.includes(o.studentLang))o.studentLang="ar";
@@ -740,6 +1026,7 @@ function renderChrome(){
         <p class="brand-credit">${esc(t("credit"))}</p>
       </div>
     </div>
+    <a class="back-main" href="${MAIN_URL}">${L==="en"?"←":"→"} ${esc(t("backMain"))}</a>
     <div class="top-row">
       <div class="lang-switch" role="group" aria-label="${esc(t("uiLang"))}"><span class="ls-label">${esc(t("uiLang"))}</span>
         ${LANGS.map(l=>`<button type="button" data-ui="${l}" lang="${l}" aria-pressed="${l===L}">${{ar:"العربية",he:"עברית",en:"English"}[l]}</button>`).join("")}</div></div>
@@ -754,7 +1041,9 @@ function renderChrome(){
 function renderStepper(){
   $("#stepper").innerHTML=t("stages").map((n,i)=>`<li><button type="button" data-go="${i}" ${i===cur?'aria-current="step"':''} class="${i<cur?'done':''}"><span class="n">${i+1}</span>${esc(n)}</button></li>`).join("");
 }
-function go(i,scroll=true){cur=Math.max(0,Math.min(4,i));$$("[data-stage]").forEach(s=>s.hidden=+s.dataset.stage!==cur);renderStepper();
+function go(i,scroll=true){cur=Math.max(0,Math.min(4,i));
+  if(cur===2){let ch=false;S.tasks.forEach((x,j)=>{if(x.kind&&SUG_KEYS.every(k=>!(x[k]||"").trim()))ch=fillTask(j,false)||ch;});if(ch){save();renderStage(2);}}
+  if(cur===3&&!S.criteria.some(c=>(c.name||"").trim()||(c.l4||"").trim())){fillCriteria();save();renderStage(3);}$$("[data-stage]").forEach(s=>s.hidden=+s.dataset.stage!==cur);renderStepper();
   $("#prev").disabled=cur===0;$("#next").hidden=cur===4;if(cur===4)renderStage(4);if(scroll)window.scrollTo({top:0,behavior:"smooth"});}
 
 // ---------- stages
@@ -784,6 +1073,10 @@ function taskCard(x,i){
   const id=k=>`t${i}-${k}`, a=k=>`id="${id(k)}" data-t="${i}" data-k="${k}"`;
   return `<div class="task"><h3><span class="tag">${esc(t("taskTag")(i+1))}</span> ${esc(t("taskName")[i])}</h3>
     ${stuOn()?`<div class="task-tr"><button type="button" class="ai-btn tr-task" data-trtask="${i}">${esc(t("trTask")(t("langNames")[S.studentLang]))}</button><span class="status" id="trs${i}" role="status"></span></div>`:""}
+    ${fld(id("kind"),t("kindLbl"),`<select class="kind-sel" ${a("kind")}><option value="">${esc(t("kindPick"))}</option>${KINDS.map(k=>`<option value="${k}" ${k===x.kind?"selected":""}>${KIND_ICON[k]} ${esc((KIND_NAMES[L]||KIND_NAMES.ar)[k])}</option>`).join("")}</select>`)}
+    <div class="sug-row"><button type="button" class="btn" data-sugtask="${i}">${esc(t("sugTaskBtn"))}</button><button type="button" class="btn ai-sug" data-sugtaskai="${i}">✨ ${esc(t("sugTaskAi"))}</button></div>
+    <div id="t${i}-sugslot"></div>
+    ${x.sug?`<p class="sug-note">${esc(t("sugTaskNote"))}</p>`:""}
     ${fld(id("title"),t("tTitle"),`<input type="text" ${a("title")} value="${esc(x.title)}">`,{stu:true})}
     ${fld(id("desc"),t("tDesc"),`<textarea ${a("desc")}>${esc(x.desc)}</textarea>`,{hint:t("tDescHint"),ai:"student",stu:true})}
     <div class="row">
@@ -821,6 +1114,11 @@ R[2]=()=>`${head(t("s3h"),t("s3p"))}
   </div>${guide(t("guideQ"),t("s3guide"))}`;
 R[3]=()=>`${head(t("s4h"),t("s4p"))}
   <div class="fields">
+    ${S.critSug?`<p class="sug-note">${esc(t("sugCritNote"))}</p>`:""}
+    <div class="claude-box"><div class="cb-text"><h3>✨ ${esc(t("keyAiH"))}</h3><p>${esc(t("keyAiP"))}</p></div>
+      <button type="button" class="btn primary" id="keyAi">${esc(t("keyAiBtn"))}</button></div>
+    <div id="keySlot"></div>
+    <div class="part-head part-a"><div><h3>${esc(t("partA"))}</h3><p>${esc(t("partAP"))}</p></div><div class="sug-row"><button type="button" class="btn" id="splitW">${esc(t("splitBtn"))}</button><button type="button" class="btn" id="sugCrit">${esc(t("sugCritBtn"))}</button></div></div>
     ${S.criteria.map((c,i)=>{const id=k=>`c${i}-${k}`,a=k=>`id="${id(k)}" data-c="${i}" data-k="${k}"`;
       return `<div class="crit">
       <div class="crit-head">
@@ -834,13 +1132,27 @@ R[3]=()=>`${head(t("s4h"),t("s4p"))}
         <button type="button" class="btn quiet" data-remove="${i}" ${S.criteria.length<=1?"disabled":""}>${esc(t("removeCrit"))}</button></div>
     </div>`;}).join("")}
     <div class="crit-actions"><button class="btn" type="button" id="addCrit" ${S.criteria.length>=5?"disabled":""}>${esc(t("addCrit"))}</button><span class="weight-sum" id="weightSum"></span></div>
+    <div class="part-head part-b"><div><h3>${esc(t("partB"))}</h3><p>${esc(t("partBP"))}</p></div></div>
+    ${S.tasks.map((x,i)=>formBlock(x,i)).join("")}
   </div>${guide(t("guideQ"),t("s4guide"))}`;
+function formBlock(x,i){
+  const name=t("taskName")[i];
+  if(!x.kind)return `<div class="form-task"><h4>${esc(name)}</h4><p class="hint">${esc(t("noKind")(name))}</p></div>`;
+  return `<div class="form-task"><div class="form-task-head"><h4>${KIND_ICON[x.kind]} ${esc(name)}: ${esc((KIND_NAMES[L]||KIND_NAMES.ar)[x.kind])}</h4>
+    <button type="button" class="btn quiet" data-regen="${i}">${esc(t("regen"))}</button></div>
+    ${x.form.map((c,j)=>{const id=k=>`f${i}-${j}-${k}`,a=k=>`id="${id(k)}" data-ft="${i}" data-fc="${j}" data-k="${k}"`;
+      return `<div class="crit form-crit"><div class="crit-head">
+        ${fld(id("name"),t("critN")(j+1),`<input type="text" ${a("name")} value="${esc(c.name)}">`,{stu:true})}
+        <div class="field w"><span class="lbl-row"><label>${esc(t("weight"))}</label></span><span class="w-fixed">${esc(c.weight)}%</span></div></div>
+        <div class="levels">${[4,3,2,1].map(l=>fld(id("l"+l),t("levels")[l],`<textarea ${a("l"+l)}>${esc(c["l"+l])}</textarea>`,{cls:"lv"+l,stu:true})).join("")}</div></div>`;}).join("")}</div>`;
+}
 
 // every text the student sees, used for word suggestions and the "word not found" check
 function stuTexts(){
   const out=[S.skillStudent];
   S.tasks.forEach(x=>out.push(x.title,x.desc,x.product,x.materials,x.time,x.place==="other"?x.placeOther:""));
   S.criteria.forEach(c=>out.push(c.name,c.l4,c.l3,c.l2,c.l1));
+  S.tasks.forEach(x=>(x.form||[]).forEach(c=>out.push(c.name,c.l4,c.l3,c.l2,c.l1)));
   return out.filter(v=>(v||"").trim());
 }
 // student-facing fields that still contain Arabic text
@@ -853,9 +1165,11 @@ function arabicFields(){
       if((k!=="placeOther"||x.place==="other")&&AR.test(x[k]||""))out.push({key:`t|${i}|${k}`,label:`${n}: ${t(lk)}`,src:x[k]});});});
   S.criteria.forEach((c,i)=>[["name",t("critName")],["l4",lv[4]],["l3",lv[3]],["l2",lv[2]],["l1",lv[1]]].forEach(([k,lb])=>{
     if(AR.test(c[k]||""))out.push({key:`c|${i}|${k}`,label:`${t("critN")(i+1)}: ${lb}`,src:c[k]});}));
+  S.tasks.forEach((x,i)=>(x.form||[]).forEach((c,j)=>[["name",t("critName")],["l4",lv[4]],["l3",lv[3]],["l2",lv[2]],["l1",lv[1]]].forEach(([k,lb])=>{
+    if(AR.test(c[k]||""))out.push({key:`f|${i}|${j}|${k}`,label:`${t("taskName")[i]} · ${c.name}: ${lb}`,src:c[k]});})));
   return out;
 }
-function setField(key,v){const p=key.split("|");if(p[0]==="s")S[p[1]]=v;else if(p[0]==="t")S.tasks[+p[1]][p[2]]=v;else S.criteria[+p[1]][p[2]]=v;}
+function setField(key,v){const p=key.split("|");if(p[0]==="s")S[p[1]]=v;else if(p[0]==="t")S.tasks[+p[1]][p[2]]=v;else if(p[0]==="f"){const x=S.tasks[+p[1]];x.form[+p[2]][p[3]]=v;x.formAuto=false;}else S.criteria[+p[1]][p[2]]=v;}
 let fixSug=[];
 async function fixLanguage(){
   const items=arabicFields();if(!items.length){setStatus("fixStatus",t("fixNothing"));return;}
@@ -874,7 +1188,7 @@ ${JSON.stringify(obj)}`,{cache:false});
         <div class="fix-pair"><p class="fix-src" dir="rtl" lang="ar">${esc(x.src)}</p><textarea class="short" id="fx${i}" dir="${wd}" lang="${S.studentLang}" aria-label="${esc(x.label)}">${esc(x.to)}</textarea></div></div>`).join("")}
       <div class="assist-actions"><button type="button" class="btn primary" id="fixApply">${esc(t("fixApply"))}</button><button type="button" class="btn" id="fixCancel">${esc(t("cancel"))}</button></div></div>`;
     setStatus("fixStatus","");
-  }catch(err){const c=err&&err.code;setStatus("fixStatus",errText(c)+(c&&c!=="not_granted"&&c!=="rate_limited"?` (${c})`:""),"err");aiFailed(err);}
+  }catch(err){const c=err&&err.code;setStatus("fixStatus",errText(c)+(c&&c!=="not_granted"&&c!=="rate_limited"&&c!=="cancelled"?` (${c})`:""),"err");aiFailed(err);}
   finally{const b2=$("#fixLang");if(b2)b2.disabled=false;}
 }
 async function translateTask(i,b){
@@ -897,7 +1211,7 @@ ${JSON.stringify(obj)}`,{cache:false});
     const [ok,no]=box.querySelectorAll(".s-actions button");
     ok.onclick=e=>{e.stopPropagation();got.forEach(k=>x[k]=res[k].trim());save();renderStage(2);renderStage(4);setStatus("trs"+i,t("trDone"),"ok");};
     no.onclick=e=>{e.stopPropagation();box.remove();};
-  }catch(err){const c=err&&err.code;setStatus("trs"+i,errText(c)+(c&&c!=="not_granted"&&c!=="rate_limited"?` (${c})`:""),"err");aiFailed(err);}
+  }catch(err){const c=err&&err.code;setStatus("trs"+i,errText(c)+(c&&c!=="not_granted"&&c!=="rate_limited"&&c!=="cancelled"?` (${c})`:""),"err");aiFailed(err);}
   finally{b.disabled=false;}
 }
 const langMismatch=()=>stuOn()&&/[\u0600-\u06FF]/.test(stuTexts().join(" "));
@@ -942,13 +1256,13 @@ function renderAll(){renderChrome();for(let i=0;i<5;i++)renderStage(i);go(cur,fa
 
 // ---------- weights, gating
 function updateWeights(){const el=$("#weightSum");if(!el)return;const ws=S.criteria.map(c=>parseFloat(c.weight)).filter(n=>!isNaN(n));const sum=ws.reduce((a,b)=>a+b,0);
-  el.textContent=ws.length?t("weightSum")(sum)+(sum!==100?t("weightBad"):""):"";}
+  el.textContent=ws.length?t("weightSum")(sum)+(sum!==50?t("weightBad"):""):t("weightSum")(50);}
 function missing(){const M=t("miss"),m=[];
   if(!S.unit.trim())m.push(M.unit);if(!S.skill.trim())m.push(M.skill);if(!S.skillStudent.trim())m.push(M.skillStudent);
-  S.tasks.forEach((x,i)=>{if(!x.title.trim()||!x.desc.trim())m.push(M.task(t("taskName")[i]))});
+  S.tasks.forEach((x,i)=>{if(!x.kind)m.push(M.kind(t("taskName")[i]));if(!x.title.trim()||!x.desc.trim())m.push(M.task(t("taskName")[i]))});
   const named=S.criteria.filter(c=>c.name.trim());if(!named.length)m.push(M.crit);
   named.forEach(c=>{if(!c.inA.trim()||!c.inB.trim())m.push(M.critBoth(c.name))});
-  const ws=S.criteria.map(c=>parseFloat(c.weight)).filter(n=>!isNaN(n));if(ws.length&&ws.reduce((a,b)=>a+b,0)!==100)m.push(M.weights);
+  const ws=S.criteria.map(c=>parseFloat(c.weight)).filter(n=>!isNaN(n));if(ws.length&&ws.reduce((a,b)=>a+b,0)!==50)m.push(M.weights);
   return m;}
 function setStatus(id,msg,kind){const s=$("#"+id);if(!s)return;s.textContent=msg;s.className="status "+(kind||"");}
 function gate(){const box=$("#missing");if(!box)return;const m=missing(),all=S.checks.every(Boolean);
@@ -960,6 +1274,7 @@ function gate(){const box=$("#missing");if(!box)return;const m=missing(),all=S.c
 function detectLang(x){x=String(x||"");if(/عبر|עבר|hebrew/i.test(x))return "he";if(/[اإأ]نجل|انكل|אנגל|english/i.test(x))return "en";return null;}
 function applyStudentLang(lang,fromAuto){
   if(lang===S.studentLang)return;S.studentLang=lang;S.helperAr=lang!=="ar";
+  S.tasks.forEach(x=>{if(x.kind&&x.formAuto)x.form=makeForm(x.kind,lang);});
   const sel=$("#studentLang");if(sel)sel.value=lang;const hw=$("#helperWrap");if(hw)hw.hidden=lang==="ar";const hc=$("#helperAr");if(hc)hc.checked=S.helperAr;
   for(let i=1;i<5;i++)renderStage(i);
 }
@@ -968,8 +1283,10 @@ function applyStudentLang(lang,fromAuto){
 document.addEventListener("input",e=>{
   const el=e.target;if(!el.closest("#form"))return;
   const d=el.dataset,v=el.type==="checkbox"?el.checked:el.value;
-  if(d.t!=null){S.tasks[+d.t][d.k]=v;if(d.k==="place"){const w=$(`#t${d.t}-otherwrap`);if(w)w.hidden=v!=="other";}}
-  else if(d.c!=null){S.criteria[+d.c][d.k]=v;if(d.k==="weight")updateWeights();}
+  if(d.ft!=null){const x=S.tasks[+d.ft];x.form[+d.fc][d.k]=v;x.formAuto=false;}
+  else if(d.t!=null){const x=S.tasks[+d.t];x[d.k]=v;if(d.k!=="kind")x.sug=false;if(d.k==="place"){const w=$(`#t${d.t}-otherwrap`);if(w)w.hidden=v!=="other";}
+    if(d.k==="kind"){x.form=v?makeForm(v,S.studentLang):[];x.formAuto=true;if(v)fillTask(+d.t,false);renderStage(2);renderStage(3);}}
+  else if(d.c!=null){S.criteria[+d.c][d.k]=v;S.critSug=false;if(d.k==="weight")updateWeights();}
   else if(d.gi!=null){S.gloss[+d.gi][d.gk]=v;}
   else if(d.chk!=null){S.checks[+d.chk]=v;gate();}
   else if(d.k){
@@ -1018,6 +1335,20 @@ document.addEventListener("click",e=>{
   }
   if(b.dataset.glrm!=null){S.gloss.splice(+b.dataset.glrm,1);save();renderStage(4);return;}
   if(b.dataset.remove!=null){S.criteria.splice(+b.dataset.remove,1);save();renderStage(3);return;}
+  if(b.dataset.sugtask!=null){const i=+b.dataset.sugtask,x=S.tasks[i];
+    if(!x.kind){$(`#t${i}-sugslot`).innerHTML=`<p class="hint warn">${esc(t("needKindFirst"))}</p>`;return;}
+    const doIt=()=>{fillTask(i,true);save();renderStage(2);renderStage(4);};
+    SUG_KEYS.some(k=>(x[k]||"").trim())?inlineConfirm(b.closest(".sug-row"),t("sugTaskQ"),doIt):doIt();return;}
+  if(b.dataset.sugtaskai!=null){taskAi(+b.dataset.sugtaskai,b);return;}
+  if(b.id==="sugCrit"){const doIt=()=>{fillCriteria();save();renderStage(3);renderStage(4);};
+    S.criteria.some(c=>(c.name||"").trim())?inlineConfirm(b.closest(".part-head"),t("sugCritQ"),doIt):doIt();return;}
+  if(b.id==="keyAi"){keyAi(b);return;}
+  if(b.dataset.regen!=null){const x=S.tasks[+b.dataset.regen];const doIt=()=>{x.form=makeForm(x.kind,S.studentLang);x.formAuto=true;save();renderStage(3);};
+    if(x.formAuto){doIt();return;}
+    const head=b.closest(".form-task-head");head.parentNode.querySelector(".inline-confirm")?.remove();
+    const cf=document.createElement("div");cf.className="inline-confirm";cf.innerHTML=`<span>${esc(t("regenQ"))}</span><button type="button" class="btn primary">${esc(t("yes"))}</button><button type="button" class="btn">${esc(t("cancel"))}</button>`;
+    head.after(cf);const [y,n]=cf.querySelectorAll("button");y.onclick=e=>{e.stopPropagation();doIt();};n.onclick=e=>{e.stopPropagation();cf.remove();};return;}
+  if(b.id==="splitW"){const w=skillWeights(S.criteria.map(c=>Object.assign({},c,{weight:""})));let j=0;S.criteria.forEach(c=>{if(c.name.trim())c.weight=String(w[j++]);});save();renderStage(3);return;}
   if(b.dataset.trtask!=null){translateTask(+b.dataset.trtask,b);return;}
   if(b.dataset.aiFor){suggest(b);return;}
   if(b.dataset.aiCrit!=null){suggestCrit(b);return;}
@@ -1030,7 +1361,6 @@ async function dl(which,force){
     setStatus("status","");$("#status").innerHTML=`<span class="inline-confirm"><span>${esc(t("dlArabicQ")(t("langNames")[S.studentLang]))}</span><button type="button" class="btn" id="dlAnyway">${esc(t("dlAnyway"))}</button></span>`;
     document.querySelector(".fixlang")?.scrollIntoView({behavior:"smooth",block:"center"});return;}
   if(typeof docx==="undefined"){setStatus("status",t("noDocx"),"err");return;}
-  if(!downloads){setStatus("status",t("noDl"),"err");return;}
   const btn=$(which==="student"?"#dlStudent":"#dlTeacher");btn.disabled=true;setStatus("status",t("preparing"));
   try{
     const gloss=helperOn()?[...S.gloss.map(g=>[g.w,g.m]),...(FIXED_GLOSS[S.studentLang]||[])]:null;
@@ -1038,16 +1368,168 @@ async function dl(which,force){
     const blob=await docx.Packer.toBlob(docs[which]);
     const fl=which==="student"?S.studentLang:L;
     const base=(S.unit||DOC[fl].unitFallback).replace(/[\\/:*?"<>|]/g," ").trim();
-    await downloads.save({filename:(which==="student"?DOC[fl].fileS:DOC[fl].fileT)+" - "+base+".docx",data:blob});
+    const filename=(which==="student"?DOC[fl].fileS:DOC[fl].fileT)+" - "+base+".docx";
+    if(downloads)await downloads.save({filename,data:blob});
+    else{const u=URL.createObjectURL(blob),a=document.createElement("a");a.href=u;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000);}
     setStatus("status",t("saved"),"ok");
   }catch(err){const c=err&&err.code;setStatus("status",c==="declined"?t("declined"):c==="rate_limited"?t("rateLim"):t("saveFail"),"err");}
   finally{btn.disabled=false;gate();}
 }
 
+// ---------- built-in suggestions (task details, skill criteria)
+const SUG_KEYS=["desc","product","materials","time","reveals"];
+function fillTask(i,force){
+  const x=S.tasks[i];if(!x.kind)return false;
+  const g=suggestTask(x.kind,S.studentLang,S.unit,S.skill);if(!g)return false;
+  const empty=SUG_KEYS.every(k=>!(x[k]||"").trim());
+  let changed=false;
+  SUG_KEYS.forEach(k=>{if(force||!(x[k]||"").trim()){x[k]=g[k];changed=true;}});
+  if(force||empty)x.mode=g.mode;
+  if(changed)x.sug=true;
+  return changed;
+}
+function fillCriteria(){
+  S.criteria=suggestCriteria(S.studentLang,L,S.skill,S.tasks.map(x=>x.kind)).map(c=>Object.assign(blankCrit(),c));
+  S.critSug=true;
+}
+function inlineConfirm(after,msg,yes){
+  after.parentNode.querySelector(":scope > .inline-confirm")?.remove();
+  const cf=document.createElement("div");cf.className="inline-confirm";
+  cf.innerHTML=`<span>${esc(msg)}</span><button type="button" class="btn primary">${esc(t("yes"))}</button><button type="button" class="btn">${esc(t("cancel"))}</button>`;
+  after.after(cf);const [y,n]=cf.querySelectorAll("button");
+  y.onclick=e=>{e.stopPropagation();cf.remove();yes();};n.onclick=e=>{e.stopPropagation();cf.remove();};
+}
+function previewBox(slot,rows,onUse){
+  slot.innerHTML=`<div class="suggest"><span class="s-label">${esc(t("sugPrev"))}</span><div class="s-text" dir="auto">${rows.map(([k,v])=>`<p><strong>${esc(k)}:</strong> ${esc(v)}</p>`).join("")}</div>
+    <div class="s-actions"><button type="button" class="btn primary">${esc(t("sugUse"))}</button><button type="button" class="btn">${esc(t("keepMine"))}</button></div></div>`;
+  const [ok,no]=slot.querySelectorAll(".s-actions button");
+  ok.onclick=e=>{e.stopPropagation();onUse();};no.onclick=e=>{e.stopPropagation();slot.innerHTML="";};
+}
+const ctxLines=()=>`Subject: ${S.subject||"not specified"}
+Grade: ${S.grade||"not specified"}
+Unit / topic: ${S.unit||"not specified"}
+The skill being assessed: ${S.skill||"not written yet"}
+Evidence of the skill: ${S.evidence||"not written"}`;
+async function taskAi(i,b){
+  const x=S.tasks[i],slot=$(`#t${i}-sugslot`);
+  if(!x.kind){slot.innerHTML=`<p class="hint warn">${esc(t("needKindFirst"))}</p>`;return;}
+  const other=S.tasks[1-i];b.disabled=true;
+  slot.innerHTML=`<p class="status">${esc(S.skill.trim()?t("thinkingLong"):t("needSkillFirst"))}</p>`;
+  try{
+    const res=await sample.json(`You are a pedagogical designer helping teachers at an Arab school write a creative alternative-assessment task.
+${ctxLines()}
+Task type: ${KIND_NAMES.en[x.kind]}.
+${other.kind?`The student will choose between this task and another one of type ${KIND_NAMES.en[other.kind]}${other.title?` ("${other.title}")`:""}; make this one clearly different.`:""}
+Write the task so the student can show the skill through this type of product. Address the student directly in short, clear, motivating sentences suited to their age. The grade is split: 50% for understanding the skill and 50% for form, delivery and use of technology, so the task should require both.
+Fields: "title" (short, catchy), "desc" (3 to 5 sentences: what to make, what it must include to show the skill, and how it is presented), "product" (what is handed in or presented, with length or size), "materials" (realistic tools and materials), "time" (e.g. number of lessons), "reveals" (for the teacher: what this task reveals about the skill that the other one does not).
+Write title, desc, product, materials and time in ${LN[S.studentLang]}; write reveals in ${LN[L]}.
+Return only a JSON object with the keys title, desc, product, materials, time, reveals.`,{cache:false});
+    const keys=["title","desc","product","materials","time","reveals"].filter(k=>typeof res[k]==="string"&&res[k].trim());
+    if(!keys.length)throw {code:"empty"};
+    const lbl={title:t("tTitle"),desc:t("tDesc"),product:t("tProduct"),materials:t("tMaterials"),time:t("tTime"),reveals:t("tReveals")};
+    previewBox(slot,keys.map(k=>[lbl[k],res[k].trim()]),()=>{keys.forEach(k=>x[k]=res[k].trim());x.sug=false;save();renderStage(2);renderStage(4);
+      document.getElementById(`t${i}-title`)?.scrollIntoView({behavior:"smooth",block:"center"});});
+  }catch(err){slot.innerHTML=err&&err.code==="cancelled"?"":`<p class="status err">${esc(errText(err&&err.code))}</p>`;aiFailed(err);}
+  finally{b.disabled=false;}
+}
+async function keyAi(b){
+  const slot=$("#keySlot");b.disabled=true;
+  slot.innerHTML=`<p class="status">${esc(S.skill.trim()?t("thinkingLong"):t("needSkillFirst"))}</p>`;
+  const tasks=S.tasks.map((x,i)=>`Task ${i+1}: type ${x.kind?KIND_NAMES.en[x.kind]:"not chosen"}; title: ${x.title||"-"}; description for the student: ${x.desc||"-"}; product: ${x.product||"-"}; materials: ${x.materials||"-"}; time: ${x.time||"-"}; mode: ${x.mode}`).join("\n");
+  const fn=(FORM_GEN[S.studentLang]||FORM_GEN.ar).names;
+  const current=S.criteria.filter(c=>c.name.trim()).map(c=>c.name).join("; ");
+  try{
+    const res=await sample.json(`You are a pedagogical mentor helping teachers at an Arab school build the marking key (rubric) for a creative alternative-assessment task. The student chooses ONE of two tasks.
+${ctxLines()}
+How to explain the skill to the student: ${S.skillStudent||"-"}
+${tasks}
+${current?`Their current skill criteria are: ${current}. Offer a genuinely different, sharper alternative, not a rewording.`:""}
+
+The marking key has two parts, each worth 50% of the grade:
+A) "skillCriteria": exactly 3 criteria that assess understanding of the skill itself and work for BOTH tasks. Do not include anything about appearance, design, delivery or technology here. For each give four observable levels (l4 excellent, l3 good, l2 needs improvement, l1 beginning) that differ clearly in accuracy, depth, independence or quality of justification, plus how the criterion shows up in task 1 ("inA") and in task 2 ("inB"), specifically. Give integer weights that total exactly 50.
+B) "task1Form" and "task2Form": for each task, exactly 3 criteria in this order and with these weights: "${fn[0]}" 20, "${fn[1]}" 15, "${fn[2]}" 15. Write the four levels specifically for that task's type and product (for example storyboard and editing for a video, recording quality for a podcast, rules and components for a game).
+
+Language: write every criterion name and level in ${LN[S.studentLang]}, in language the students can understand. Write inA and inB in ${LN[L]}.
+Return only JSON in this shape:
+{"skillCriteria":[{"name":"","weight":17,"l4":"","l3":"","l2":"","l1":"","inA":"","inB":""}],"task1Form":[{"name":"","weight":20,"l4":"","l3":"","l2":"","l1":""}],"task2Form":[{"name":"","weight":20,"l4":"","l3":"","l2":"","l1":""}]}`,{cache:false});
+    const clean=(arr,n)=>(Array.isArray(arr)?arr:[]).filter(c=>c&&typeof c.name==="string"&&c.name.trim()).slice(0,n)
+      .map(c=>({name:String(c.name).trim(),weight:c.weight,l4:String(c.l4||""),l3:String(c.l3||""),l2:String(c.l2||""),l1:String(c.l1||""),inA:String(c.inA||""),inB:String(c.inB||"")}));
+    const A=clean(res&&res.skillCriteria,4),F=[clean(res&&res.task1Form,3),clean(res&&res.task2Form,3)];
+    if(!A.length&&!F[0].length&&!F[1].length)throw {code:"empty"};
+    // weights: skill part must total 50, otherwise split equally; form part keeps 20/15/15
+    const aw=A.map(c=>parseFloat(c.weight));
+    const okW=aw.length&&aw.every(n=>!isNaN(n))&&aw.reduce((x,y)=>x+y,0)===50;
+    const eq=skillWeights(A.map(c=>({name:c.name,weight:""})));
+    A.forEach((c,j)=>c.weight=String(okW?aw[j]:eq[j]));
+    F.forEach(list=>list.forEach((c,j)=>c.weight=String(FORM_W[j]||c.weight||"")));
+    const lv=t("levels");
+    const tbl=list=>`<div class="kp-wrap"><table class="kp"><thead><tr><th>${esc(t("critName"))}</th>${[4,3,2,1].map(l=>`<th>${esc(lv[l])}</th>`).join("")}<th>%</th></tr></thead><tbody>${list.map(c=>`<tr><td><strong>${esc(c.name)}</strong></td><td>${esc(c.l4)}</td><td>${esc(c.l3)}</td><td>${esc(c.l2)}</td><td>${esc(c.l1)}</td><td>${esc(c.weight)}</td></tr>`).join("")}</tbody></table></div>`;
+    const kn=k=>k?(KIND_NAMES[L]||KIND_NAMES.ar)[k]:"";
+    slot.innerHTML=`<div class="suggest key-prev"><span class="s-label">${esc(t("sugPrev"))}</span>
+      ${A.length?`<h4>${esc(t("partA"))}</h4>${tbl(A)}`:""}
+      ${F.map((list,i)=>list.length&&S.tasks[i].kind?`<h4>${esc(t("partB"))} · ${esc(t("taskName")[i])}: ${esc(kn(S.tasks[i].kind))}</h4>${tbl(list)}`:"").join("")}
+      <div class="s-actions"><button type="button" class="btn primary" id="keyUse">${esc(t("keyUse"))}</button><button type="button" class="btn" id="keyAgain">${esc(t("keyAgain"))}</button><button type="button" class="btn" id="keyKeep">${esc(t("keepMine"))}</button></div></div>`;
+    $("#keyUse").onclick=e=>{e.stopPropagation();
+      if(A.length)S.criteria=A.map(c=>Object.assign(blankCrit(),c));
+      F.forEach((list,i)=>{if(list.length&&S.tasks[i].kind){S.tasks[i].form=list.map(c=>({name:c.name,weight:c.weight,l4:c.l4,l3:c.l3,l2:c.l2,l1:c.l1}));S.tasks[i].formAuto=false;}});
+      S.critSug=false;save();renderStage(3);renderStage(4);
+      setTimeout(()=>{const n=$("#keySlot");if(n)n.innerHTML=`<p class="status ok">${esc(t("keyDone"))}</p>`;},0);};
+    $("#keyAgain").onclick=e=>{e.stopPropagation();keyAi($("#keyAi"));};
+    $("#keyKeep").onclick=e=>{e.stopPropagation();slot.innerHTML="";};
+    slot.scrollIntoView({behavior:"smooth",block:"start"});
+  }catch(err){slot.innerHTML=err&&err.code==="cancelled"?"":`<p class="status err">${esc(errText(err&&err.code))}</p>`;aiFailed(err);}
+  finally{b.disabled=false;}
+}
+
 // ---------- AI
 function showAiButtons(){$$(".ai-btn:not(.tr-task)").forEach(b=>b.hidden=!sample);const a=$("#assistAi");if(a)a.hidden=!sample;}
-function errText(c){return c==="not_granted"?t("errNG"):c==="rate_limited"?t("errRL"):t("errGen");}
-function aiFailed(err){if(err&&err.code==="not_granted"){sample=null;showAiButtons();}}
+function errText(c){return c==="cancelled"?"":c==="not_granted"?t("errNG"):c==="rate_limited"?t("errRL"):t("errGen");}
+function aiFailed(err){if(err&&err.code==="not_granted"){sample=bridgeSample;showAiButtons();}}
+// ---------- Claude bridge: outside the Claude app, each AI feature prepares a prompt to copy into Claude, then reads the pasted reply
+function parseReply(txt){
+  let x=String(txt||"").trim().replace(/^```[a-zA-Z]*\s*/,"").replace(/```\s*$/,"").trim();
+  try{return JSON.parse(x);}catch(e){}
+  const a=x.search(/[\[{]/),b=Math.max(x.lastIndexOf("}"),x.lastIndexOf("]"));
+  if(a>=0&&b>a){try{return JSON.parse(x.slice(a,b+1));}catch(e){}}
+  return undefined;
+}
+function bridge(prompt,json){
+  return new Promise((resolve,reject)=>{
+    const full=json?prompt+"\n\nReply with the JSON only, with no explanation before or after it.":prompt;
+    const ov=document.createElement("div");ov.className="br-ov";ov.dir=L==="en"?"ltr":"rtl";ov.lang=L;
+    ov.innerHTML=`<div class="br-box" role="dialog" aria-modal="true" aria-labelledby="brH"><h3 id="brH">${esc(t("brH"))}</h3>
+      <ol class="br-steps">${t("brSteps").map(x=>`<li>${esc(x)}</li>`).join("")}</ol>
+      <textarea class="br-prompt" readonly dir="auto" aria-label="prompt">${esc(full)}</textarea>
+      <div class="assist-actions"><button type="button" class="btn primary" data-br="copy">${esc(t("brCopy"))}</button><a class="btn" href="https://claude.ai/new" target="_blank" rel="noopener">${esc(t("brOpen"))}</a><span class="status" data-br-st></span></div>
+      <label class="br-lbl" for="brReply">${esc(t("brPasteLbl"))}</label>
+      <textarea id="brReply" class="br-reply" dir="auto" placeholder="${esc(t("brPastePh"))}"></textarea>
+      <div class="assist-actions"><button type="button" class="btn primary" data-br="use">${esc(t("brUse"))}</button><button type="button" class="btn" data-br="cancel">${esc(t("cancel"))}</button><span class="status err" data-br-err></span></div></div>`;
+    document.body.appendChild(ov);
+    const st=ov.querySelector("[data-br-st]"),er=ov.querySelector("[data-br-err]"),pr=ov.querySelector(".br-prompt"),rp=ov.querySelector("#brReply");
+    const close=()=>{ov.remove();document.removeEventListener("keydown",onKey);};
+    const onKey=e=>{if(e.key==="Escape"){close();reject({code:"cancelled"});}};
+    document.addEventListener("keydown",onKey);
+    ov.querySelector("[data-br=copy]").focus();
+    ov.addEventListener("click",e=>{
+      if(e.target===ov){close();reject({code:"cancelled"});return;}
+      const b=e.target.closest("[data-br]");if(!b)return;e.stopPropagation();
+      if(b.dataset.br==="copy"){
+        const done=()=>{st.textContent=t("brCopied");st.className="status ok";};
+        if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(full).then(done).catch(()=>{pr.select();document.execCommand("copy");done();});
+        else{pr.select();try{document.execCommand("copy");}catch(_){}done();}
+        rp.focus({preventScroll:true});return;}
+      if(b.dataset.br==="cancel"){close();reject({code:"cancelled"});return;}
+      if(b.dataset.br==="use"){
+        const v=rp.value.trim();if(!v){er.textContent=t("brEmpty");return;}
+        if(json){const o=parseReply(v);if(o===undefined||o===null||typeof o!=="object"){er.textContent=t("brBad");return;}close();resolve(o);}
+        else{close();resolve({text:v.replace(/^```[a-zA-Z]*\s*/,"").replace(/```\s*$/,"").trim()});}
+      }
+    });
+  });
+}
+const bridgeSample=(p,o)=>bridge(p,false).then(r=>{if(o&&o.onText)o.onText({text:r.text});return r;});
+bridgeSample.json=p=>bridge(p,true);
+sample=bridgeSample;
 const LN={ar:"Arabic (Modern Standard Arabic)",he:"Hebrew",en:"English"};
 function audience(kind){
   const g=S.grade?` in grade ${S.grade}`:"";
@@ -1111,6 +1593,7 @@ Unit: ${S.unit||"not specified"}
 The skill they chose: ${S.skill}
 Evidence of the skill, as they described it: ${S.evidence||"not written"}
 Spaces available at the school: a robotics room, a carpentry workshop, a water garden and the school yard, plus the classroom and the surrounding community.
+${S.tasks.some(x=>x.kind)?"The two tasks will take these creative forms: "+S.tasks.map((x,i)=>"task "+(i+1)+" = "+(x.kind?KIND_NAMES.en[x.kind]:"not chosen yet")).join("; ")+". Make every idea fit one of these forms, and say which.":""}
 ${prefs.length?"What matters to the team in the idea: "+prefs.join("; "):""}
 ${note?"Team notes: "+note:""}
 ${avoid.length?"Do not repeat these ideas suggested earlier: "+avoid.join("; "):""}
@@ -1180,10 +1663,33 @@ ${texts.map(x=>"- "+x.replace(/\n+/g," ")).join("\n")}`,{cache:false});
   finally{const b2=$("#glSuggest");if(b2)b2.disabled=false;}
 }
 
+// ---------- arriving from the Smart Alternative Assessment Platform (creative path), data in #import=
+function readImport(){
+  const m=location.hash.match(/^#import=(.+)$/);if(!m)return null;
+  try{history.replaceState(null,"",location.pathname+location.search);}catch(e){}
+  try{const d=JSON.parse(decodeURIComponent(m[1]));return d&&d.source==="muna-assess-mate"?d:false;}catch(e){return false;}
+}
+function applyImport(d){
+  const str=x=>String(x==null?"":x).slice(0,300);
+  const kinds=(Array.isArray(d.kinds)?d.kinds:[]).filter(k=>KINDS.includes(k)).slice(0,2);
+  const subject=str(d.subject);
+  S=normalize(Object.assign(EMPTY(),{subject,grade:str(d.grade),unit:str(d.unit),coordinator:str(d.coordinator),
+    studentLang:detectLang(subject)||"ar",helperAr:(detectLang(subject)||"ar")!=="ar",
+    tasks:[{kind:kinds[0]||""},{kind:kinds[1]||""}]}));
+  save();cur=0;renderAll();
+  const z=$("#confirmZone");if(z)z.innerHTML=`<div class="banner"><span>${esc(t("importOk"))}</span></div>`;
+}
+function handleImport(){
+  const d=readImport();if(d===null)return;
+  if(d===false){const z=$("#confirmZone");if(z)z.innerHTML=`<div class="banner"><span>${esc(t("importBad"))}</span></div>`;return;}
+  (hasContent()&&!S.example)?askConfirm(t("importQ"),()=>applyImport(d)):applyImport(d);
+}
+
 // ---------- boot
 renderAll();go(0,false);
+handleImport();
 if(window.claude&&claude.use){
-  claude.use("sample").then(s=>{sample=s;showAiButtons();if(cur===4)renderStage(4);}).catch(()=>{});
+  claude.use("sample").then(s=>{if(s)sample=s;showAiButtons();if(cur===4)renderStage(4);}).catch(()=>{});
   claude.use("downloads").then(d=>{downloads=d}).catch(()=>{});
 }
 })();
