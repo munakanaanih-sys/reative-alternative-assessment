@@ -267,12 +267,12 @@ ar:{
   ideasFoot:"هذه نقاط انطلاق فقط. خذوا منها، ادمجوها، أو تجاهلوها، وصوغوا المهمة بكلماتكم.",moreIdeas:"أفكار أخرى",
   moved:n=>`نُقلت الفكرة إلى ${n} كمسودة. طوّروا الوصف بكلماتكم وأكملوا باقي البنود.`,
   replaceQ:n=>`في ${n} نص مكتوب. هل تريدون استبدال العنوان والوصف؟`,replace:"استبدال",
-  s3guide:["هل تُظهر المهمة المهارة التي اخترناها، أم تفحص شيئًا آخر كالخط أو الحفظ؟","لو أن طالبًا ضعيفًا في الكتابة لكنه يملك المهارة، أي مهمة ستنصفه؟","ما الذي تكشفه المهمة الثانية ولا تكشفه الأولى؟","هل تخدم الحديقة المائية أو الروبوتيكا أو النجارة مهارتكم؟ استعمالها إمكانية لا شرط."],
+  s3guide:["هل تُظهر المهمة المهارة التي اخترناها، أم تفحص شيئًا آخر كالخط أو الحفظ؟","لو أن طالبًا ضعيفًا في الكتابة لكنه يملك المهارة، أي مهمة ستنصفه؟","ما الذي تكشفه المهمة الثانية ولا تكشفه الأولى؟","هل تخدم الحديقة المائية أو الروبوتيكا أو النجارة أو المختبر أو غرفة اللغات مهارتكم؟ استعمالها إمكانية لا شرط."],
   taskTag:n=>`خيار ${n}`,taskName:["المهمة الأولى","المهمة الثانية"],
   tTitle:"عنوان المهمة",tDesc:"وصف المهمة للطالب",tDescHint:"بلغة يفهمها الطالب، بصيغة المخاطَب.",tPlace:"أين تُنفَّذ؟",tMode:"طريقة العمل",tPlaceOther:"حدّدوا المكان",
   tProduct:"ماذا يُنتج الطالب أو يقدّم؟",tMaterials:"المواد والأدوات",tTime:"الوقت المتاح",tTimePh:"مثال: حصتان",
   tReveals:"ما الذي تكشفه هذه المهمة ولا تكشفه الأخرى؟",teacherOnly:"يظهر في ملف المعلم فقط.",
-  places:{class:"الصف",robotics:"غرفة الروبوتيكا",carpentry:"ورشة النجارة",water:"الحديقة المائية",yard:"ساحة المدرسة",outside:"خارج المدرسة",other:"أخرى"},
+  places:{class:"الصف",robotics:"غرفة الروبوتيكا",carpentry:"ورشة النجارة",water:"الحديقة المائية",lab:"المختبر العلمي",languages:"غرفة اللغات",media:"استوديو الإعلام",arts:"غرفة الفنون",yard:"ساحة المدرسة",outside:"خارج المدرسة",other:"أخرى"},
   modes:{solo:"فردي",pair:"زوجي",group:"مجموعة"},
   s4h:"مرشد التصحيح الموحد",s4p:"3 إلى 4 معايير تصف جوانب المهارة. كل معيار يجب أن يصلح للمهمتين: إن لم تستطيعوا وصف ظهوره في إحداهما، فهو يقيس المنتَج لا المهارة.",
   critN:n=>`المعيار ${n}`,critPh:"جانب من المهارة",weight:"الوزن %",optional:"اختياري",
@@ -342,12 +342,12 @@ he:{
   ideasFoot:"אלה נקודות פתיחה בלבד. קחו מהן, שלבו ביניהן או התעלמו מהן, ונסחו את המשימה במילים שלכם.",moreIdeas:"רעיונות נוספים",
   moved:n=>`הרעיון הועבר כטיוטה: ${n}. פתחו את התיאור במילים שלכם והשלימו את שאר הסעיפים.`,
   replaceQ:n=>`ב${n.replace(/^ה/,"")} כבר יש טקסט. להחליף את הכותרת והתיאור?`,replace:"החלפה",
-  s3guide:["האם המשימה מראה את המיומנות שבחרנו, או בודקת משהו אחר כמו כתב יד או שינון?","אם תלמיד חלש בכתיבה אבל שולט במיומנות, איזו משימה תעשה איתו צדק?","מה חושפת המשימה השנייה שהראשונה לא?","האם הגינה המימית, הרובוטיקה או הנגרייה משרתות את המיומנות שלכם? השימוש בהן הוא אפשרות, לא חובה."],
+  s3guide:["האם המשימה מראה את המיומנות שבחרנו, או בודקת משהו אחר כמו כתב יד או שינון?","אם תלמיד חלש בכתיבה אבל שולט במיומנות, איזו משימה תעשה איתו צדק?","מה חושפת המשימה השנייה שהראשונה לא?","האם הגינה המימית, הרובוטיקה, הנגרייה, המעבדה או חדר השפות משרתים את המיומנות שלכם? השימוש בהם הוא אפשרות, לא חובה."],
   taskTag:n=>`אפשרות ${n}`,taskName:["המשימה הראשונה","המשימה השנייה"],
   tTitle:"כותרת המשימה",tDesc:"תיאור המשימה לתלמיד",tDescHint:"בשפה שהתלמיד מבין, בפנייה ישירה אליו.",tPlace:"איפה היא מתבצעת?",tMode:"אופן העבודה",tPlaceOther:"פרטו את המקום",
   tProduct:"מה התלמיד מגיש או מציג?",tMaterials:"חומרים וכלים",tTime:"הזמן העומד לרשות",tTimePh:"לדוגמה: שני שיעורים",
   tReveals:"מה המשימה הזו חושפת שהאחרת לא?",teacherOnly:"מופיע בקובץ המורה בלבד.",
-  places:{class:"כיתה",robotics:"חדר רובוטיקה",carpentry:"נגרייה",water:"הגינה המימית",yard:"חצר בית הספר",outside:"מחוץ לבית הספר",other:"אחר"},
+  places:{class:"כיתה",robotics:"חדר רובוטיקה",carpentry:"נגרייה",water:"הגינה המימית",lab:"מעבדה",languages:"חדר שפות",media:"אולפן מדיה",arts:"חדר אמנות",yard:"חצר בית הספר",outside:"מחוץ לבית הספר",other:"אחר"},
   modes:{solo:"יחידני",pair:"בזוגות",group:"בקבוצה"},
   s4h:"מחוון אחיד",s4p:"3 עד 4 קריטריונים שמתארים היבטים של המיומנות. כל קריטריון חייב להתאים לשתי המשימות: אם אי אפשר לתאר איך הוא בא לידי ביטוי באחת מהן, הוא מודד את התוצר ולא את המיומנות.",
   critN:n=>`קריטריון ${n}`,critPh:"היבט של המיומנות",weight:"משקל %",optional:"אופציונלי",
@@ -417,12 +417,12 @@ en:{
   ideasFoot:"These are starting points only. Take from them, combine them or ignore them, and phrase the task in your own words.",moreIdeas:"More ideas",
   moved:n=>`The idea was copied to ${n} as a draft. Develop the description in your own words and complete the other fields.`,
   replaceQ:n=>`${n} already has text. Replace the title and description?`,replace:"Replace",
-  s3guide:["Does the task show the skill we chose, or assess something else like handwriting or memorization?","If a student is weak at writing but has the skill, which task would be fair to them?","What does the second task reveal that the first does not?","Do the water garden, robotics or carpentry serve your skill? Using them is an option, not a requirement."],
+  s3guide:["Does the task show the skill we chose, or assess something else like handwriting or memorization?","If a student is weak at writing but has the skill, which task would be fair to them?","What does the second task reveal that the first does not?","Do the water garden, robotics, carpentry, the science lab or the language room serve your skill? Using them is an option, not a requirement."],
   taskTag:n=>`Option ${n}`,taskName:["Task 1","Task 2"],
   tTitle:"Task title",tDesc:"Task description for the student",tDescHint:"In language the student understands, addressed directly to them.",tPlace:"Where does it take place?",tMode:"Work mode",tPlaceOther:"Specify the place",
   tProduct:"What does the student produce or present?",tMaterials:"Materials and tools",tTime:"Time available",tTimePh:"e.g. two lessons",
   tReveals:"What does this task reveal that the other does not?",teacherOnly:"Appears in the teacher file only.",
-  places:{class:"Classroom",robotics:"Robotics room",carpentry:"Carpentry workshop",water:"Water garden",yard:"School yard",outside:"Outside school",other:"Other"},
+  places:{class:"Classroom",robotics:"Robotics room",carpentry:"Carpentry workshop",water:"Water garden",lab:"Science lab",languages:"Language room",media:"Media studio",arts:"Art room",yard:"School yard",outside:"Outside school",other:"Other"},
   modes:{solo:"Individual",pair:"Pairs",group:"Group"},
   s4h:"Shared rubric",s4p:"3 to 4 criteria describing aspects of the skill. Each criterion must fit both tasks: if you cannot describe how it shows up in one of them, it measures the product, not the skill.",
   critN:n=>`Criterion ${n}`,critPh:"An aspect of the skill",weight:"Weight %",optional:"Optional",
@@ -612,7 +612,7 @@ const FIXED_GLOSS={
   ar:[]};
 
 
-// ===== Creative assessment layer: task types + rubric split 50% skill / 50% form, delivery, technology =====
+// ===== Creative assessment layer: task types + rubric split SKW()% skill / FMW()% form, delivery, technology (60/40 default, 50/50 optional) =====
 const KINDS=["presentation","poster","video","podcast","interview","model","digitalGame","physicalGame"];
 const KIND_ICON={presentation:"🎤",poster:"🖼",video:"🎬",podcast:"🎙",interview:"🗣",model:"🧱",digitalGame:"🕹",physicalGame:"🎲"};
 const KIND_NAMES={
@@ -654,6 +654,13 @@ const FORM_FOCUS={
   }
 };
 const FORM_W=[20,15,15];
+// grade split: SPLIT% for understanding the skill, (100-SPLIT)% for form, delivery and technology. 60 = default, 50 = optional
+let SPLIT=60;
+const SKW=()=>SPLIT, FMW=()=>100-SPLIT;
+const formW=()=>SPLIT===50?[20,15,15]:[16,12,12];
+// fills {A} (skill %) and {B} (form %) in interface/document texts
+function W$(v){if(typeof v==="string")return v.replace(/\{A\}/g,String(SKW())).replace(/\{B\}/g,String(FMW()));if(Array.isArray(v))return v.map(W$);if(typeof v==="function")return (...a)=>W$(v(...a));return v;}
+function W$o(o){const r={};for(const k in o)r[k]=W$(o[k]);return r;}
 const FORM_GEN={
   ar:{names:["الشكل والتنسيق","التقديم المتمكّن","استخدام التكنولوجيا"],
     g:[f=>["متقن ومتميز في: "+f+". العمل جذاب ومنظّم ويخدم الفكرة تمامًا.","جيد في: "+f+"، مع جوانب قليلة تحتاج تحسينًا بسيطًا.","مقبول في: "+f+"؛ تظهر عيوب واضحة تؤثر على وضوح العمل.","ضعيف في: "+f+"؛ يحتاج توجيهًا ودعمًا لإنجازه."],
@@ -671,14 +678,14 @@ const FORM_GEN={
 function makeForm(kind,lang){
   const G=FORM_GEN[lang]||FORM_GEN.ar, F=(FORM_FOCUS[lang]||FORM_FOCUS.ar)[kind];
   if(!F)return [];
-  return G.g.map((gen,i)=>{const l=gen(F[i]);return {name:G.names[i],weight:String(FORM_W[i]),l4:l[0],l3:l[1],l2:l[2],l1:l[3]};});
+  return G.g.map((gen,i)=>{const l=gen(F[i]);return {name:G.names[i],weight:String(formW()[i]),l4:l[0],l3:l[1],l2:l[2],l1:l[3]};});
 }
-// effective skill-criteria weights: as entered, or 50% split equally when left empty
+// effective skill-criteria weights: as entered, or SKW()% split equally when left empty
 function skillWeights(crits){
   const named=crits.filter(c=>(c.name||"").trim());
   const entered=named.map(c=>parseFloat(c.weight));
   if(named.length&&entered.every(n=>!isNaN(n)))return entered;
-  const n=named.length||1,base=Math.floor(50/n),rest=50-base*n;
+  const n=named.length||1,base=Math.floor(SKW()/n),rest=SKW()-base*n;
   return named.map((_,i)=>base+(i<rest?1:0));
 }
 
@@ -686,79 +693,79 @@ function skillWeights(crits){
 (function(){
 const P={
 ar:{
-  intro:"يعبّئ الطاقم البنود معًا في خمس مراحل، وفي النهاية يحصل على ملفَي Word: ملف للطالب يشرح مركّبات المهمة وفيه خياران يختار منهما واحدًا، ومرشد تقييم للمعلم. نصف العلامة على فهم المهارة بمعايير موحدة للمهمتين، والنصف الآخر على الشكل والتقديم واستخدام التكنولوجيا حسب نوع كل مهمة. زر «اقتراح صياغة» اختياري: يجهّز لكم برومبت تنسخونه إلى Claude ثم تلصقون الرد، ولا يُعتمد أي اقتراح إلا بموافقتكم.",
+  intro:"يعبّئ الطاقم البنود معًا في خمس مراحل، وفي النهاية يحصل على ملفَي Word: ملف للطالب يشرح مركّبات المهمة وفيه خياران يختار منهما واحدًا، ومرشد تقييم للمعلم. {A}% من العلامة على فهم المهارة بمعايير موحدة للمهمتين، و{B}% على الشكل والتقديم واستخدام التكنولوجيا حسب نوع كل مهمة (تختارون التوزيع 60/40 أو 50/50 في مرحلة مرشد التصحيح). زر «اقتراح صياغة» اختياري: يجهّز لكم برومبت تنسخونه إلى Claude ثم تلصقون الرد، ولا يُعتمد أي اقتراح إلا بموافقتكم.",
   s3p:"مهمتان إبداعيتان تفحصان المهارة نفسها بطريقتين مختلفتين، ولكل منهما نوع (فيديو، بودكاست، مجسم...). الطالب يختار واحدة منهما.",
-  s4h:"مرشد التصحيح",s4p:"قسمان: أولًا معايير المهارة (50%) — معياران إلى أربعة تصف جوانب المهارة وتصلح للمهمتين. ثانيًا الشكل والتقديم والتكنولوجيا (50%) — تُولَّد تلقائيًا حسب نوع كل مهمة، ويمكنكم تعديل صياغتها.",
-  weightSum:n=>`مجموع أوزان معايير المهارة: ${n}%`,weightBad:" (يجب أن يكون 50%)",
+  s4h:"مرشد التصحيح",s4p:"قسمان: أولًا معايير المهارة ({A}%) — معياران إلى أربعة تصف جوانب المهارة وتصلح للمهمتين. ثانيًا الشكل والتقديم والتكنولوجيا ({B}%) — تُولَّد تلقائيًا حسب نوع كل مهمة، ويمكنكم تعديل صياغتها.",
+  weightSum:n=>`مجموع أوزان معايير المهارة: ${n}%`,weightBad:" (يجب أن يكون {A}%)",
   kindLbl:"نوع المهمة الإبداعية",kindPick:"اختاروا نوع المهمة...",
-  partA:"أولًا: فهم المهارة — 50%",partAP:"معايير موحدة تصلح للمهمتين. اتركوا الأوزان فارغة لتوزيع 50% بالتساوي، أو أدخلوها بمجموع 50%.",splitBtn:"وزّعوا 50% بالتساوي",
-  partB:"ثانيًا: الشكل والتقديم واستخدام التكنولوجيا — 50%",partBP:"تُولَّد حسب نوع كل مهمة: الشكل والتنسيق 20%، التقديم المتمكّن 15%، استخدام التكنولوجيا 15%. عدّلوا الصياغة كما تشاؤون.",
+  partA:"أولًا: فهم المهارة — {A}%",partAP:"معايير موحدة تصلح للمهمتين. اتركوا الأوزان فارغة لتوزيع {A}% بالتساوي، أو أدخلوها بمجموع {A}%.",splitBtn:"وزّعوا {A}% بالتساوي",
+  partB:"ثانيًا: الشكل والتقديم واستخدام التكنولوجيا — {B}%",partBP:"تُولَّد حسب نوع كل مهمة: الشكل والتنسيق 20%، التقديم المتمكّن 15%، استخدام التكنولوجيا 15%. عدّلوا الصياغة كما تشاؤون.",
   regen:"إعادة التوليد حسب نوع المهمة",regenQ:"ستُستبدل تعديلاتكم على معايير هذه المهمة. هل تريدون المتابعة؟",noKind:n=>`اختاروا نوع ${n} في المرحلة 3 لتظهر معاييرها هنا.`,
   backMain:"العودة إلى المنصة الذكية للتقييم البديل",
   importOk:"وصلت بيانات المهمة من المنصة الذكية للتقييم البديل ✓ أكملوا المراحل بالترتيب.",importQ:"وصلت بيانات مهمة جديدة من المنصة الذكية للتقييم البديل. هل تستبدلون بها الخطة الحالية؟",importBad:"تعذّرت قراءة البيانات المرسلة.",
   brH:"اقتراح عبر Claude",brSteps:["انسخوا البرومبت","الصقوه في محادثة مع Claude","انسخوا رد Claude والصقوه هنا"],brCopy:"نسخ البرومبت",brOpen:"فتح Claude",brPasteLbl:"رد Claude",brPastePh:"الصقوا هنا رد Claude كما هو",brUse:"استعمال الرد",brCopied:"تم النسخ ✓",brBad:"لم نتمكن من قراءة الرد. تأكدوا أنكم نسختم رد Claude كاملًا.",brEmpty:"الصقوا رد Claude أولًا.",
   glNoAi:"أضيفوا الكلمات بأنفسكم، أو اطلبوا اقتراحات عبر Claude.",
   stuCardP:l=>`ب${l}: شرح مركّبات المهمة، المهمتان للاختيار، ومعايير التقييم.`,
-  teaCardP:"المهارة والدليل، تفاصيل المهمتين، مرشد التصحيح بقسميه (50% مهارة، 50% شكل وتقديم وتكنولوجيا)، وورقة رصد الدرجات.",
+  teaCardP:"المهارة والدليل، تفاصيل المهمتين، مرشد التصحيح بقسميه ({A}% مهارة، {B}% شكل وتقديم وتكنولوجيا)، وورقة رصد الدرجات.",
   saved:"تم تنزيل الملف."
 },
 he:{
-  intro:"הצוות ממלא את הסעיפים יחד בחמישה שלבים, ובסוף מקבל שני קובצי Word: קובץ לתלמיד שמסביר את רכיבי המשימה ובו שתי אפשרויות לבחירה, ומחוון הערכה למורה. מחצית מהציון על הבנת המיומנות לפי קריטריונים אחידים לשתי המשימות, והמחצית השנייה על העיצוב, ההצגה והשימוש בטכנולוגיה לפי סוג כל משימה. הכפתור «הצעת ניסוח» אופציונלי: הוא מכין פרומפט שמעתיקים ל-Claude ואז מדביקים את התשובה, ושום הצעה לא נכנסת בלי אישורכם.",
+  intro:"הצוות ממלא את הסעיפים יחד בחמישה שלבים, ובסוף מקבל שני קובצי Word: קובץ לתלמיד שמסביר את רכיבי המשימה ובו שתי אפשרויות לבחירה, ומחוון הערכה למורה. {A}% מהציון על הבנת המיומנות לפי קריטריונים אחידים לשתי המשימות, ו-{B}% על העיצוב, ההצגה והשימוש בטכנולוגיה לפי סוג כל משימה (בוחרים חלוקה 60/40 או 50/50 בשלב המחוון). הכפתור «הצעת ניסוח» אופציונלי: הוא מכין פרומפט שמעתיקים ל-Claude ואז מדביקים את התשובה, ושום הצעה לא נכנסת בלי אישורכם.",
   s3p:"שתי משימות יצירתיות שבודקות את אותה מיומנות בשתי דרכים שונות, ולכל אחת סוג (סרטון, פודקאסט, מודל...). התלמיד בוחר אחת מהן.",
-  s4h:"מחוון",s4p:"שני חלקים: א. קריטריוני המיומנות (50%) — שניים עד ארבעה קריטריונים שמתאימים לשתי המשימות. ב. עיצוב, הצגה וטכנולוגיה (50%) — נוצרים אוטומטית לפי סוג כל משימה, וניתן לערוך את ניסוחם.",
-  weightSum:n=>`סכום משקלות קריטריוני המיומנות: ${n}%`,weightBad:" (צריך להיות 50%)",
+  s4h:"מחוון",s4p:"שני חלקים: א. קריטריוני המיומנות ({A}%) — שניים עד ארבעה קריטריונים שמתאימים לשתי המשימות. ב. עיצוב, הצגה וטכנולוגיה ({B}%) — נוצרים אוטומטית לפי סוג כל משימה, וניתן לערוך את ניסוחם.",
+  weightSum:n=>`סכום משקלות קריטריוני המיומנות: ${n}%`,weightBad:" (צריך להיות {A}%)",
   kindLbl:"סוג המשימה היצירתית",kindPick:"בחרו סוג משימה...",
-  partA:"א. הבנת המיומנות — 50%",partAP:"קריטריונים אחידים לשתי המשימות. השאירו את המשקלות ריקים לחלוקה שווה של 50%, או מלאו אותם בסכום של 50%.",splitBtn:"חלקו 50% באופן שווה",
-  partB:"ב. עיצוב, הצגה ושימוש בטכנולוגיה — 50%",partBP:"נוצרים לפי סוג כל משימה: עיצוב וארגון 20%, הצגה בביטחון 15%, שימוש בטכנולוגיה 15%. ערכו את הניסוח כרצונכם.",
+  partA:"א. הבנת המיומנות — {A}%",partAP:"קריטריונים אחידים לשתי המשימות. השאירו את המשקלות ריקים לחלוקה שווה של {A}%, או מלאו אותם בסכום של {A}%.",splitBtn:"חלקו {A}% באופן שווה",
+  partB:"ב. עיצוב, הצגה ושימוש בטכנולוגיה — {B}%",partBP:"נוצרים לפי סוג כל משימה: עיצוב וארגון 20%, הצגה בביטחון 15%, שימוש בטכנולוגיה 15%. ערכו את הניסוח כרצונכם.",
   regen:"יצירה מחדש לפי סוג המשימה",regenQ:"השינויים שלכם בקריטריונים של משימה זו יוחלפו. להמשיך?",noKind:n=>`בחרו את סוג ${n} בשלב 3 כדי שהקריטריונים שלה יופיעו כאן.`,
   backMain:"חזרה לפלטפורמה החכמה להערכה חלופית",
   importOk:"פרטי המשימה התקבלו מהפלטפורמה החכמה להערכה חלופית ✓ השלימו את השלבים לפי הסדר.",importQ:"התקבלו פרטי משימה חדשה מהפלטפורמה החכמה. להחליף בהם את התוכנית הנוכחית?",importBad:"לא ניתן לקרוא את הנתונים שנשלחו.",
   brH:"הצעה דרך Claude",brSteps:["העתיקו את הפרומפט","הדביקו אותו בשיחה עם Claude","העתיקו את תשובת Claude והדביקו כאן"],brCopy:"העתקת הפרומפט",brOpen:"פתיחת Claude",brPasteLbl:"תשובת Claude",brPastePh:"הדביקו כאן את תשובת Claude כמות שהיא",brUse:"שימוש בתשובה",brCopied:"הועתק ✓",brBad:"לא הצלחנו לקרוא את התשובה. ודאו שהעתקתם את כל תשובת Claude.",brEmpty:"הדביקו קודם את תשובת Claude.",
   glNoAi:"הוסיפו את המילים בעצמכם, או בקשו הצעות דרך Claude.",
   stuCardP:l=>`ב${l}: הסבר רכיבי המשימה, שתי המשימות לבחירה וקריטריוני ההערכה.`,
-  teaCardP:"המיומנות והעדות, פרטי שתי המשימות, המחוון בשני חלקיו (50% מיומנות, 50% עיצוב, הצגה וטכנולוגיה) ודף ריכוז ציונים.",
+  teaCardP:"המיומנות והעדות, פרטי שתי המשימות, המחוון בשני חלקיו ({A}% מיומנות, {B}% עיצוב, הצגה וטכנולוגיה) ודף ריכוז ציונים.",
   saved:"הקובץ הורד."
 },
 en:{
-  intro:"The team fills in the items together in five stages and ends with two Word files: a student file explaining the task components with two options to choose from, and a teacher assessment guide. Half the grade is on understanding the skill, with criteria shared by both tasks; the other half is on form, delivery and use of technology, according to each task's type. The “Suggest wording” button is optional: it prepares a prompt you copy into Claude and then paste the reply back, and no suggestion is used without your approval.",
+  intro:"The team fills in the items together in five stages and ends with two Word files: a student file explaining the task components with two options to choose from, and a teacher assessment guide. {A}% of the grade is on understanding the skill, with criteria shared by both tasks, and {B}% is on form, delivery and use of technology, according to each task's type (you choose a 60/40 or 50/50 split in the assessment-guide stage). The “Suggest wording” button is optional: it prepares a prompt you copy into Claude and then paste the reply back, and no suggestion is used without your approval.",
   s3p:"Two creative tasks that assess the same skill in two different ways, each with a type (video, podcast, model...). The student chooses one.",
-  s4h:"Assessment guide",s4p:"Two parts: A. Skill criteria (50%) — two to four criteria describing the skill that fit both tasks. B. Form, delivery and technology (50%) — generated automatically from each task's type; you can edit the wording.",
-  weightSum:n=>`Skill-criteria weights total: ${n}%`,weightBad:" (must be 50%)",
+  s4h:"Assessment guide",s4p:"Two parts: A. Skill criteria ({A}%) — two to four criteria describing the skill that fit both tasks. B. Form, delivery and technology ({B}%) — generated automatically from each task's type; you can edit the wording.",
+  weightSum:n=>`Skill-criteria weights total: ${n}%`,weightBad:" (must be {A}%)",
   kindLbl:"Creative task type",kindPick:"Choose a task type...",
-  partA:"A. Understanding the skill — 50%",partAP:"Criteria shared by both tasks. Leave weights empty to split 50% equally, or enter weights that total 50%.",splitBtn:"Split 50% equally",
-  partB:"B. Form, delivery and use of technology — 50%",partBP:"Generated from each task's type: form & organization 20%, confident delivery 15%, use of technology 15%. Edit the wording as you like.",
+  partA:"A. Understanding the skill — {A}%",partAP:"Criteria shared by both tasks. Leave weights empty to split {A}% equally, or enter weights that total {A}%.",splitBtn:"Split {A}% equally",
+  partB:"B. Form, delivery and use of technology — {B}%",partBP:"Generated from each task's type: form & organization 20%, confident delivery 15%, use of technology 15%. Edit the wording as you like.",
   regen:"Regenerate from task type",regenQ:"Your edits to this task's criteria will be replaced. Continue?",noKind:n=>`Choose the type of ${n} in stage 3 to see its criteria here.`,
   backMain:"Back to the Smart Alternative Assessment Platform",
   importOk:"Task details arrived from the Smart Alternative Assessment Platform ✓ Complete the stages in order.",importQ:"New task details arrived from the Smart Alternative Assessment Platform. Replace the current plan with them?",importBad:"Could not read the data that was sent.",
   brH:"Suggestion via Claude",brSteps:["Copy the prompt","Paste it into a chat with Claude","Copy Claude's reply and paste it here"],brCopy:"Copy prompt",brOpen:"Open Claude",brPasteLbl:"Claude's reply",brPastePh:"Paste Claude's reply here as it is",brUse:"Use the reply",brCopied:"Copied ✓",brBad:"We could not read the reply. Make sure you copied all of Claude's reply.",brEmpty:"Paste Claude's reply first.",
   glNoAi:"Add the words yourselves, or ask Claude for suggestions.",
   stuCardP:l=>`In ${l}: the task components, the two tasks to choose from, and the assessment criteria.`,
-  teaCardP:"The skill and evidence, both tasks in detail, the two-part guide (50% skill, 50% form, delivery and technology), and a grade sheet.",
+  teaCardP:"The skill and evidence, both tasks in detail, the two-part guide ({A}% skill, {B}% form, delivery and technology), and a grade sheet.",
   saved:"File downloaded."
 }};
-const RULE={ar:"مرشد التصحيح من قسمين: 50% لفهم المهارة بمعايير موحدة للمهمتين، و50% للشكل والتقديم واستخدام التكنولوجيا حسب نوع كل مهمة.",
-  he:"המחוון בשני חלקים: 50% להבנת המיומנות לפי קריטריונים אחידים לשתי המשימות, ו-50% לעיצוב, להצגה ולשימוש בטכנולוגיה לפי סוג כל משימה.",
-  en:"The guide has two parts: 50% for understanding the skill, with criteria shared by both tasks, and 50% for form, delivery and use of technology, according to each task's type."};
-const CHK={ar:["كل معيار في قسم المهارة يصلح للمهمتين معًا.","معايير الشكل والتقديم والتكنولوجيا مناسبة لنوع كل مهمة، ووزنها معًا 50%."],
-  he:["כל קריטריון בחלק המיומנות מתאים לשתי המשימות.","קריטריוני העיצוב, ההצגה והטכנולוגיה מתאימים לסוג כל משימה, ומשקלם יחד 50%."],
-  en:["Every skill criterion fits both tasks.","The form, delivery and technology criteria fit each task's type, and together weigh 50%."]};
-const GUIDE={ar:"أوزان معايير المهارة مجموعها 50%. إن تركتموها فارغة تُوزَّع بالتساوي.",he:"סכום משקלות קריטריוני המיומנות הוא 50%. אם תשאירו אותם ריקים, הם יחולקו באופן שווה.",en:"Skill-criteria weights total 50%. If you leave them empty, they are split equally."};
-const MISS={ar:{weights:"مجموع أوزان معايير المهارة يجب أن يكون 50% أو اتركوها فارغة (المرحلة 4)",kind:n=>`نوع ${n} الإبداعي (المرحلة 3)`},
-  he:{weights:"סכום משקלות קריטריוני המיומנות צריך להיות 50%, או השאירו אותם ריקים (שלב 4)",kind:n=>`סוג ${n} (שלב 3)`},
-  en:{weights:"Skill-criteria weights must total 50%, or leave them empty (stage 4)",kind:n=>`The type of ${n} (stage 3)`}};
+const RULE={ar:"مرشد التصحيح من قسمين: {A}% لفهم المهارة بمعايير موحدة للمهمتين، و{B}% للشكل والتقديم واستخدام التكنولوجيا حسب نوع كل مهمة.",
+  he:"המחוון בשני חלקים: {A}% להבנת המיומנות לפי קריטריונים אחידים לשתי המשימות, ו-{B}% לעיצוב, להצגה ולשימוש בטכנולוגיה לפי סוג כל משימה.",
+  en:"The guide has two parts: {A}% for understanding the skill, with criteria shared by both tasks, and {B}% for form, delivery and use of technology, according to each task's type."};
+const CHK={ar:["كل معيار في قسم المهارة يصلح للمهمتين معًا.","معايير الشكل والتقديم والتكنولوجيا مناسبة لنوع كل مهمة، ووزنها معًا {B}%."],
+  he:["כל קריטריון בחלק המיומנות מתאים לשתי המשימות.","קריטריוני העיצוב, ההצגה והטכנולוגיה מתאימים לסוג כל משימה, ומשקלם יחד {B}%."],
+  en:["Every skill criterion fits both tasks.","The form, delivery and technology criteria fit each task's type, and together weigh {B}%."]};
+const GUIDE={ar:"أوزان معايير المهارة مجموعها {A}%. إن تركتموها فارغة تُوزَّع بالتساوي.",he:"סכום משקלות קריטריוני המיומנות הוא {A}%. אם תשאירו אותם ריקים, הם יחולקו באופן שווה.",en:"Skill-criteria weights total {A}%. If you leave them empty, they are split equally."};
+const MISS={ar:{weights:"مجموع أوزان معايير المهارة يجب أن يكون {A}% أو اتركوها فارغة (المرحلة 4)",kind:n=>`نوع ${n} الإبداعي (المرحلة 3)`},
+  he:{weights:"סכום משקלות קריטריוני המיומנות צריך להיות {A}%, או השאירו אותם ריקים (שלב 4)",kind:n=>`סוג ${n} (שלב 3)`},
+  en:{weights:"Skill-criteria weights must total {A}%, or leave them empty (stage 4)",kind:n=>`The type of ${n} (stage 3)`}};
 const DOCP={
-  ar:{chooseNote:"نصف العلامة (50%) على فهم المهارة، بالمعايير نفسها في المهمتين. النصف الآخر (50%) على الشكل والتقديم واستخدام التكنولوجيا حسب المهمة التي تختارها. اختر المهمة التي تستطيع أن تُظهر فيها قدرتك بأفضل شكل.",
-    kind:"نوع المهمة",partA:"أولًا: فهم المهارة (50%) — للمهمتين",partB:(t,k)=>`ثانيًا: الشكل والتقديم واستخدام التكنولوجيا (50%) — ${t}: ${k}`,partBT:"ثانيًا: الشكل والتقديم واستخدام التكنولوجيا (50%)",
-    rubricH:"مرشد التصحيح",weight:"الوزن",formulaW:"الدرجة النهائية من 100 = مجموع (مستوى المعيار ÷ 4 × وزن المعيار). معايير المهارة مجموعها 50%، ومعايير الشكل والتقديم والتكنولوجيا للمهمة التي اختارها الطالب مجموعها 50%.",
-    sumA:"المهارة (50)",sumB:"الشكل والتقديم (50)"},
-  he:{chooseNote:"מחצית מהציון (50%) על הבנת המיומנות, לפי אותם קריטריונים בשתי המשימות. המחצית השנייה (50%) על העיצוב, ההצגה והשימוש בטכנולוגיה לפי המשימה שתבחרו. בחרו את המשימה שבה תוכלו להראות את היכולת שלכם בצורה הטובה ביותר.",
-    kind:"סוג המשימה",partA:"א. הבנת המיומנות (50%) — לשתי המשימות",partB:(t,k)=>`ב. עיצוב, הצגה ושימוש בטכנולוגיה (50%) — ${t}: ${k}`,partBT:"ב. עיצוב, הצגה ושימוש בטכנולוגיה (50%)",
-    rubricH:"מחוון",weight:"משקל",formulaW:"ציון סופי מתוך 100 = סכום (רמת הקריטריון ÷ 4 × משקל הקריטריון). סכום קריטריוני המיומנות 50%, וסכום קריטריוני העיצוב, ההצגה והטכנולוגיה של המשימה שהתלמיד בחר 50%.",
-    sumA:"מיומנות (50)",sumB:"עיצוב והצגה (50)"},
-  en:{chooseNote:"Half of the grade (50%) is on understanding the skill, with the same criteria in both tasks. The other half (50%) is on form, delivery and use of technology for the task you choose. Choose the task in which you can best show what you can do.",
-    kind:"Task type",partA:"A. Understanding the skill (50%) — both tasks",partB:(t,k)=>`B. Form, delivery and use of technology (50%) — ${t}: ${k}`,partBT:"B. Form, delivery and use of technology (50%)",
-    rubricH:"Assessment guide",weight:"Weight",formulaW:"Final grade out of 100 = sum of (criterion level ÷ 4 × criterion weight). Skill criteria total 50%; the form, delivery and technology criteria of the task the student chose total 50%.",
-    sumA:"Skill (50)",sumB:"Form & delivery (50)"}};
+  ar:{chooseNote:"{A}% من العلامة على فهم المهارة، بالمعايير نفسها في المهمتين، و{B}% على الشكل والتقديم واستخدام التكنولوجيا حسب المهمة التي تختارها. اختر المهمة التي تستطيع أن تُظهر فيها قدرتك بأفضل شكل.",
+    kind:"نوع المهمة",partA:"أولًا: فهم المهارة ({A}%) — للمهمتين",partB:(t,k)=>`ثانيًا: الشكل والتقديم واستخدام التكنولوجيا ({B}%) — ${t}: ${k}`,partBT:"ثانيًا: الشكل والتقديم واستخدام التكنولوجيا ({B}%)",
+    rubricH:"مرشد التصحيح",weight:"الوزن",formulaW:"الدرجة النهائية من 100 = مجموع (مستوى المعيار ÷ 4 × وزن المعيار). معايير المهارة مجموعها {A}%، ومعايير الشكل والتقديم والتكنولوجيا للمهمة التي اختارها الطالب مجموعها {B}%.",
+    sumA:"المهارة ({A})",sumB:"الشكل والتقديم ({B})"},
+  he:{chooseNote:"{A}% מהציון על הבנת המיומנות, לפי אותם קריטריונים בשתי המשימות, ו-{B}% על העיצוב, ההצגה והשימוש בטכנולוגיה לפי המשימה שתבחרו. בחרו את המשימה שבה תוכלו להראות את היכולת שלכם בצורה הטובה ביותר.",
+    kind:"סוג המשימה",partA:"א. הבנת המיומנות ({A}%) — לשתי המשימות",partB:(t,k)=>`ב. עיצוב, הצגה ושימוש בטכנולוגיה ({B}%) — ${t}: ${k}`,partBT:"ב. עיצוב, הצגה ושימוש בטכנולוגיה ({B}%)",
+    rubricH:"מחוון",weight:"משקל",formulaW:"ציון סופי מתוך 100 = סכום (רמת הקריטריון ÷ 4 × משקל הקריטריון). סכום קריטריוני המיומנות {A}%, וסכום קריטריוני העיצוב, ההצגה והטכנולוגיה של המשימה שהתלמיד בחר {B}%.",
+    sumA:"מיומנות ({A})",sumB:"עיצוב והצגה ({B})"},
+  en:{chooseNote:"{A}% of the grade is on understanding the skill, with the same criteria in both tasks, and {B}% is on form, delivery and use of technology for the task you choose. Choose the task in which you can best show what you can do.",
+    kind:"Task type",partA:"A. Understanding the skill ({A}%) — both tasks",partB:(t,k)=>`B. Form, delivery and use of technology ({B}%) — ${t}: ${k}`,partBT:"B. Form, delivery and use of technology ({B}%)",
+    rubricH:"Assessment guide",weight:"Weight",formulaW:"Final grade out of 100 = sum of (criterion level ÷ 4 × criterion weight). Skill criteria total {A}%; the form, delivery and technology criteria of the task the student chose total {B}%.",
+    sumA:"Skill ({A})",sumB:"Form & delivery ({B})"}};
 ["ar","he","en"].forEach(l=>{
   Object.assign(I18N[l],P[l]);
   I18N[l].rules=I18N[l].rules.slice();I18N[l].rules[3]=RULE[l];
@@ -769,7 +776,7 @@ const DOCP={
 });
 // sample tasks get a creative type
 const EXK={ar:["presentation","poster"],he:["presentation","poster"],en:["presentation","poster"]};
-Object.keys(EXK).forEach(l=>{if(EXAMPLES[l]&&EXAMPLES[l].tasks)EXAMPLES[l].tasks.forEach((x,i)=>{x.kind=EXK[l][i];});(EXAMPLES[l].criteria||[]).forEach(c=>{if(c.weight)c.weight=String(parseFloat(c.weight)/2);});});
+Object.keys(EXK).forEach(l=>{if(EXAMPLES[l]&&EXAMPLES[l].tasks)EXAMPLES[l].tasks.forEach((x,i)=>{x.kind=EXK[l][i];});(EXAMPLES[l].criteria||[]).forEach(c=>{if(c.weight)c.weight=String(Math.round(parseFloat(c.weight)*0.6));});EXAMPLES[l].split=60;});
 })();
 
 
@@ -837,7 +844,7 @@ function suggestTask(kind,lang,unit,skill){
 function suggestCriteria(lang,uiLang,skill,kinds){
   const C=(CRIT_TPL[lang]||CRIT_TPL.ar).c, Wh=KIND_WHERE[uiLang]||KIND_WHERE.ar, Wt=(CRIT_TPL[uiLang]||CRIT_TPL.ar).c;
   const sk=String(skill||"").trim().replace(/[.。]+$/,"");
-  const n=C.length,base=Math.floor(50/n),rest=50-base*n;
+  const n=C.length,base=Math.floor(SKW()/n),rest=SKW()-base*n;
   return C.map((c,i)=>{const l=c.l(sk),at=k=>k&&Wh[k]?Wt[i].w(Wh[k][0],Wh[k][1]):"";
     return {name:c.name,weight:String(base+(i<rest?1:0)),l4:l[0],l3:l[1],l2:l[2],l1:l[3],inA:at(kinds[0]),inB:at(kinds[1])};});
 }
@@ -853,6 +860,12 @@ const P={
     sugCritBtn:"Re-suggest automatically",keyAiH:"Another marking-key suggestion via Claude",keyAiP:"We filled in the marking key automatically. For a detailed alternative tailored to your topic, we prepare a prompt with everything you entered (subject, grade, skill, evidence, both tasks and their types). Copy it into Claude, paste the reply here, then compare and choose.",keyAiBtn:"Ask Claude for a suggestion",keyUse:"Use the suggested key",keyAgain:"Another suggestion",keyDone:"The suggested marking key is in place. You can edit any part of it.",sugCritAi:"Detailed criteria via Claude",sugCritQ:"The current skill criteria will be replaced. Continue?",sugCritNote:"We suggested skill criteria with levels, weights and how each shows up in every task. It is a starting point: adjust the wording to fit your skill precisely.",
     sugPrev:"Claude's suggestion:",sugUse:"Use the suggestion",needSkillFirst:"Write the skill in stage 2 first for a more precise suggestion.",needKindFirst:"Choose the task type first."}};
 ["ar","he","en"].forEach(l=>Object.assign(I18N[l],P[l]));
+// grade split choice (stage 4)
+const SP={
+  ar:{splitH:"توزيع العلامة",split60:"60% فهم المهارة / 40% الشكل والتقديم (موصى به)",split50:"50% / 50%",splitNote:"60/40 مناسب حين يكون الهدف فهم محتوى المادة. اختاروا 50/50 حين تكون مهارات الإنتاج والتكنولوجيا هدفًا تعليميًا بحد ذاته (حوسبة، روبوتيكا، إعلام، فنون). عند التغيير تُعدَّل الأوزان تلقائيًا."},
+  he:{splitH:"חלוקת הציון",split60:"60% הבנת המיומנות / 40% עיצוב והצגה (מומלץ)",split50:"50% / 50%",splitNote:"60/40 מתאים כשהמטרה היא הבנת תוכן המקצוע. בחרו 50/50 כשמיומנויות ההפקה והטכנולוגיה הן מטרה לימודית בפני עצמה (מחשבים, רובוטיקה, מדיה, אמנות). בשינוי, המשקלות מתעדכנים אוטומטית."},
+  en:{splitH:"Grade split",split60:"60% understanding the skill / 40% form & delivery (recommended)",split50:"50% / 50%",splitNote:"60/40 suits tasks whose goal is understanding the subject content. Choose 50/50 when production and technology skills are a learning goal in themselves (computing, robotics, media, art). Weights update automatically when you switch."}};
+["ar","he","en"].forEach(l=>Object.assign(I18N[l],SP[l]));
 })();
 
 </script>
@@ -913,7 +926,8 @@ function buildDocs(D, s, o){
   const cname=c=>c.name+(anyW&&String(c.weight||"").trim()?` (${c.weight}%)`:"");
 
   // ---------- student file
-  const sl=o.sl||"ar", S=DOC[sl];
+  SPLIT=(+s.split===50)?50:60;
+  const sl=o.sl||"ar", S=W$o(DOC[sl]);
   const k=kit(sl,sl!=="ar"&&o.gloss?o.gloss:null);
   const placeOf=(L,t)=>t.place==="other"?(t.placeOther||L.places.other):(L.places[t.place]||"");
   const st=[k.h1(S.sTitle+": "+(s.unit||""))];
@@ -934,7 +948,7 @@ function buildDocs(D, s, o){
   st.push(k.para([k.run("______________________________________________________________")],{before:120}));
 
   // ---------- teacher file
-  const tl=o.tl||"ar", Q=DOC[tl], m=kit(tl);
+  const tl=o.tl||"ar", Q=W$o(DOC[tl]), m=kit(tl);
   const te=[m.h1(Q.tTitle+": "+(s.unit||""))];
   te.push(m.kv(Q.subject,s.subject),m.kv(Q.grade,s.grade),m.kv(Q.unit,s.unit),m.kv(Q.coord,s.coordinator),m.kv(Q.team,s.team),m.kv(Q.date,s.date));
   te.push(m.h2(Q.skillH),...m.lines(s.skill));
@@ -949,7 +963,7 @@ function buildDocs(D, s, o){
   te.push(m.h2(Q.sheetH));
   te.push(m.para([m.run(Q.formulaW,{size:21,color:GRAY})]));
   const fnames=((T.find(t=>(t.form||[]).length)||{}).form||[]).map(c=>c.name).filter(Boolean);
-  const head=[Q.stName,Q.taskCol,...named.map((c,j)=>c.name+" ("+ws[j]+"%)"),...(fnames.length?fnames:(FORM_GEN[tl]||FORM_GEN.ar).names).map((n,j)=>n+" ("+FORM_W[j]+"%)"),Q.total];
+  const head=[Q.stName,Q.taskCol,...named.map((c,j)=>c.name+" ("+ws[j]+"%)"),...(fnames.length?fnames:(FORM_GEN[tl]||FORM_GEN.ar).names).map((n,j)=>n+" ("+formW()[j]+"%)"),Q.total];
   te.push(m.table([head,...Array.from({length:14},()=>head.map(()=>" "))],{blank:true}));
 
   return {student:k.doc(st),teacher:m.doc(te)};
@@ -963,9 +977,9 @@ const KEY="alt-assess-planner-v1", UIKEY="alt-assess-ui-lang";
 const LANGS=["ar","he","en"];
 let L="ar";
 try{const v=localStorage.getItem(UIKEY);if(LANGS.includes(v))L=v;}catch(e){}
-const t=k=>{const v=I18N[L][k];return v===undefined?I18N.ar[k]:v;};
+const t=k=>{const v=I18N[L][k];return W$(v===undefined?I18N.ar[k]:v);};
 const esc=x=>String(x??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const PLACES=["class","robotics","carpentry","water","yard","outside","other"], MODES=["solo","pair","group"];
+const PLACES=["class","robotics","carpentry","water","lab","languages","media","arts","yard","outside","other"], MODES=["solo","pair","group"];
 const NCHECK=9;
 const MAIN_URL="https://munakanaanih-sys.github.io/Muna-assess-mate/";
 
@@ -974,11 +988,17 @@ const blankTask=()=>({kind:"",form:[],formAuto:true,title:"",desc:"",place:"clas
 const blankCrit=()=>({name:"",weight:"",l4:"",l3:"",l2:"",l1:"",inA:"",inB:""});
 const EMPTY=()=>({subject:"",grade:"",unit:"",coordinator:"",date:"",team:"",studentLang:"ar",helperAr:false,slManual:false,
   unitSkills:"",skill:"",skillWhy:"",evidence:"",skillStudent:"",tasks:[blankTask(),blankTask()],criteria:[blankCrit(),blankCrit(),blankCrit()],
-  checks:Array(NCHECK).fill(false),gloss:[],example:false,critSug:false});
-const OLD_PLACE={"الصف":"class","غرفة الروبوتيكا":"robotics","ورشة النجارة":"carpentry","الحديقة المائية":"water","ساحة المدرسة":"yard","خارج المدرسة":"outside","أخرى":"other"};
+  checks:Array(NCHECK).fill(false),gloss:[],example:false,critSug:false,split:60});
+const OLD_PLACE={"الصف":"class","غرفة الروبوتيكا":"robotics","ورشة النجارة":"carpentry","الحديقة المائية":"water","المختبر العلمي":"lab","غرفة اللغات":"languages","استوديو الإعلام":"media","غرفة الفنون":"arts","ساحة المدرسة":"yard","خارج المدرسة":"outside","أخرى":"other"};
 const OLD_MODE={"فردي":"solo","زوجي":"pair","مجموعة":"group"};
 function normalize(s){
   const b=EMPTY();const o=Object.assign(b,s||{});
+  // grade split: 60 (default) or 50. Models saved before this option existed keep 50 if their weights were built for it
+  if(!(s&&(+s.split===50||+s.split===60))){
+    const sum=a=>a.map(c=>parseFloat(c&&c.weight)).filter(n=>!isNaN(n)).reduce((x,y)=>x+y,0);
+    const old=s&&s.split===undefined&&(((s.criteria||[]).some(c=>c&&String(c.weight||"").trim())&&sum(s.criteria||[])===50)||(s.tasks||[]).some(x=>x&&Array.isArray(x.form)&&x.form.length&&sum(x.form)===50));
+    o.split=old?50:60;}
+  o.split=+o.split;SPLIT=o.split;
   o.tasks=[0,1].map(i=>{const x=Object.assign(blankTask(),(s&&s.tasks&&s.tasks[i])||{});
     if(!PLACES.includes(x.place))x.place=OLD_PLACE[x.place]||"class";if(!MODES.includes(x.mode))x.mode=OLD_MODE[x.mode]||"solo";
     if(!KINDS.includes(x.kind))x.kind="";
@@ -993,7 +1013,8 @@ function normalize(s){
   return o;
 }
 let S;try{S=normalize(JSON.parse(localStorage.getItem(KEY)||"null"));}catch(e){S=EMPTY();}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+SPLIT=(S&&+S.split===50)?50:60;
+function save(){SPLIT=(S&&+S.split===50)?50:60;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 let cur=0, sample=null, downloads=null, lastIdeas=[], glSug=[];
 const stuOn=()=>S.studentLang!=="ar";
 
@@ -1118,6 +1139,11 @@ R[3]=()=>`${head(t("s4h"),t("s4p"))}
     <div class="claude-box"><div class="cb-text"><h3>✨ ${esc(t("keyAiH"))}</h3><p>${esc(t("keyAiP"))}</p></div>
       <button type="button" class="btn primary" id="keyAi">${esc(t("keyAiBtn"))}</button></div>
     <div id="keySlot"></div>
+    <div class="split-pick" style="border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:6px 0 14px;background:var(--surface)">
+      <p style="margin:0 0 8px;font-weight:600">${esc(t("splitH"))}</p>
+      <div class="sug-row"><button type="button" class="btn${SPLIT===60?" primary":""}" data-split="60" aria-pressed="${SPLIT===60}">${esc(t("split60"))}</button><button type="button" class="btn${SPLIT===50?" primary":""}" data-split="50" aria-pressed="${SPLIT===50}">${esc(t("split50"))}</button></div>
+      <p style="margin:8px 0 0;font-size:.88rem;color:var(--muted)">${esc(t("splitNote"))}</p>
+    </div>
     <div class="part-head part-a"><div><h3>${esc(t("partA"))}</h3><p>${esc(t("partAP"))}</p></div><div class="sug-row"><button type="button" class="btn" id="splitW">${esc(t("splitBtn"))}</button><button type="button" class="btn" id="sugCrit">${esc(t("sugCritBtn"))}</button></div></div>
     ${S.criteria.map((c,i)=>{const id=k=>`c${i}-${k}`,a=k=>`id="${id(k)}" data-c="${i}" data-k="${k}"`;
       return `<div class="crit">
@@ -1255,14 +1281,22 @@ function renderStage(i){const sec=$(`[data-stage="${i}"]`);sec.innerHTML=R[i]();
 function renderAll(){renderChrome();for(let i=0;i<5;i++)renderStage(i);go(cur,false);}
 
 // ---------- weights, gating
+// switch the grade split and rescale the weights already entered (skill part to SKW(), each task's form part to FMW())
+function applySplit(n){n=n===50?50:60;if(n===SPLIT&&+S.split===n)return;S.split=n;SPLIT=n;
+  const scale=(list,target)=>{const xs=list.filter(c=>String(c.weight||"").trim()&&!isNaN(parseFloat(c.weight)));if(!xs.length)return;
+    const v=xs.map(c=>parseFloat(c.weight)),tot=v.reduce((a,b)=>a+b,0);if(tot<=0)return;
+    const r=v.map(x=>Math.round(x*target/tot));r[r.length-1]+=target-r.reduce((a,b)=>a+b,0);xs.forEach((c,i)=>c.weight=String(r[i]));};
+  scale(S.criteria.filter(c=>(c.name||"").trim()),SKW());
+  S.tasks.forEach(x=>scale(x.form||[],FMW()));
+  save();renderAll();}
 function updateWeights(){const el=$("#weightSum");if(!el)return;const ws=S.criteria.map(c=>parseFloat(c.weight)).filter(n=>!isNaN(n));const sum=ws.reduce((a,b)=>a+b,0);
-  el.textContent=ws.length?t("weightSum")(sum)+(sum!==50?t("weightBad"):""):t("weightSum")(50);}
+  el.textContent=ws.length?t("weightSum")(sum)+(sum!==SKW()?t("weightBad"):""):t("weightSum")(SKW());}
 function missing(){const M=t("miss"),m=[];
   if(!S.unit.trim())m.push(M.unit);if(!S.skill.trim())m.push(M.skill);if(!S.skillStudent.trim())m.push(M.skillStudent);
   S.tasks.forEach((x,i)=>{if(!x.kind)m.push(M.kind(t("taskName")[i]));if(!x.title.trim()||!x.desc.trim())m.push(M.task(t("taskName")[i]))});
   const named=S.criteria.filter(c=>c.name.trim());if(!named.length)m.push(M.crit);
   named.forEach(c=>{if(!c.inA.trim()||!c.inB.trim())m.push(M.critBoth(c.name))});
-  const ws=S.criteria.map(c=>parseFloat(c.weight)).filter(n=>!isNaN(n));if(ws.length&&ws.reduce((a,b)=>a+b,0)!==50)m.push(M.weights);
+  const ws=S.criteria.map(c=>parseFloat(c.weight)).filter(n=>!isNaN(n));if(ws.length&&ws.reduce((a,b)=>a+b,0)!==SKW())m.push(M.weights);
   return m;}
 function setStatus(id,msg,kind){const s=$("#"+id);if(!s)return;s.textContent=msg;s.className="status "+(kind||"");}
 function gate(){const box=$("#missing");if(!box)return;const m=missing(),all=S.checks.every(Boolean);
@@ -1312,6 +1346,7 @@ document.addEventListener("click",e=>{
   if(b.dataset.ui){L=b.dataset.ui;try{localStorage.setItem(UIKEY,L)}catch(_){}lastIdeas=[];renderAll();return;}
   if(b.dataset.go!=null){go(+b.dataset.go);return;}
   if(b.classList.contains("help-btn")){const p=b.closest(".field").querySelector(".help");p.hidden=!p.hidden;b.setAttribute("aria-expanded",String(!p.hidden));return;}
+  if(b.dataset.split){applySplit(+b.dataset.split);return;}
   switch(b.id){
     case "prev":go(cur-1);return; case "next":go(cur+1);return;
     case "btnExample":(hasContent()&&!S.example)?askConfirm(t("confirmExample"),loadExample):loadExample();return;
@@ -1420,7 +1455,7 @@ async function taskAi(i,b){
 ${ctxLines()}
 Task type: ${KIND_NAMES.en[x.kind]}.
 ${other.kind?`The student will choose between this task and another one of type ${KIND_NAMES.en[other.kind]}${other.title?` ("${other.title}")`:""}; make this one clearly different.`:""}
-Write the task so the student can show the skill through this type of product. Address the student directly in short, clear, motivating sentences suited to their age. The grade is split: 50% for understanding the skill and 50% for form, delivery and use of technology, so the task should require both.
+Write the task so the student can show the skill through this type of product. Address the student directly in short, clear, motivating sentences suited to their age. The grade is split: ${SKW()}% for understanding the skill and ${FMW()}% for form, delivery and use of technology, so the task should require both.
 Fields: "title" (short, catchy), "desc" (3 to 5 sentences: what to make, what it must include to show the skill, and how it is presented), "product" (what is handed in or presented, with length or size), "materials" (realistic tools and materials), "time" (e.g. number of lessons), "reveals" (for the teacher: what this task reveals about the skill that the other one does not).
 Write title, desc, product, materials and time in ${LN[S.studentLang]}; write reveals in ${LN[L]}.
 Return only a JSON object with the keys title, desc, product, materials, time, reveals.`,{cache:false});
@@ -1445,9 +1480,9 @@ How to explain the skill to the student: ${S.skillStudent||"-"}
 ${tasks}
 ${current?`Their current skill criteria are: ${current}. Offer a genuinely different, sharper alternative, not a rewording.`:""}
 
-The marking key has two parts, each worth 50% of the grade:
-A) "skillCriteria": exactly 3 criteria that assess understanding of the skill itself and work for BOTH tasks. Do not include anything about appearance, design, delivery or technology here. For each give four observable levels (l4 excellent, l3 good, l2 needs improvement, l1 beginning) that differ clearly in accuracy, depth, independence or quality of justification, plus how the criterion shows up in task 1 ("inA") and in task 2 ("inB"), specifically. Give integer weights that total exactly 50.
-B) "task1Form" and "task2Form": for each task, exactly 3 criteria in this order and with these weights: "${fn[0]}" 20, "${fn[1]}" 15, "${fn[2]}" 15. Write the four levels specifically for that task's type and product (for example storyboard and editing for a video, recording quality for a podcast, rules and components for a game).
+The marking key has two parts: ${SKW()}% of the grade for understanding the skill and ${FMW()}% for form, delivery and technology:
+A) "skillCriteria": exactly 3 criteria that assess understanding of the skill itself and work for BOTH tasks. Do not include anything about appearance, design, delivery or technology here. For each give four observable levels (l4 excellent, l3 good, l2 needs improvement, l1 beginning) that differ clearly in accuracy, depth, independence or quality of justification, plus how the criterion shows up in task 1 ("inA") and in task 2 ("inB"), specifically. Give integer weights that total exactly ${SKW()}.
+B) "task1Form" and "task2Form": for each task, exactly 3 criteria in this order and with these weights: "${fn[0]}" ${formW()[0]}, "${fn[1]}" ${formW()[1]}, "${fn[2]}" ${formW()[2]}. Write the four levels specifically for that task's type and product (for example storyboard and editing for a video, recording quality for a podcast, rules and components for a game).
 
 Language: write every criterion name and level in ${LN[S.studentLang]}, in language the students can understand. Write inA and inB in ${LN[L]}.
 Return only JSON in this shape:
@@ -1456,12 +1491,12 @@ Return only JSON in this shape:
       .map(c=>({name:String(c.name).trim(),weight:c.weight,l4:String(c.l4||""),l3:String(c.l3||""),l2:String(c.l2||""),l1:String(c.l1||""),inA:String(c.inA||""),inB:String(c.inB||"")}));
     const A=clean(res&&res.skillCriteria,4),F=[clean(res&&res.task1Form,3),clean(res&&res.task2Form,3)];
     if(!A.length&&!F[0].length&&!F[1].length)throw {code:"empty"};
-    // weights: skill part must total 50, otherwise split equally; form part keeps 20/15/15
+    // weights: skill part must total SKW(), otherwise split equally; form part keeps formW()
     const aw=A.map(c=>parseFloat(c.weight));
-    const okW=aw.length&&aw.every(n=>!isNaN(n))&&aw.reduce((x,y)=>x+y,0)===50;
+    const okW=aw.length&&aw.every(n=>!isNaN(n))&&aw.reduce((x,y)=>x+y,0)===SKW();
     const eq=skillWeights(A.map(c=>({name:c.name,weight:""})));
     A.forEach((c,j)=>c.weight=String(okW?aw[j]:eq[j]));
-    F.forEach(list=>list.forEach((c,j)=>c.weight=String(FORM_W[j]||c.weight||"")));
+    F.forEach(list=>list.forEach((c,j)=>c.weight=String(formW()[j]||c.weight||"")));
     const lv=t("levels");
     const tbl=list=>`<div class="kp-wrap"><table class="kp"><thead><tr><th>${esc(t("critName"))}</th>${[4,3,2,1].map(l=>`<th>${esc(lv[l])}</th>`).join("")}<th>%</th></tr></thead><tbody>${list.map(c=>`<tr><td><strong>${esc(c.name)}</strong></td><td>${esc(c.l4)}</td><td>${esc(c.l3)}</td><td>${esc(c.l2)}</td><td>${esc(c.l1)}</td><td>${esc(c.weight)}</td></tr>`).join("")}</tbody></table></div>`;
     const kn=k=>k?(KIND_NAMES[L]||KIND_NAMES.ar)[k]:"";
